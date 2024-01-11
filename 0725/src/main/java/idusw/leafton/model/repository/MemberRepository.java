@@ -1,10 +1,9 @@
 package idusw.leafton.model.repository;
 
 import idusw.leafton.model.entity.Member;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 import java.util.Optional;
 
 //Member entity에 접근
@@ -14,4 +13,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     레코드가 없을 경우가 많기 때문에 리턴값을 Optional로 준다. */
     Optional<Member> findByEmailAndPassword(String email, String password);
 
+    //email을 통해 select
+    Optional<Member> findByEmail(String email);
+
+    //relation의 데이터에 따라 insert 혹은 update 처리
+    @Override
+    <S extends Member> S save(S member);
 }

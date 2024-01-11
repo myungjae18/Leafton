@@ -15,8 +15,8 @@ public class Member {
     @Column(name = "memberId")
     private Long memberId;
 
-    @OneToOne
-    @JoinColumn(name = "styleId" , referencedColumnName = "styleId")
+    @ManyToOne
+    @JoinColumn(name = "styleId")
     private Style style;
 
     @Column
@@ -54,6 +54,7 @@ public class Member {
         member.setGender(memberDTO.getGender());
         member.setName(memberDTO.getName());
         member.setPhone(memberDTO.getPhone());
+        member.setZipcode(memberDTO.getZipcode());
 
         return member;
 

@@ -19,7 +19,7 @@ public class Event {
     private Long eventId;
 
     @ManyToOne
-    @JoinColumn(name = "productId", referencedColumnName = "productId")
+    @JoinColumn(name = "productId")
     private Product product;
 
     @DateTimeFormat(pattern = "yyyy-mm-dd")

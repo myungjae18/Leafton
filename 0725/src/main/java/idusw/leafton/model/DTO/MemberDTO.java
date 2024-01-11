@@ -42,6 +42,7 @@ public class MemberDTO {
         memberDTO.setGender(member.getGender());
         memberDTO.setName(member.getName());
         memberDTO.setPhone(member.getPhone());
+        memberDTO.setZipcode(member.getZipcode());
 
         return memberDTO;
     }

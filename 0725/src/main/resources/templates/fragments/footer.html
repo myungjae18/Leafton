@@ -48,9 +48,9 @@
         <div class="columns col-2">
           <h3>Account</h3>
           <ul>
-            <li th:if="${session.memberDTO!=null}"><a href="/member/login">로그아웃</a></li>
-            <li th:if="${session.memberDTO==null}"><a href="/member/logout">로그인</a></li>
-            <li th:if="${session.memberDTO==null}"><a href="/member/register">회원가입</a></li>
+            <li th:if="${session.memberDTO!=null}"><a href="/member/logout">로그아웃</a></li>
+            <li th:if="${session.memberDTO==null}"><a th:href="@{/member/login(type='login')}">로그인</a></li>
+            <li th:if="${session.memberDTO==null}"><a th:href="@{/member/login(type='register')}">회원가입</a></li>
             <li th:if="${session.memberDTO!=null}"><a href="/member/info">내 정보</a></li>
           </ul>
         </div>
