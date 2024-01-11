@@ -2,30 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="/fragments/header :: headerFragment"></th:block>
 <head>
-  <!--추후 style.css로 이동 예정-->
-  <style>
-    .slide{
-      width:1000px;
-      height:500px;
-      margin:auto;
-      overflow: hidden;
-    }
-    .slideTab{
-      width:5000px;
-      height:100%;
-    }
-    .photoFrame{
-      width:1000px;
-      height:100%;
-      float:left;
-    }
-    .slideTab img{
-      width:1000px;
-      margin-left: 0%;
-      height:500px;
-      object-fit: cover;
-    }
-  </style>
+  <link rel="stylesheet" href="/static/css/main.css"/>
 </head>
 <body>
     <!-- 현재 이벤트 슬라이드 -->

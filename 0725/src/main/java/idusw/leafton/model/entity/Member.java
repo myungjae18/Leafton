@@ -48,6 +48,7 @@ public class Member {
         Member member = new Member();
         member.setMemberId(memberDTO.getMemberId());
         member.setStyle(Style.toStyleEntity(memberDTO.getStyleDTO()));
+        member.setAddress(memberDTO.getAddress());
         member.setEmail(memberDTO.getEmail());
         member.setPassword(memberDTO.getPassword());
         member.setAge(memberDTO.getAge());

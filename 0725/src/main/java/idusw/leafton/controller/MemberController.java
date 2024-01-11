@@ -75,6 +75,7 @@ public class MemberController {
             memberDTO.setAge(Integer.valueOf(request.getParameter("age")));
             memberDTO.setPhone(request.getParameter("phone"));
             memberDTO.setAddress(request.getParameter("address"));
+            System.out.println(request.getParameter("address"));
             memberDTO.setZipcode(Integer.valueOf(request.getParameter("zipcode")));
             memberDTO.setGender(Integer.valueOf(request.getParameter("gender")));
             memberDTO.setStyleDTO(styleDTO);
