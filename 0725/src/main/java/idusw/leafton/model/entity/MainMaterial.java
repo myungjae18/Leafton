@@ -15,11 +15,6 @@ public class MainMaterial {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     @Column(name = "mainMaterialId")
     private Long mainMaterialId;
-
-    @OneToOne
-    @JoinColumn(name = "subMaterialId")
-    private SubMaterial subMaterial;
-
     @Column
     private String name;
 
@@ -27,7 +22,6 @@ public class MainMaterial {
         MainMaterial mainMaterial = new MainMaterial();
 
         mainMaterial.setMainMaterialId(mainMaterialDTO.getMainMaterialId());
-        mainMaterial.setSubMaterial(SubMaterial.toSubMaterialEntity(mainMaterialDTO));
         mainMaterial.setName(mainMaterialDTO.getName());
 
         return mainMaterial;

@@ -40,4 +40,11 @@ public class MemberServiceImpl implements MemberService{
 
         return MemberDTO.toMemberDTO(result);
     }
+
+    @Override
+    public void saveData(MemberDTO memberDTO) {
+        Member member = Member.toMemberEntity(memberDTO);
+        System.out.println(member.getUnity_data());
+        memberRepository.save(member);
+    }
 }

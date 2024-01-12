@@ -22,6 +22,9 @@ public class MainCategory {
     public static MainCategory toMainCategoryEntity(MainCategoryDTO mainCategoryDTO){
         MainCategory mainCategory = new MainCategory();
 
+        mainCategory.setMainCategoryId(mainCategoryDTO.getMainCategoryId());
+        mainCategory.setName(mainCategoryDTO.getName());
+
         return mainCategory;
     }
 }

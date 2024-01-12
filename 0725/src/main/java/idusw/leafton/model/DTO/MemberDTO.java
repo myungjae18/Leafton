@@ -31,6 +31,8 @@ public class MemberDTO {
 
     private String phone;
 
+    private String unity_data;
+
     public static MemberDTO toMemberDTO(Member member){
         MemberDTO memberDTO = new MemberDTO();
         memberDTO.setMemberId(member.getMemberId());
@@ -42,8 +44,8 @@ public class MemberDTO {
         memberDTO.setGender(member.getGender());
         memberDTO.setName(member.getName());
         memberDTO.setPhone(member.getPhone());
+        memberDTO.setUnity_data(member.getUnity_data());
         memberDTO.setZipcode(member.getZipcode());
-
         return memberDTO;
     }
 

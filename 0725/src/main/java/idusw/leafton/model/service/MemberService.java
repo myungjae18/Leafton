@@ -11,4 +11,7 @@ public interface MemberService {
 
     //Member 객체를 받아 회원가입 처리를 지시하는 메서드
     public MemberDTO register(MemberDTO memberDTO);
+
+    //Unity json 데이터를 저장하는 메서드
+    public void saveData(MemberDTO memberDTO);
 }

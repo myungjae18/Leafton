@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -13,60 +15,52 @@ public class Product {
     @Id // pk를 지정
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private Long productId;
-
     @ManyToOne
     @JoinColumn (name = "mainCategoryId") //fk지정
     private MainCategory mainCategory;
-
-    @OneToOne
-    @JoinColumn (name = "mainMaterialId")//fk 지정
-    private MainMaterial mainMaterial;
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn (name = "styledId") //fk 지정
     private Style style;
-
-    @Column
-    private String name;
-
-    @Column
-    private String color;
-
-    @Column
-    private String size;
-
-    @Column
-    private Integer price;
-
-    @Column
-    private Integer salePercentage;
-
-    @Column
-    private Integer weight;
-
-    @Column
-    private Integer asPeriod;
-
-    @Column
-    private String registDate;
-
-    @Column
-    private Integer amount;
-
-    @Column
-    private Integer isAssemble;
-
+    @ManyToOne
+    @JoinColumn (name = "eventId") //fk 지정
+    private Event event;
+    @ManyToOne
+    @JoinColumn (name = "mainMaterialId")//fk 지정
+    private MainMaterial mainMaterial;
+    @ManyToOne
+    @JoinColumn (name = "subMaterialId")//fk 지정
+    private SubMaterial subMaterial;
     @Column
     private String content;
-
+    @Column
+    private String maker;
+    @Column
+    private String name;
+    @Column
+    private String color;
+    @Column
+    private String size;
+    @Column
+    private Integer price;
+    @Column
+    private Integer salePercentage;
+    @Column
+    private Integer weight;
+    @Column
+    private Integer asPeriod;
+    @Column
+    private LocalDateTime registDate;
+    @Column
+    private Integer amount;
+    @Column
+    private Integer IsAssemble;
     @Column
     private String mainImage;
-
     @Column
     private String subImage;
-
     @Column
     private String thumbImage;
+
 
     public static Product toProductEntity(ProductDTO productDTO){
 
@@ -74,8 +68,6 @@ public class Product {
         product.setProductId(productDTO.getProductId());
         product.setMainCategory(MainCategory.toMainCategoryEntity(productDTO.getMainCategoryDTO()));
         product.setMainMaterial(MainMaterial.toMainMaterialEntity(productDTO.getMainMaterialDTO()));
-        //product.setCompany(productDTO.getCompany());
-        //product.setImage(productDTO.getImage());
         product.setStyle(Style.toStyleEntity(productDTO.getStyleDTO()));
         product.setName(productDTO.getName());
         product.setColor(productDTO.getColor());
@@ -87,7 +79,9 @@ public class Product {
         product.setRegistDate(productDTO.getRegistDate());
         product.setAmount(productDTO.getAmount());
         product.setIsAssemble(productDTO.getIsAssemble());
-        product.setContent(productDTO.getContent());
+        product.setMainImage(productDTO.getMainImage());
+        product.setSubImage(product.getSubImage());
+        product.setThumbImage(product.getThumbImage());
 
         return product;
     }

@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
@@ -18,43 +20,25 @@ import lombok.ToString;
 public class ProductDTO {
 
     private Long productId;
-
     private MainCategoryDTO mainCategoryDTO;
-
-    private MainMaterialDTO mainMaterialDTO;
-
-    //private Company company;
-
-    //private Image image;
-
     private StyleDTO styleDTO;
-
-    private String name;
-
-    private String color;
-
-    private String size;
-
-    private Integer price;
-
-    private Integer salePercentage;
-
-    private Integer weight;
-
-    private Integer asPeriod;
-
-    private String registDate;
-
-    private Integer amount;
-
-    private Integer isAssemble;
-
+    private EventDTO eventDTO;
+    private MainMaterialDTO mainMaterialDTO;
+    private SubMaterialDTO subMaterialDTO;
     private String content;
-
+    private String maker;
+    private String name;
+    private String color;
+    private String size;
+    private Integer price;
+    private Integer salePercentage;
+    private Integer weight;
+    private Integer asPeriod;
+    private LocalDateTime registDate;
+    private Integer amount;
+    private Integer isAssemble;
     private String mainImage;
-
     private String subImage;
-
     private String thumbImage;
 
     public static ProductDTO toProductDTO(Product product) {
@@ -62,10 +46,12 @@ public class ProductDTO {
 
         productDTO.setProductId(product.getProductId());
         productDTO.setMainCategoryDTO(MainCategoryDTO.toMainCategoryDTO(product.getMainCategory()));
-        productDTO.setMainMaterialDTO(MainMaterialDTO.toMainMaterialDTO(product.getMainMaterial()));
-        //productDTO.setCompany(product.getCompany());
-        //productDTO.setImage(product.getImage());
         productDTO.setStyleDTO(StyleDTO.toStyleDTO(product.getStyle()));
+        productDTO.setEventDTO(EventDTO.toEventDTO(product.getEvent()));
+        productDTO.setMainMaterialDTO(MainMaterialDTO.toMainMaterialDTO(product.getMainMaterial()));
+        productDTO.setSubMaterialDTO(SubMaterialDTO.toSubMaterialDTO(product.getSubMaterial()));
+        productDTO.setContent(product.getContent());
+        productDTO.setMaker(product.getMaker());
         productDTO.setName(product.getName());
         productDTO.setColor(product.getColor());
         productDTO.setSize(product.getSize());
@@ -76,7 +62,9 @@ public class ProductDTO {
         productDTO.setRegistDate(product.getRegistDate());
         productDTO.setAmount(product.getAmount());
         productDTO.setIsAssemble(product.getIsAssemble());
-        productDTO.setContent(product.getContent());
+        productDTO.setMainImage(product.getMainImage());
+        productDTO.setSubImage(product.getSubImage());
+        productDTO.setThumbImage(product.getThumbImage());
 
         return productDTO;
     }

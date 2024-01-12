@@ -11,14 +11,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MainMaterialDTO {
     private Long mainMaterialId;
-    private SubMaterialDTO subMaterialDTO;
     private String name;
 
     public static MainMaterialDTO toMainMaterialDTO(MainMaterial mainMaterial) {
         MainMaterialDTO mainMaterialDTO = new MainMaterialDTO();
 
         mainMaterialDTO.setMainMaterialId(mainMaterial.getMainMaterialId());
-        mainMaterialDTO.setSubMaterialDTO(SubMaterialDTO.toSubMaterialDTO(mainMaterial.getSubMaterial()));
         mainMaterialDTO.setName(mainMaterial.getName());
 
         return mainMaterialDTO;

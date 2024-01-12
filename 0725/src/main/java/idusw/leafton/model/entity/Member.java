@@ -15,8 +15,8 @@ public class Member {
     @Column(name = "memberId")
     private Long memberId;
 
-    @ManyToOne
-    @JoinColumn(name = "styleId")
+    @OneToOne
+    @JoinColumn(name = "styleId" , referencedColumnName = "styleId")
     private Style style;
 
     @Column
@@ -43,20 +43,22 @@ public class Member {
     @Column
     private String phone;
 
+    @Column (columnDefinition = "LONGTEXT")
+    private String unity_data;
+
     //DTO 내의 정보를 현재 객체에 저장하는 메서드
     public static Member toMemberEntity(MemberDTO memberDTO){
         Member member = new Member();
         member.setMemberId(memberDTO.getMemberId());
         member.setStyle(Style.toStyleEntity(memberDTO.getStyleDTO()));
-        member.setAddress(memberDTO.getAddress());
         member.setEmail(memberDTO.getEmail());
         member.setPassword(memberDTO.getPassword());
         member.setAge(memberDTO.getAge());
         member.setGender(memberDTO.getGender());
         member.setName(memberDTO.getName());
         member.setPhone(memberDTO.getPhone());
-        member.setZipcode(memberDTO.getZipcode());
-
+        member.setUnity_data(memberDTO.getUnity_data());
+        member.setZipcode(member.getZipcode());
         return member;
 
     }
