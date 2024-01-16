@@ -25,23 +25,35 @@
         </div>
         <!--메인 Logo 끝-->
         <!--페이지 이동 탭-->
-        <div class="columns col-5">
+        <div class="columns col-7">
           <a href="#" class="toggle-nav">
             <i class="fa fa-bars"></i> Menu
           </a>
           <nav class="main-nav">
             <ul>
-              <li><a href="/product/product">All</a></li>
-              <li><a href="/event/index">Sale</a></li>
+              <li><a href="/product/shop">All</a></li>
               <li><a href="/event/index">Event</a></li>
-              <li><a href="/product/shop">Brand</a></li>
             </ul>
           </nav>
+          <li class="header-search" >
+            <div class="search-wrapper">
+              <form class="search-form">
+                <input type="text" placeholder="Search...">
+              </form>
+            </div>
+          </li>
         </div>
         <!--페이지 이동 탭 끝-->
         <!--버튼/검색 메뉴-->
-        <div class="columns col-5">
+        <div class="columns col-3">
           <ul class="header-controls">
+            <!--myPage 이동 버튼-->
+            <li class="header-actions" th:if="${session.memberDTO!=null}">
+              <a href="/member/myPage" title="view myPage">
+                <span class="fa fa-user"></span> myPage
+              </a>
+            </li>
+            <!--cart 이동 버튼 끝-->
             <!--cart 이동 버튼-->
             <li class="header-cart" th:if="${session.memberDTO!=null}">
               <a href="/pay/cart" title="view cart">
@@ -65,15 +77,10 @@
         </div>
         <!--버튼/검색 메뉴 끝-->
         <!--검색 창-->
-        <li class="header-search">
-          <div class="search-wrapper">
-            <form class="search-form">
-              <input type="text" placeholder="Search...">
-            </form>
-          </div>
-        </li>
+
         <!--검색 창 끝-->
       </div>
+
     </header>
   </body>
 </th:block>
