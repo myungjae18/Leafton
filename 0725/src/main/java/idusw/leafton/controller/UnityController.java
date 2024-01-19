@@ -44,7 +44,6 @@ public class UnityController {
         {
             return null;
         }
-
     }
 
     //httpservlet 사용 시 타임리프때매 문제생기고 테스트 하기에 있어 제약이 많음(유니티 에디터 내에서 테스ㅡㅌ 안됨)
