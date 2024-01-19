@@ -1,5 +1,7 @@
 package idusw.leafton.model.entity;
 
+import idusw.leafton.model.DTO.CartDTO;
+import idusw.leafton.model.DTO.MemberDTO;
 import idusw.leafton.model.DTO.OrderDTO;
 
 import jakarta.persistence.*;
@@ -12,19 +14,15 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@Table(name = "orderTable")
+@Table(name = "order_table")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "memberId")
     private Member member;
-
-    @OneToOne
-    @JoinColumn(name = "cartId")
-    private Cart cart;
 
     @Column
     private String address;
@@ -52,11 +50,12 @@ public class Order {
 
     @Column
     private String customerRequest;
+
+    @Column String phone;
     public static Order toOrderEntity(OrderDTO orderDTO){
         Order order = new Order();
         order.setOrderId(orderDTO.getOrderId());
         order.setMember(Member.toMemberEntity(orderDTO.getMemberDTO()));
-        order.setCart(Cart.toCartEntity(orderDTO.getCartDTO()));
         order.setAddress(orderDTO.getAddress());
         order.setZipcode(orderDTO.getZipcode());
         order.setOrderDate(orderDTO.getOrderDate());
@@ -66,6 +65,23 @@ public class Order {
         order.setDeliveryPeriod(orderDTO.getDeliveryPeriod());
         order.setDeliveryCompany(orderDTO.getDeliveryCompany());
         order.setCustomerRequest(orderDTO.getCustomerRequest());
+
+        return order;
+    }
+
+    public static Order createOrder(OrderDTO orderDTO){
+        Order order = new Order();
+        order.setMember(Member.toMemberEntity(orderDTO.getMemberDTO()));
+        order.setAddress(orderDTO.getAddress());
+        order.setZipcode(orderDTO.getZipcode());
+        order.setOrderDate(LocalDate.now());
+        order.setOrderPrice(orderDTO.getOrderPrice());
+        order.setPaymentMethod(orderDTO.getPaymentMethod());
+        order.setDeliveryFee(orderDTO.getDeliveryFee());
+        order.setDeliveryPeriod(order.getOrderDate().plusDays(2)); //이게 동작할지 의문
+        order.setDeliveryCompany(orderDTO.getDeliveryCompany()); //아직 테스트 값 지정
+        order.setCustomerRequest(orderDTO.getCustomerRequest());
+        order.setPhone(orderDTO.getPhone());
 
         return order;
     }

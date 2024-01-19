@@ -132,94 +132,60 @@
                 <strong>CART</strong>
             </p>
         </nav>
-        <form action="#">
+        <form th:action="@{/pay/buy/{memberId}(memberId=${session.memberDTO.getMemberId()})}" method="get" onsubmit="return submitForm();">
             <table border="0">
                 <tr>
                     <th>상품명</th>
                     <th>총수량</th>
                     <th>판매가</th>
-                    <th>배송비</th>
-                    <th>소계</th>
+                    <th>할인금액</th>
+                    <th>최종금액</th>
+                    <th>삭제</th>
+                    <th>주문</th>
                 </tr>
-                <tr class="empty">
+                <tr th:if="${cartItems.isEmpty()}">
                     <td colspan="7">장바구니에 상품이 없습니다.</td>
                 </tr>
-                <tr>
+                <tr th:each="cartItem : ${cartItems}" th:unless="${cartItems.isEmpty()}">
                     <td><article>
                         <a href="#">
                             <img src="	https://via.placeholder.com/80x80" alt="1">
                         </a>
                         <div>
-                            <h2><a href="#">상품명</a></h2>
-                            <p>상품설명</p>
+                            <h2 th:text="${cartItem.getProduct().getName()}"><a href="#">상품명</a></h2>
+                            <p th:text="${cartItem.getProduct().getContent()}">상품설명</p>
                         </div>
                     </article></td>
-                    <td>1</td>
-                    <td>27,000</td>
-                    <td>무료배송</td>
-                    <td>27,000</td>
-                </tr>
-                <tr>
-                    <td><article>
-                        <a href="#">
-                            <img src="	https://via.placeholder.com/80x80" alt="1">
-                        </a>
-                        <div>
-                            <h2><a href="#">상품명</a></h2>
-                            <p>상품설명</p>
-                        </div>
-                    </article></td>
-                    <td>1</td>
-                    <td>27,000</td>
-                    <td>무료배송</td>
-                    <td>27,000</td>
-                </tr>
-                <tr>
-                    <td><article>
-                        <a href="#">
-                            <img src="	https://via.placeholder.com/80x80" alt="1">
-                        </a>
-                        <div>
-                            <h2><a href="#">상품명</a></h2>
-                            <p>상품설명</p>
-                        </div>
-                    </article></td>
-                    <td>1</td>
-                    <td>27,000</td>
-                    <td>무료배송</td>
-                    <td>27,000</td>
+                    <td th:text="${cartItem.getCount()}"></td>
+                    <td th:text="'₩' + ${#numbers.formatInteger(cartItem.getProduct().getPrice(), 0, 'COMMA')}">상품금액</td>
+                    <td th:if="${cartItem.getProduct().getSalePercentage() == null}" th:text="'적용된 할인 없음'">할인금액</td>
+                    <td th:unless="${cartItem.getProduct().getSalePercentage() == null}">
+                            <span th:with="discountedPrice=${cartItem.getProduct().getPrice() *
+                            (1 - cartItem.getProduct().getSalePercentage()/100.0)}" th:text="'₩' + ${#numbers.formatInteger(discountedPrice.intValue(), 0, 'COMMA')}"></span>
+                    </td>
+                    <!--<td th:text="${deliveryFee}">무료배송</td>-->
+                    <td th:if="${cartItem.getProduct().getSalePercentage() == null}" th:text="'₩' + ${#numbers.formatInteger(cartItem.getProduct().getPrice() * cartItem.getCount(), 1, 'COMMA')}"></td>
+                    <td th:unless="${cartItem.getProduct().getSalePercentage() == null}">
+                            <span th:with="discountedTotalPrice=${cartItem.getProduct().getPrice() *
+                            (1 - cartItem.getProduct().getSalePercentage()/100.0) * cartItem.getCount()}" th:text="'₩' + ${#numbers.formatInteger(discountedTotalPrice.intValue(), 0, 'COMMA')}"></span>
+                    </td>
+                    <td><a th:href="@{/pay/cart/{memberId}/{cartItemId}/delete(memberId=${session.memberDTO.getMemberId()}, cartItemId=${cartItem.getCartItemId()})}">삭제</a></td>
+                    <td> <input type="checkbox" name="itemChkBox" th:value="${cartItem.getCartItemId()}"></td>
                 </tr>
             </table>
             <div class="final">
                 <h2>최종결제 정보</h2>
                 <table>
                     <tr>
-                        <td>총</td>
-                        <td>3 건</td>
-                    </tr>
-                    <tr>
-                        <td>상품금액</td>
-                        <td>27,000</td>
-                    </tr>
-                    <tr>
-                        <td>할인금액</td>
-                        <td>-1,000</td>
-                    </tr>
-                    <tr>
-                        <td>배송비</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>포인트 할인</td>
-                        <td>-1,000</td>
-                    </tr>
-                    <tr>
                         <td>전체주문금액</td>
-                        <td>25,000</td>
+                        <td th:text="'₩' + ${#numbers.formatInteger(totalPrice, 0, 'COMMA')}"></td>
                     </tr>
                 </table>
-                <form> <input type="button" value="결제하기" onclick="addToBuy()"></form>
+                <input type="hidden" name="checkedItems" value="">
+                <input type="submit" value="결제하기">
+                <h3>10만원 이상 주문시 배송비 무료!</h3>
             </div>
+
         </form>
     </section>
 </main>
@@ -228,15 +194,24 @@
 <th:block th:replace="/fragments/footer"></th:block>
 </body>
 <script type="text/javascript">
-    function addToBuy(){
-        if (confirm('상품을 구매하시겠습니까?')) {
-            location.href = "/pay/buy"
-            document.addForm.submit();
+    function submitForm() {
+        const itemChkBox = document.getElementsByName('itemChkBox');
+        let checkedItems = [];
 
-        } else {
-            document.addForm.reset();
+        for(let i = 0; i < itemChkBox.length; i++) {
+            if(itemChkBox[i].checked) {
+                checkedItems.push(itemChkBox[i].value);
+            }
         }
+
+        if(checkedItems.length === 0) {
+            alert("선택된 상품이 없습니다.");
+            return false;
+        }
+
+        document.getElementsByName('checkedItems')[0].value = checkedItems.join(',');
+
+        return true;
     }
 </script>
-
 </html>

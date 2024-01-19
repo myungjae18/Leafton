@@ -29,9 +29,9 @@ public class Cart {
         return cart;
     }
 
-    public static Cart createCart(MemberDTO member) {
+    public static Cart createCart(MemberDTO memberDTO) {
         Cart cart = new Cart();
-        cart.setMember(Member.toMemberEntity(member));
+        cart.setMember(Member.toMemberEntity(memberDTO));
         return cart;
     }
 }

@@ -5,6 +5,8 @@ import idusw.leafton.model.DTO.ReviewDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,7 +25,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "memberId")
-    private Member memberId;
+    private Member member;
 
     @Column
     private int rating;
@@ -32,13 +34,14 @@ public class Review {
     private String content;
 
     @Column
-    private LocalDateTime registDate;
+    private LocalDate registDate;
 
     public static Review toReviewEntity(ReviewDTO reviewDTO){
         Review review = new Review();
 
         review.setReviewId(reviewDTO.getReviewId());
         review.setProduct(Product.toProductEntity(reviewDTO.getProductDTO())); //참조부분 직접 바로 메서드 사용하여 호출
+        review.setMember(Member.toMemberEntity(reviewDTO.getMemberDTO()));
         review.setRating(reviewDTO.getRating());
         review.setContent(reviewDTO.getContent());
         review.setRegistDate(reviewDTO.getRegistDate());

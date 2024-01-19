@@ -51,4 +51,12 @@ public class MemberServiceImpl implements MemberService{
     public void withdraw(Long memberId) {
         memberRepository.deleteById(memberId);
     }
+
+    @Override
+    public MemberDTO getMemberById(Long memberId) {
+        Optional<Member> opMember = memberRepository.findById(memberId);
+        if(opMember.isPresent()) {
+            return MemberDTO.toMemberDTO(opMember.get());
+        } else return null;
+    }
 }

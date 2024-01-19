@@ -1,7 +1,6 @@
 package idusw.leafton.model.DTO;
 
 import idusw.leafton.model.entity.MainMaterial;
-import idusw.leafton.model.entity.SubMaterial;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

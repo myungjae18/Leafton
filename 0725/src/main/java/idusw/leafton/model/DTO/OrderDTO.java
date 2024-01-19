@@ -20,8 +20,6 @@ public class OrderDTO {
 
     private MemberDTO memberDTO;
 
-    private CartDTO cartDTO;
-
     private String address;
 
     private int zipcode;
@@ -40,6 +38,8 @@ public class OrderDTO {
 
     private String customerRequest;
 
+    private String phone;
+
     public static OrderDTO toOrderDTO(Order order){
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setOrderId(order.getOrderId());
@@ -52,6 +52,7 @@ public class OrderDTO {
         orderDTO.setDeliveryFee(order.getDeliveryFee());
         orderDTO.setDeliveryCompany(order.getDeliveryCompany());
         orderDTO.setCustomerRequest(order.getCustomerRequest());
+        orderDTO.setPhone(order.getPhone());
 
         return orderDTO;
     }

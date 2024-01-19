@@ -31,6 +31,7 @@
             <ul>
               <li><a href="/product/shop">All</a></li>
               <li><a href="/event/index">Event</a></li>
+              <li><a href="/unity">VirtualRoom</a></li>
             </ul>
           </nav>
           <li class="header-search" >
@@ -47,14 +48,14 @@
           <ul class="header-controls">
             <!--myPage 이동 버튼-->
             <li class="header-actions" th:if="${session.memberDTO!=null}">
-              <a href="/member/myPage" title="view myPage">
+              <a href="/member/myPage?type=info" title="view myPage">
                 <span class="fa fa-user"></span> myPage
               </a>
             </li>
             <!--cart 이동 버튼 끝-->
             <!--cart 이동 버튼-->
             <li class="header-cart" th:if="${session.memberDTO!=null}">
-              <a href="/pay/cart" title="view cart">
+              <a th:href="@{/pay/cart/{memberId}(memberId=${session.memberDTO.memberId})}" title="view cart">
                 <span class="fa fa-shopping-cart"></span>
                 <span class="cart-count">cart</span>
               </a>

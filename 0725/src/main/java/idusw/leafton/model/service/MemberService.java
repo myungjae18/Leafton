@@ -17,4 +17,7 @@ public interface MemberService {
 
     //회원 탈퇴를 처리하는 메서드
     public void withdraw(Long memberId);
+
+    //member_id를 통해 조회하는 메서드
+    public MemberDTO getMemberById(Long memberId);
 }

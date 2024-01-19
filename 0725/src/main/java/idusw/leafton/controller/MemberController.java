@@ -2,10 +2,10 @@ package idusw.leafton.controller;
 
 import idusw.leafton.model.DTO.MemberDTO;
 import idusw.leafton.model.DTO.StyleDTO;
+import idusw.leafton.model.service.CartService;
 import idusw.leafton.model.service.MemberService;
 import idusw.leafton.model.service.StyleService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +18,8 @@ public class MemberController {
     MemberService memberService;
     @Autowired
     StyleService styleService;
+    @Autowired
+    CartService cartService;
 
     //로그인 페이지로 이동
     @GetMapping(value = "/login")
@@ -28,8 +30,17 @@ public class MemberController {
 
     //마이 페이지로 이동
     @GetMapping(value="/myPage")
-    private String goMyPage(HttpServletRequest request) {
-        return "/member/info";
+    private String goMyPage(HttpServletRequest request, @RequestParam String type) {
+        String url = null;
+
+        switch (type) {
+            case "info": url = "/member/info"; break;
+            case "change-password": url = "/member/changePw"; break;
+            case "change-style": url = "/member/changeSt"; break;
+            default: break;
+        }
+
+        return url;
     }
 
     //로그아웃 요청을 처리하는 메서드
@@ -73,7 +84,8 @@ public class MemberController {
             memberDTO.setStyleDTO(styleDTO);//memberDTO에 styleDTO 주입
 
             //entity에 insert
-            memberService.register(memberDTO);
+            MemberDTO result = memberService.register(memberDTO);
+            cartService.createCart(result);
         }
 
         return "redirect:/main/index";

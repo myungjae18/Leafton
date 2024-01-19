@@ -155,62 +155,33 @@
             <table border="0">
                 <tr>
                     <th>상품명</th>
-                    <th>상품금액</th>
+                    <th>총수량</th>
+                    <th>판매가</th>
                     <th>할인금액</th>
-                    <th>수량</th>
-                    <th>주문금액</th>
+                    <th>최종금액</th>
                 </tr>
-                <tr>
-                    <td>
-                        <article>
-                            <img src="https://via.placeholder.com/80X80" alt="">
-                            <div>
-                                <h2>
-                                    <a href="#">상품명</a>
-                                </h2>
-                                <p>상품설명</p>
-                            </div>
-                        </article>
+                <tr th:each="orderItem : ${orderItems}">
+                    <td><article>
+                        <a href="#">
+                            <img src="	https://via.placeholder.com/80x80" alt="1">
+                        </a>
+                        <div>
+                            <h2 th:text="${orderItem.getProductDTO().getName()}"><a href="#">상품명</a></h2>
+                            <p th:text="${orderItem.getProductDTO().getContent()}">상품설명</p>
+                        </div>
+                    </article></td>
+                    <td th:text="${orderItem.getCount()}"></td>
+                    <td th:text="'₩' + ${#numbers.formatInteger(orderItem.getProductDTO().getPrice(), 0, 'COMMA')}">판매가</td>
+                    <td th:if="${orderItem.getProductDTO().getSalePercentage() == null}" th:text="'적용된 할인 없음'">할인금액</td>
+                    <td th:unless="${orderItem.getProductDTO().getSalePercentage() == null}">
+                            <span th:with="discountedPrice=${orderItem.getProductDTO().getPrice() *
+                            (1 - orderItem.getProductDTO().getSalePercentage()/100.0)}" th:text="'-₩' + ${#numbers.formatInteger(discountedPrice.intValue(), 0, 'COMMA')}"></span>
                     </td>
-                    <td>17,000원</td>
-                    <td>1,000원</td>
-                    <td>1</td>
-                    <td>16,000원</td>
-                </tr>
-                <tr>
-                    <td>
-                        <article>
-                            <img src="https://via.placeholder.com/80X80" alt="">
-                            <div>
-                                <h2>
-                                    <a href="#">상품명</a>
-                                </h2>
-                                <p>상품설명</p>
-                            </div>
-                        </article>
+                    <td th:if="${orderItem.getProductDTO().getSalePercentage() == null}" th:text="'₩' + ${#numbers.formatInteger(orderItem.getProductDTO().getPrice() * orderItem.getCount(), 1, 'COMMA')}"></td>
+                    <td th:unless="${orderItem.getProductDTO().getSalePercentage() == null}">
+                             <span th:with="discountedTotalPrice=${orderItem.getProductDTO().getPrice() *
+                             (1 - orderItem.getProductDTO().getSalePercentage()/100.0) * orderItem.getCount()}" th:text="'₩' + ${#numbers.formatInteger(discountedTotalPrice.intValue(), 0, 'COMMA')}"></span>
                     </td>
-                    <td>17,000원</td>
-                    <td>1,000원</td>
-                    <td>1</td>
-                    <td>16,000원</td>
-                </tr>
-                <tr>
-                    <td>
-                        <article>
-                            <img src="https://via.placeholder.com/80X80" alt="">
-                            <div>
-                                <h2>
-                                    <a href="#">상품명</a>
-                                </h2>
-                                <p>상품설명</p>
-                            </div>
-                        </article>
-                    </td>
-                    <td>17,000원</td>
-                    <td>1,000원</td>
-                    <td>1</td>
-                    <td>16,000원</td>
-                </tr>
                 <tr class="total">
                     <td colspan="4"></td>
                     <td>
@@ -218,25 +189,27 @@
                             <tr>
                                 <td>총 상품금액</td>
                                 <td>
-                                    <span>34,000원</span>
+                                    <span th:text="'₩' + ${#numbers.formatInteger(totalPrice, 0, 'COMMA')}">34,000원</span>
                                 </td>
                             </tr>
+                            <!--
                             <tr>
                                 <td>총 할인금액</td>
                                 <td>
                                     <span>-2,000원</span>
                                 </td>
                             </tr>
+                            -->
                             <tr>
                                 <td>배송비</td>
                                 <td>
-                                    <span>3,000원</span>
+                                    <span th:text="'₩' + ${#numbers.formatInteger(order.getDeliveryFee(), 0, 'COMMA')}">3,000원</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>총 결제금액</td>
                                 <td>
-                                    <span>35,000</span>원
+                                    <span th:text="'₩' + ${#numbers.formatInteger(totalPrice - order.getDeliveryFee(), 0, 'COMMA')}">35,000</span>
                                 </td>
                             </tr>
                         </table>
@@ -250,41 +223,27 @@
             <table border="0">
                 <tr>
                     <td>주문번호</td>
-                    <td>2008101324568</td>
+                    <td th:text="${order.getOrderId()}">2008101324568</td>
                     <td rowspan="3">총 결제금액</td>
                     <td rowspan="3">
-                        <span>35,000</span>원
+                        <span th:text="'₩' + ${#numbers.formatInteger(totalPrice - order.getDeliveryFee(), 0, 'COMMA')}">35,000</span>
                     </td>
                 </tr>
                 <tr>
                     <td>결제방법</td>
-                    <td>신용카드</td>
-                </tr>
-                <tr>
-                    <td>주문자/연락처</td>
-                    <td>홍길동/010-1234-1234</td>
-                </tr>
-            </table>
-        </article>
-        <!-- 주문정보 -->
-        <article class="order">
-            <h1>주문정보</h1>
-            <table border="0">
-                <tr>
-                    <td>주문번호</td>
-                    <td>2008101324568</td>
-                    <td rowspan="3">총 결제금액</td>
-                    <td rowspan="3">
-                        <span>35,000</span>원
+                    <td th:switch="${order.getPaymentMethod()}">
+                        <span th:case="1">신용카드 결제</span>
+                        <span th:case="2">체크카드 결제</span>
+                        <span th:case="3">실시간 계좌이체</span>
+                        <span th:case="4">무통장 입금</span>
+                        <span th:case="5">휴대폰 결제</span>
+                        <span th:case="6">카카오페이</span>
                     </td>
                 </tr>
                 <tr>
-                    <td>결제방법</td>
-                    <td>신용카드</td>
-                </tr>
-                <tr>
                     <td>주문자/연락처</td>
-                    <td>홍길동/010-1234-1234</td>
+                    <td th:text="${order.getMemberDTO().getName()} + '/' + ${order.getPhone().substring(0,3)} + '-' + ${order.getPhone().substring(3,7)} + '-' + ${order.getPhone().substring(7,11)}">홍길동/010-1234-1234</td>
+
                 </tr>
             </table>
         </article>
@@ -294,20 +253,24 @@
             <table border="0">
                 <tr>
                     <td>수취인</td>
-                    <td>홍길동</td>
+                    <td th:text="${order.getMemberDTO().getName()}">홍길동</td>
                     <td>주문자 정보</td>
                 </tr>
                 <tr>
                     <td>연락처</td>
-                    <td>010-1234-1234</td>
-                    <td rowspan="2">
+                    <td th:text="${order.getPhone().substring(0,3)} + '-' + ${order.getPhone().substring(3,7)} + '-' + ${order.getPhone().substring(7,11)}">010-1234-1234</td>
+                    <td rowspan="2" th:text="${order.getMemberDTO().getName()}">
                         홍길동
-                        <br> 010-1234-1234
+                        <br th:text="${order.getPhone().substring(0,3)} + '-' + ${order.getPhone().substring(3,7)} + '-' + ${order.getPhone().substring(7,11)}"> 010-1234-1234
                     </td>
                 </tr>
-                <tr>
+                <!--<tr>
                     <td>배송지 주소</td>
                     <td>부산광역시 강남구 대연동 123 10층</td>
+                </tr>-->
+                <tr>
+                    <td>고객 요청사항</td>
+                    <td th:text="${order.getCustomerRequest()}"></td>
                 </tr>
             </table>
         </article>

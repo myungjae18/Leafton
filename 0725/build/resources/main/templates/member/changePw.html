@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>내 정보</title>
+    <th:block th:replace="/fragments/header :: headerFragment"></th:block>
+    <link rel="stylesheet" href="/static/css/myPage.css"/>
+</head>
+<body>
+    <div class="row max-inner">
+        <!--sidebar-->
+            <th:block th:replace="/member/sidebar :: sidebarFragment"></th:block>
+        <!--sidebar-->
+        <div class="main">
+            <div class="sidebar-header">
+                비밀번호 변경
+                <hr>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
