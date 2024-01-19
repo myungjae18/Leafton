@@ -2,9 +2,50 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>내 정보</title>
+    <th:block th:replace="/fragments/header :: headerFragment"></th:block>
+    <link rel="stylesheet" href="/static/css/myPage.css"/>
 </head>
 <body>
-
+    <div class="row max-inner">
+        <!--sidebar-->
+        <th:block th:replace="/member/sidebar :: sidebarFragment"></th:block>
+        <!--sidebar 끝-->
+        <div class="main">
+            <div class="sidebar-header">
+                내 정보
+                <hr>
+            </div>
+            <div class="main-info">
+                <form action="/member/edit" method="post" id="form-edit">
+                    <input type="hidden" name="memberId" th:value="${session.memberDTO.memberId}"/>
+                    <input type="hidden" name="styleId" th:value="${session.memberDTO.getStyleDTO().getStyleId()}"/>
+                    <input type="hidden" name="gender" th:value="${session.memberDTO.gender}"/>
+                    <input type="hidden" name="password" th:value="${session.memberDTO.password}"/>
+                    <br>
+                    <label>&nbsp;이름</label>
+                    <input type="text" class="input-field" name="name" th:value="${session.memberDTO.name}"/><br><br>
+                    <label>&nbsp;Email</label>
+                    <input type="text" class="input-field" name="email" th:value="${session.memberDTO.email}" readonly /><br><br>
+                    <label>&nbsp;Phone</label>
+                    <input type="text" class="input-field" name="phone" th:value="${session.memberDTO.phone}"/><br><br>
+                    <label>&nbsp;우편번호</label>
+                    <input type="number" class="input-field" name="zipcode" th:value="${session.memberDTO.zipcode}"/><br><br>
+                    <label>&nbsp;주소</label>
+                    <input type="text" class="input-field" name="address" th:value="${session.memberDTO.address}"/><br><br>
+                    <label>&nbsp;선호 스타일</label>
+                    <input type="text" class="input-field" th:value="${session.memberDTO.styleDTO.name}" style="width:47%;"/>
+                    &nbsp;&nbsp;<button type="button">변경</button><br><br>
+                    <label></label>
+                    <button type="button" onclick="edit('edit')">수정</button>
+                    <button type="button" onclick="edit('delete')">탈퇴</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- footer -->
+        <th:block th:replace="/fragments/footer :: footerFragment"></th:block>
+    <!-- footer 끝 -->
+    <script src="/static/js/info.js"></script>
 </body>
 </html>

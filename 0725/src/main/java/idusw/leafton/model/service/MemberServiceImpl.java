@@ -44,7 +44,11 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public void saveData(MemberDTO memberDTO) {
         Member member = Member.toMemberEntity(memberDTO);
-        System.out.println(member.getUnity_data());
         memberRepository.save(member);
+    }
+
+    @Override
+    public void withdraw(Long memberId) {
+        memberRepository.deleteById(memberId);
     }
 }

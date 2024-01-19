@@ -22,7 +22,7 @@ public class Review {
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "memerId")
+    @JoinColumn(name = "memberId")
     private Member memberId;
 
     @Column

@@ -24,10 +24,10 @@
             <input type="text" id="email" name="email" class="input-field" placeholder="Email" required>
             <input type="password" name="password" class="input-field" placeholder="Enter Password" required>
             <input type="text" name="name" class="input-field" placeholder="Your Name" required>
-            <input type="text" name="age" class="input-field" placeholder="Your Age" required>
+            <input type="number" name="age" class="input-field" placeholder="Your Age" required>
             <input type="text" name="phone" class="input-field" placeholder="Phone Number" required>
             <input type="text" name="address" class="input-field" placeholder="Address" required>
-            <input type="text" name="zipcode" class="input-field" placeholder="zipcode" required>
+            <input type="number" name="zipcode" class="input-field" placeholder="zipcode" required>
             <input type="checkbox" id="man" name="gender" class="checkbox" value="0">
             <label for="man" style="font-size:12px">man</label>
             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -37,22 +37,22 @@
             <label>prefferred style</label>
             <br>
             <div class="style-wrapper">
-                <input type="checkbox" id="modern" name="styleId" class="checkbox" value="1">
-                <label for="modern" style="font-size:12px" >modern</label>
+                <input type="checkbox" id="modern" name="styleId" class="checkbox" value="1" onclick="setStyle(event)">
+                <label for="modern">modern</label>
                 <img src="/static/images/modern.jpg" class="style-image">
             </div>
             <div class="style-wrapper">
-                <input type="checkbox" id="classic" name="styleId" class="checkbox" value="2">
-                <label for="classic" style="font-size:12px">classic</label>
+                <input type="checkbox" id="classic" name="styleId" class="checkbox" value="2" onclick="setStyle(event)">
+                <label for="classic">classic</label>
                 <img src="/static/images/classic.jpg" class="style-image">
             </div>
             <div class="style-wrapper">
-                <input type="checkbox" id="upcycling" name="styleId" class="checkbox" value="3">
-                <label for="upcycling" style="font-size:12px">upcycling</label><br>
+                <input type="checkbox" id="upcycling" name="styleId" class="checkbox" value="3" onclick="setStyle(event)">
+                <label for="upcycling">upcycling</label><br>
                 <img src="/static/images/upcycling.jpg" class="style-image">
             </div>
             &nbsp;&nbsp;<br>
-            <button class="submit">REGISTER</button>
+            <button type="button" onclick="insert()" class="submit">REGISTER</button>
         </form>
     </div>
 </div>

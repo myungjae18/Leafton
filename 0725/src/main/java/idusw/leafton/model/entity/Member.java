@@ -58,8 +58,9 @@ public class Member {
         member.setName(memberDTO.getName());
         member.setPhone(memberDTO.getPhone());
         member.setUnity_data(memberDTO.getUnity_data());
-        member.setZipcode(member.getZipcode());
-        return member;
+        member.setZipcode(memberDTO.getZipcode());
+        member.setAddress(memberDTO.getAddress());
 
+        return member;
     }
 }

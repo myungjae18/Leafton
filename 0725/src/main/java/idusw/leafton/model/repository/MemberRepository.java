@@ -19,4 +19,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     //relation의 데이터에 따라 insert 혹은 update 처리
     @Override
     <S extends Member> S save(S member);
+
+    @Override
+    void deleteById(Long memberId);
 }
