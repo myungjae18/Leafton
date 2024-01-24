@@ -10,7 +10,7 @@ public interface MemberService {
     public MemberDTO emailCheck(String email);
 
     //MemberDTO 객체를 받아 회원가입, 정보 수정 처리를 지시하는 메서드
-    public MemberDTO register(MemberDTO memberDTO);
+    public MemberDTO save(MemberDTO memberDTO);
 
     //Unity json 데이터를 저장하는 메서드
     public void saveData(MemberDTO memberDTO);
@@ -20,4 +20,7 @@ public interface MemberService {
 
     //member_id를 통해 조회하는 메서드
     public MemberDTO getMemberById(Long memberId);
+
+    //update
+    public void update(MemberDTO memberDTO);
 }

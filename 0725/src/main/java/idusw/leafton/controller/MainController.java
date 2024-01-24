@@ -17,5 +17,4 @@ public class MainController {
     public String goLocation() {
         return "/main/location";
     }
-
 }

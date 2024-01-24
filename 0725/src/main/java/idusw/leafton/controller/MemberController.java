@@ -1,10 +1,12 @@
 package idusw.leafton.controller;
 
+import idusw.leafton.model.DTO.CartDTO;
 import idusw.leafton.model.DTO.MemberDTO;
 import idusw.leafton.model.DTO.StyleDTO;
 import idusw.leafton.model.service.CartService;
 import idusw.leafton.model.service.MemberService;
 import idusw.leafton.model.service.StyleService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,22 +27,18 @@ public class MemberController {
     @GetMapping(value = "/login")
     private String goLogin(HttpServletRequest request) {
         request.setAttribute("type", request.getParameter("type"));
+        request.setAttribute("styleList", styleService.getAll());
         return "/member/login";
     }
 
     //마이 페이지로 이동
-    @GetMapping(value="/myPage")
+    @GetMapping(value="/info")
     private String goMyPage(HttpServletRequest request, @RequestParam String type) {
-        String url = null;
-
-        switch (type) {
-            case "info": url = "/member/info"; break;
-            case "change-password": url = "/member/changePw"; break;
-            case "change-style": url = "/member/changeSt"; break;
-            default: break;
+        request.setAttribute("type", type);
+        if(type.equals("changeSt")) {
+            request.setAttribute("styleList", styleService.getAll());
         }
-
-        return url;
+        return "/member/info";
     }
 
     //로그아웃 요청을 처리하는 메서드
@@ -84,7 +82,7 @@ public class MemberController {
             memberDTO.setStyleDTO(styleDTO);//memberDTO에 styleDTO 주입
 
             //entity에 insert
-            MemberDTO result = memberService.register(memberDTO);
+            MemberDTO result = memberService.save(memberDTO);
             cartService.createCart(result);
         }
 
@@ -94,28 +92,68 @@ public class MemberController {
     //회원 정보 수정 요청을 처리하는 메서드
     @PostMapping(value="/edit")
     private String edit(HttpServletRequest request, @RequestParam String type, @ModelAttribute MemberDTO memberDTO){
-        String url = null;
         HttpSession session = request.getSession();
+        StyleDTO styleDTO = null;
+        MemberDTO result = null;
 
-        if(type.equals("edit")) {
-            System.out.println(request.getParameter("zipcode"));
+        //view에서 날라온 요청을 분리하여 처리
+        switch (type) {
+            case "edit":
+                styleDTO = new StyleDTO();
+                styleDTO.setStyleId(Long.valueOf(request.getParameter("styleId")));
+                memberDTO.setStyleDTO(styleDTO);
+                result = memberService.save(memberDTO);
 
-            StyleDTO styleDTO = new StyleDTO();
-            styleDTO.setStyleId(Long.valueOf(request.getParameter("styleId")));
-            memberDTO.setStyleDTO(styleDTO);
-            MemberDTO result = memberService.register(memberDTO);
+                session.removeAttribute("memberDTO");
+                session.setAttribute("memberDTO", result);
 
-            session.removeAttribute("memberDTO");
-            session.setAttribute("memberDTO", result);
+                request.setAttribute("type", "info");
+                request.setAttribute("message", "회원 정보 수정이 완료되었습니다");
 
-            url = "redirect:/member/myPage";
-        }else if(type.equals("delete")) {
-            memberService.withdraw(Long.valueOf(request.getParameter("memberId")));
+                return "/member/info";
+            case "delete":
+                CartDTO cartDTO = cartService.findMemberCart(Long.valueOf(request.getParameter("memberId")));
+                cartService.deleteCart(cartDTO.getCartId());
+                memberService.withdraw(Long.valueOf(request.getParameter("memberId")));
 
-            session.removeAttribute("memberDTO");
-            url = "redirect:/main/index";
+                session.removeAttribute("memberDTO");
+
+                request.setAttribute("message", "회원 탈퇴가 완료되었습니다. 이용해 주셔서 감사합니다");
+
+                return "/main/index";
+            case "changePw":
+                memberDTO = memberService.getMemberById(Long.valueOf(request.getParameter("memberId")));
+                //사용자가 입력한 현재 비밀번호가 데이터베이스와 일치할 경우
+                if(request.getParameter("oldPassword").equals(memberDTO.getPassword())) {
+                    memberDTO.setPassword(request.getParameter("password"));
+                    result = memberService.save(memberDTO);
+
+                    session.removeAttribute("memberDTO");
+                    session.setAttribute("memberDTO", result);
+
+                    request.setAttribute("type", "info");
+                    request.setAttribute("message", "비밀번호가 성공적으로 변경되었습니다");
+                } else {
+                    System.out.println(request.getParameter("oldPassword"));
+                    request.setAttribute("type", "info");
+                    request.setAttribute("message", "현재 비밀번호가 일치하지 않습니다");
+                }
+                return "/member/info";
+            case "changeSt":
+                memberDTO = memberService.getMemberById(Long.valueOf(request.getParameter("memberId")));
+                styleDTO = new StyleDTO();
+                styleDTO.setStyleId(Long.valueOf(request.getParameter("styleId")));
+                memberDTO.setStyleDTO(styleDTO);
+                result = memberService.save(memberDTO);
+
+                session.removeAttribute("memberDTO");
+                session.setAttribute("memberDTO", result);
+
+                request.setAttribute("type", "info");
+                request.setAttribute("message", "선호 스타일이 성공적으로 변경되었습니다");
+
+                return "/member/info";
+            default: return null;
         }
-
-        return url;
     }
 }

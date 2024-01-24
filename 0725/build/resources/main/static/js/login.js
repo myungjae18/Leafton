@@ -31,7 +31,7 @@ function emailCheck(email){
     alert(email);
 }
 
-function setStyle(event)  {
+function setStyle(event) {
     if(event.target.checked)  {
         if(event.target.id == "modern") {
             classic.checked=false;
@@ -46,10 +46,6 @@ function setStyle(event)  {
             classic.checked=false;
             styleId = event.target.value;
         }
+        register.action = "/member/register/"+styleId;
     }
-}
-
-function insert() {
-    register.action = "/member/register/"+styleId;
-    register.submit();
 }

@@ -34,7 +34,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public MemberDTO register(MemberDTO memberDTO) {
+    public MemberDTO save(MemberDTO memberDTO) {
         Member member = Member.toMemberEntity(memberDTO); //relation에 넣기 위해 entity에 DTO 데이터 주입
         Member result = memberRepository.save(member); //insert
 
@@ -58,5 +58,10 @@ public class MemberServiceImpl implements MemberService{
         if(opMember.isPresent()) {
             return MemberDTO.toMemberDTO(opMember.get());
         } else return null;
+    }
+
+    @Override
+    public void update(MemberDTO memberDTO) {
+
     }
 }

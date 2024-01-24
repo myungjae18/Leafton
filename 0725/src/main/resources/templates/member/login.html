@@ -37,22 +37,22 @@
             <label>prefferred style</label>
             <br>
             <div class="style-wrapper">
-                <input type="checkbox" id="modern" name="styleId" class="checkbox" value="1" onclick="setStyle(event)">
-                <label for="modern">modern</label>
+                <input type="radio" id="modern" name="styleId" class="checkbox" value="1" onclick="setStyle(event)">
+                <label for="modern" th:text="${styleList.get(0).name}"></label>
                 <img src="/static/images/modern.jpg" class="style-image">
             </div>
             <div class="style-wrapper">
-                <input type="checkbox" id="classic" name="styleId" class="checkbox" value="2" onclick="setStyle(event)">
-                <label for="classic">classic</label>
+                <input type="radio" id="classic" name="styleId" class="checkbox" value="2" onclick="setStyle(event)">
+                <label for="classic" th:text="${styleList.get(1).name}"></label>
                 <img src="/static/images/classic.jpg" class="style-image">
             </div>
             <div class="style-wrapper">
-                <input type="checkbox" id="upcycling" name="styleId" class="checkbox" value="3" onclick="setStyle(event)">
-                <label for="upcycling">upcycling</label><br>
+                <input type="radio" id="upcycling" name="styleId" class="checkbox" value="3" onclick="setStyle(event)">
+                <label for="upcycling" th:text="${styleList.get(2).name}"></label><br>
                 <img src="/static/images/upcycling.jpg" class="style-image">
             </div>
             &nbsp;&nbsp;<br>
-            <button type="button" onclick="insert()" class="submit">REGISTER</button>
+            <button class="submit">REGISTER</button>
         </form>
     </div>
 </div>

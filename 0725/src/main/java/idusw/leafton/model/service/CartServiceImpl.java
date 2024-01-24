@@ -101,6 +101,15 @@ public class CartServiceImpl implements CartService{
         cartItemRepository.deleteById(cartItemId);
     }
 
+    //전체 삭제 기능
+    @Override
+    public void deleteCart(Long cartId) {
+        cartItemRepository.deleteByCart_CartId(cartId);
+        cartRepository.deleteById(cartId);
+    }
+
+
+    //회원가입 시 생성되는 고유한 장바구니
     @Override
     public void createCart(MemberDTO memberDTO) {
         Cart cart = new Cart();
