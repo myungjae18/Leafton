@@ -18,10 +18,6 @@ public class Event {
     @Column(name = "eventId")
     private Long eventId;
 
-    @ManyToOne
-    @JoinColumn(name = "productId")
-    private Product product;
-
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDateTime registDate;
 
