@@ -23,8 +23,8 @@ public class StyleServiceImpl implements StyleService {
     public StyleDTO getById(Long styleId) {
         Optional<Style> opStyle = styleRepository.findById(styleId);
         if(opStyle.isPresent()) {
-           Style style = opStyle.get();
-           return StyleDTO.toStyleDTO(style);
+            Style style = opStyle.get();
+            return StyleDTO.toStyleDTO(style);
         } else return null;
     }
 

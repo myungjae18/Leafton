@@ -158,14 +158,14 @@
                     </article></td>
                     <td th:text="${cartItem.getCount()}"></td>
                     <td th:text="'₩' + ${#numbers.formatInteger(cartItem.getProduct().getPrice(), 0, 'COMMA')}">상품금액</td>
-                    <td th:if="${cartItem.getProduct().getSalePercentage() == null}" th:text="'적용된 할인 없음'">할인금액</td>
-                    <td th:unless="${cartItem.getProduct().getSalePercentage() == null}">
+                    <td th:if="${cartItem.getProduct().getSalePercentage() == 0}" th:text="'적용된 할인 없음'">할인금액</td>
+                    <td th:unless="${cartItem.getProduct().getSalePercentage() == 0}">
                             <span th:with="discountedPrice=${cartItem.getProduct().getPrice() *
                             (1 - cartItem.getProduct().getSalePercentage()/100.0)}" th:text="'₩' + ${#numbers.formatInteger(discountedPrice.intValue(), 0, 'COMMA')}"></span>
                     </td>
                     <!--<td th:text="${deliveryFee}">무료배송</td>-->
-                    <td th:if="${cartItem.getProduct().getSalePercentage() == null}" th:text="'₩' + ${#numbers.formatInteger(cartItem.getProduct().getPrice() * cartItem.getCount(), 1, 'COMMA')}"></td>
-                    <td th:unless="${cartItem.getProduct().getSalePercentage() == null}">
+                    <td th:if="${cartItem.getProduct().getSalePercentage() == 0}" th:text="'₩' + ${#numbers.formatInteger(cartItem.getProduct().getPrice() * cartItem.getCount(), 1, 'COMMA')}"></td>
+                    <td th:unless="${cartItem.getProduct().getSalePercentage() == 0}">
                             <span th:with="discountedTotalPrice=${cartItem.getProduct().getPrice() *
                             (1 - cartItem.getProduct().getSalePercentage()/100.0) * cartItem.getCount()}" th:text="'₩' + ${#numbers.formatInteger(discountedTotalPrice.intValue(), 0, 'COMMA')}"></span>
                     </td>

@@ -20,7 +20,9 @@ public interface CartService {
 
     void cartItemDelete(Long cartItemId);
 
+    Long addOneCart(MemberDTO member, ProductDTO product, int count);
+
     void deleteCart(Long cartId);
 
-    void createCart(MemberDTO memberDTO);
+
 }

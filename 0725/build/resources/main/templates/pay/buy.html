@@ -34,94 +34,6 @@
 
 
 <main id="product">
-    <!-- <aside>
-        <ul class="category" style="list-style: none;">
-            <li>
-                <i class="fa fa-bars" aria-hidden="true"></i>카테고리
-                <li>
-                  <a href="#">
-                      <i class="fas fa-home" aria-hidden="true"></i>ALL
-                      </i>
-                  </a>
-                  <ol>
-                      <li>
-                          <a href="#">가구/DIY</a>
-                      </li>
-                      <li>
-                          <a href="#">침구·커튼</a>
-                      </li>
-                      <li>
-                          <a href="#">생활용품</a>
-                      </li>
-                      <li>
-                          <a href="#">사무용품</a>
-                      </li>
-                  </ol>
-              </li>
-            </li>
-                <li>
-                <a href="#">
-                  <i class="fa fa-percent" aria-hidden="true"></i>SALE
-                    </i>
-                </a>
-                <ol>
-                    <li>
-                        <a href="#">남성의류</a>
-                    </li>
-                    <li>
-                        <a href="#">여성의류</a>
-                    </li>
-                    <li>
-                        <a href="#">잡화</a>
-                    </li>
-                    <li>
-                        <a href="#">뷰티</a>
-                    </li>
-                </ol>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-star-o" aria-hidden="true"></i>EVENT
-                    </i>
-                </a>
-                <ol>
-                    <li>
-                        <a href="#">노트북/PC</a>
-                    </li>
-                    <li>
-                        <a href="#">가전</a>
-                    </li>
-                    <li>
-                        <a href="#">휴대폰</a>
-                    </li>
-                    <li>
-                        <a href="#">기타</a>
-                    </li>
-                </ol>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-search" aria-hidden="true"></i>BRAND
-                    </i>
-                </a>
-                <ol>
-                    <li>
-                        <a href="#">신선식품</a>
-                    </li>
-                    <li>
-                        <a href="#">가공식품</a>
-                    </li>
-                    <li>
-                        <a href="#">건강식품</a>
-                    </li>
-                    <li>
-                        <a href="#">생필품</a>
-                    </li>
-                </ol>
-            </li>
-
-        </ul>
-    </aside> -->
     <section class="order">
         <nav>
             <h1>주문결제</h1>
@@ -139,7 +51,7 @@
                 <h1>배송정보</h1>
                 <table>
                     <tr>
-                        <td>주문자</td>
+                        <td>이름</td>
                         <td><input type="text" name="orderer" th:value="${session.memberDTO.getName}" style="width:133px;" readonly></td>
                     </tr>
                     <tr>
@@ -157,13 +69,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>주소</td>
+                        <td>배송주소</td>
                         <td>
                             <input type="text" name="address">
                         </td>
                     </tr>
                     <tr>
-                        <td>고객요청사항</td>
+                        <td>고객 요청사항</td>
                         <td><input type="text" name="customerRequest"></td>
                     </tr>
                 </table>
@@ -184,17 +96,30 @@
             <article class="discount">
                 <h1>할인정보</h1>
                 <div>
-                    <p>
-                        현재 포인트 :
-                        <span>7200</span>점
-                    </p>
-
-                    <label>
-                        <input type="text" name="point" style="width:133px;">점
-                        <input type="button" value="적용">
-                    </label>
-                    <br>
-                    <span>포인트 5,000점 이상이면 현금처럼 사용 가능합니다.</span>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>상품명</th>
+                            <th>진행중인 이벤트</th>
+                            <th>가격</th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="entry : ${productEvents}">
+                        <tr>
+                            <td class="product-name" th:text="${entry.key.name}"></td>
+                            <td class="event" th:text="${entry.value}"></td>
+                            <td class="product-price" th:if="${entry.value != '이벤트 없음'}">
+                                <span th:with="discountedPrice=${entry.key.getPrice() * (1 - entry.key.getSalePercentage()/100.0)}">
+                                    <s th:text="'₩' + ${#numbers.formatInteger(entry.key.getPrice(), 0, 'COMMA')}"></s>
+                                    <span th:text="'₩' + ${#numbers.formatInteger(discountedPrice.intValue(), 0, 'COMMA')}"></span>
+                                </span>
+                            </td>
+                            <td th:if="${entry.value == '이벤트 없음'}">
+                                <span th:text="'₩' + ${#numbers.formatInteger(entry.key.getPrice(), 0, 'COMMA')}"></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </article>
             <!-- 결제방법 -->
@@ -238,9 +163,9 @@
             <!-- 경고 -->
             <article class="alert">
                 <ul>
-                    <li><span>케이마켓의 모든 판매자는 안전거래를 위해 구매금액, 결제수단에 상관없이 모든거래에 대하여 케이마켓 유한책임회사의 구매안전서비스(에스크로)를 제공하고 있습니다.
+                    <li><span>Leafton의 모든 판매자는 안전거래를 위해 구매금액, 결제수단에 상관없이 모든거래에 대하여 케이마켓 유한책임회사의 구매안전서비스(에스크로)를 제공하고 있습니다.
                           </span></li>
-                    <li><span>케이마켓 유한책임회사의 전자금융거래법에 의해 결제대금예치업 등록번호는 02-006-00008 입니다.
+                    <li><span>Leafton 유한책임회사의 전자금융거래법에 의해 결제대금예치업 등록번호는 02-006-00008 입니다.
                           </span></li>
                     <li><span>등록여부는 금융감독원 홈페이지(www.fss.or.kr)의 업무자료>인허가업무안내>전자금융업등록현황에서 확인하실수 있습니다.
                           </span></li>

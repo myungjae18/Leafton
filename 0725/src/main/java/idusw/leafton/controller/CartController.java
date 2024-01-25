@@ -11,10 +11,7 @@ import idusw.leafton.model.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,9 +23,6 @@ public class CartController {
     private final MemberService memberService;
     private final ProductService productService;
     private final CartService cartService;
-
-    @GetMapping(value = "/complete")
-    public String goComplete(){ return "pay/complete"; }
 
     // 해당 사용자의 장바구니에 담긴 물건을 cart.html에 나타냄
     @GetMapping(value = "/cart/{memberId}")
@@ -54,7 +48,6 @@ public class CartController {
             model.addAttribute("totalCount", totalCount);
             model.addAttribute("totalPrice", totalPrice);
             model.addAttribute("cartItems", cartItemList);
-            //model.addAttribute("isCart", userCart);
 
             return "pay/cart";
         }else {
@@ -112,4 +105,21 @@ public class CartController {
         }
     }
 
+    // 바로 구매하기 버튼 클릭시 장바구니 생성 및 구매 상품 장바구니에 담기
+    // 기존에는 @PathVariable을 사용하여 변수를 받아왔지만 css가 꺠지는 오류가 발생하여 @RequestParam으로 변경
+    @PostMapping(value = "/cart/one")
+    public String addOneCartItem(@RequestParam("memberId") Long memberId, @RequestParam("productId") Long productId, int count) {
+
+        MemberDTO member = memberService.getMemberById(memberId);
+        ProductDTO product = productService.getProductById(productId);
+
+        Long cartOneItemId = cartService.addOneCart(member, product, count);
+
+
+        return "redirect:/pay/buy/one?memberId=" + memberId + "&cartOneItemId=" + cartOneItemId;
+
+    }
+
 }
+
+

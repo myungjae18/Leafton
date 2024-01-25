@@ -15,71 +15,71 @@
     <link rel="stylesheet" href="/static/css/main.css"/>
   </head>
   <body>
-    <header class="header">
-      <div class="row max-inner">
-        <!--메인 Logo-->
-        <div class="columns col-2">
-          <a href="/main/index" title="메인으로 이동" class="mainLogo">Leafton</a>
-        </div>
-        <!--메인 Logo 끝-->
-        <!--페이지 이동 탭-->
-        <div class="columns col-6">
-          <a href="#" class="toggle-nav">
-            <i class="fa fa-bars"></i> Menu
-          </a>
-          <nav class="main-nav">
-            <ul>
-              <li><a href="/product/shop">All</a></li>
-              <li><a href="/event/index">Event</a></li>
-              <li><a href="/unity">VirtualRoom</a></li>
-            </ul>
-          </nav>
-          <li class="header-search" >
-            <div class="search-wrapper">
-              <form class="search-form">
-                <input type="text" placeholder="Search...">
-              </form>
-            </div>
-          </li>
-        </div>
-        <!--페이지 이동 탭 끝-->
-        <!--버튼/검색 메뉴-->
-        <div class="columns col-4">
-          <ul class="header-controls">
-            <!--myPage 이동 버튼-->
-            <li class="header-actions" th:if="${session.memberDTO!=null}">
-              <a href="/member/info?type=info" title="view myPage">
-                <span class="fa fa-user"></span> myPage
-              </a>
-            </li>
-            <!--cart 이동 버튼 끝-->
-            <!--cart 이동 버튼-->
-            <li class="header-cart" th:if="${session.memberDTO!=null}">
-              <a th:href="@{/pay/cart/{memberId}(memberId=${session.memberDTO.memberId})}" title="view cart">
-                <span class="fa fa-shopping-cart"></span>
-                <span class="cart-count">cart</span>
-              </a>
-            </li>
-            <!--cart 이동 버튼 끝-->
-            <!--로그인/로그아웃 버튼-->
-            <li class="header-actions" th:if="${session.memberDTO!=null}">
-              <a href="/member/logout" title="Login"><span class="fa fa-lock"></span> Log out</a>
-            </li>
-            <li class="header-actions" th:if="${session.memberDTO==null}">
-              <a th:href="@{/member/login(type='login')}" title="Login"><span class="fa fa-lock"></span> Login</a>
-            </li>
-            <li class="header-actions" th:if="${session.memberDTO==null}">
-              <a th:href="@{/member/login(type='register')}" title="Login"><span class="fa fa-sign-in"></span> Register</a>
-            </li>
-            <!--로그인/로그아웃 버튼 끝-->
-          </ul>
-        </div>
-        <!--버튼/검색 메뉴 끝-->
-        <!--검색 창-->
-
-        <!--검색 창 끝-->
+  <header class="header">
+    <div class="row max-inner">
+      <!--메인 Logo-->
+      <div class="columns col-2">
+        <a href="/main/index" title="메인으로 이동" class="mainLogo">Leafton</a>
       </div>
-    </header>
+      <!--메인 Logo 끝-->
+      <!--페이지 이동 탭-->
+      <div class="columns col-6">
+        <a href="#" class="toggle-nav">
+          <i class="fa fa-bars"></i> Menu
+        </a>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="/product/shop">All</a></li>
+            <li><a href="/event/index">Event</a></li>
+            <li><a href="/unity">VirtualRoom</a></li>
+          </ul>
+        </nav>
+        <li class="header-search" >
+          <div class="search-wrapper">
+            <form class="search-form">
+              <input type="text" placeholder="Search...">
+            </form>
+          </div>
+        </li>
+      </div>
+      <!--페이지 이동 탭 끝-->
+      <!--버튼/검색 메뉴-->
+      <div class="columns col-4">
+        <ul class="header-controls">
+          <!--myPage 이동 버튼-->
+          <li class="header-actions" th:if="${session.memberDTO!=null}">
+            <a href="/member/info?type=info" title="view myPage">
+              <span class="fa fa-user"></span> myPage
+            </a>
+          </li>
+          <!--cart 이동 버튼 끝-->
+          <!--cart 이동 버튼-->
+          <li class="header-cart" th:if="${session.memberDTO!=null}">
+            <a th:href="@{/pay/cart/{memberId}(memberId=${session.memberDTO.memberId})}" title="view cart">
+              <span class="fa fa-shopping-cart"></span>
+              <span class="cart-count">cart</span>
+            </a>
+          </li>
+          <!--cart 이동 버튼 끝-->
+          <!--로그인/로그아웃 버튼-->
+          <li class="header-actions" th:if="${session.memberDTO!=null}">
+            <a href="/member/logout" title="Login"><span class="fa fa-lock"></span> Log out</a>
+          </li>
+          <li class="header-actions" th:if="${session.memberDTO==null}">
+            <a th:href="@{/member/login(type='login')}" title="Login"><span class="fa fa-lock"></span> Login</a>
+          </li>
+          <li class="header-actions" th:if="${session.memberDTO==null}">
+            <a th:href="@{/member/login(type='register')}" title="Login"><span class="fa fa-sign-in"></span> Register</a>
+          </li>
+          <!--로그인/로그아웃 버튼 끝-->
+        </ul>
+      </div>
+      <!--버튼/검색 메뉴 끝-->
+      <!--검색 창-->
+
+      <!--검색 창 끝-->
+    </div>
+  </header>
   </body>
 </th:block>
 </html>

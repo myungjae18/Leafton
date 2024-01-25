@@ -1,6 +1,15 @@
-#product > .order > form {}
+#product > .order { /*추가 사항 */
+    margin : 15px;
+}
+#product > .order > form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 1170px; /* 가로 크기 변경 */
+}
 
 #product > .order > form > table {
+    flex: 8.2; /* 테이블 영역이 차지하는 비율을 80%로 설정 */
     width: 100%;
     border-top: 2px solid #000;
     border-collapse: collapse;
@@ -16,6 +25,7 @@
     font-size: 0.95em;
     text-align: center;
     letter-spacing: -0.1em;
+    height: 66px;
 }
 
 #product > .order > form > table .empty { display: none ;}
@@ -64,11 +74,15 @@
 #product > .order > form > .delivery {}
 
 #product > .order > form > .final {
-    float: right;
+    /* float: right; 삭제 */
+    display: flex;
+    flex-direction: column;
+    flex: 1.8; /* .final 영역이 차지하는 비율을 20%로 설정 */
     width: 360px;
-    height: 412px;
+    height: 330px;
     padding: 20px;
     margin-top: 12px;
+    margin-left: 20px; /* 왼쪽 여백 추가 */
     background: #fff;
     border: 1px solid #d3d3d3;
     box-sizing: border-box;
@@ -85,15 +99,25 @@
     color: #1e1e1e;
 }
 
+#product > .order > form > .final > h3 { /* 추가 */
+    width: 100%;
+    font-size: 10px;
+    border-top: 1px solid #111;
+    margin-top: 10px;
+    padding-top: 10px;
+    box-sizing: border-box;
+    color: #1e1e1e;
+}
+
 #product > .order > form > .final > table { width: 100%; }
 
 #product > .order > form > .final > table tr:nth-last-child(1) td {
-    font-size: 20px;
+    font-size: 18px; /* font-size 20 -> 18로 조정 */
 }
 
 #product > .order > form > .final > table tr:nth-last-child(1) td:last-child {
     color: #ff006c;
-    font-size: 20px;
+    font-size: 18px; /* font-size 20 -> 18로 조정 */
     font-weight: bold;
 }
 
@@ -117,6 +141,20 @@
     color: #fff;
     box-sizing: border-box;
     margin-top: 10px;
+}
+
+#product > .order > form > .final > input[type="submit"] { /* 추가 */
+    width: 100%;
+    height: 56px;
+    font-size: 26px;
+    color: rgb(255, 255, 255);
+    box-sizing: border-box;
+    /*margin-top: 10px;*/
+    border-width: 1px;
+    border-color: #008000;
+    background: #008000;
+    /* 버튼을 하단에 위치시키는 스타일 추가 */
+    margin-top: auto
 }
 
 #product > .order > form > article > h1 {

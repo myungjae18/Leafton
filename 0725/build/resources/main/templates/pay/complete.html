@@ -147,7 +147,7 @@
                 <i class="far fa-smile" aria-hidden="true"></i>
             </h2>
             <p>
-                즐거운 쇼핑이 되셨습니까? 항상 고객님을 최우선으로 생각하는 케이마켓이 되겠습니다.
+                즐거운 쇼핑이 되셨습니까? 항상 고객님을 최우선으로 생각하는 Leafton이 되겠습니다.
             </p>
         </article>
         <article class="info">
@@ -172,13 +172,13 @@
                     </article></td>
                     <td th:text="${orderItem.getCount()}"></td>
                     <td th:text="'₩' + ${#numbers.formatInteger(orderItem.getProductDTO().getPrice(), 0, 'COMMA')}">판매가</td>
-                    <td th:if="${orderItem.getProductDTO().getSalePercentage() == null}" th:text="'적용된 할인 없음'">할인금액</td>
-                    <td th:unless="${orderItem.getProductDTO().getSalePercentage() == null}">
+                    <td th:if="${orderItem.getProductDTO().getSalePercentage() == 0}" th:text="'적용된 할인 없음'">할인금액</td>
+                    <td th:unless="${orderItem.getProductDTO().getSalePercentage() == 0}">
                             <span th:with="discountedPrice=${orderItem.getProductDTO().getPrice() *
                             (1 - orderItem.getProductDTO().getSalePercentage()/100.0)}" th:text="'-₩' + ${#numbers.formatInteger(discountedPrice.intValue(), 0, 'COMMA')}"></span>
                     </td>
-                    <td th:if="${orderItem.getProductDTO().getSalePercentage() == null}" th:text="'₩' + ${#numbers.formatInteger(orderItem.getProductDTO().getPrice() * orderItem.getCount(), 1, 'COMMA')}"></td>
-                    <td th:unless="${orderItem.getProductDTO().getSalePercentage() == null}">
+                    <td th:if="${orderItem.getProductDTO().getSalePercentage() == 0}" th:text="'₩' + ${#numbers.formatInteger(orderItem.getProductDTO().getPrice() * orderItem.getCount(), 1, 'COMMA')}"></td>
+                    <td th:unless="${orderItem.getProductDTO().getSalePercentage() == 0}">
                              <span th:with="discountedTotalPrice=${orderItem.getProductDTO().getPrice() *
                              (1 - orderItem.getProductDTO().getSalePercentage()/100.0) * orderItem.getCount()}" th:text="'₩' + ${#numbers.formatInteger(discountedTotalPrice.intValue(), 0, 'COMMA')}"></span>
                     </td>
@@ -209,7 +209,7 @@
                             <tr>
                                 <td>총 결제금액</td>
                                 <td>
-                                    <span th:text="'₩' + ${#numbers.formatInteger(totalPrice - order.getDeliveryFee(), 0, 'COMMA')}">35,000</span>
+                                    <span th:text="'₩' + ${#numbers.formatInteger(totalPrice + order.getDeliveryFee(), 0, 'COMMA')}">35,000</span>
                                 </td>
                             </tr>
                         </table>
@@ -219,14 +219,14 @@
         </article>
         <!-- 주문정보 -->
         <article class="order">
-            <h1>주문정보</h1>
+            <h1 th:text="'주문정보(' + ${order.getOrderDate()} + ')' ">주문정보</h1>
             <table border="0">
                 <tr>
                     <td>주문번호</td>
-                    <td th:text="${order.getOrderId()}">2008101324568</td>
+                    <td th:text="${formattedDate} + ${order.getOrderId()}">200810130001</td>
                     <td rowspan="3">총 결제금액</td>
                     <td rowspan="3">
-                        <span th:text="'₩' + ${#numbers.formatInteger(totalPrice - order.getDeliveryFee(), 0, 'COMMA')}">35,000</span>
+                        <span th:text="'₩' + ${#numbers.formatInteger(totalPrice + order.getDeliveryFee(), 0, 'COMMA')}">35,000</span>
                     </td>
                 </tr>
                 <tr>
@@ -243,7 +243,6 @@
                 <tr>
                     <td>주문자/연락처</td>
                     <td th:text="${order.getMemberDTO().getName()} + '/' + ${order.getPhone().substring(0,3)} + '-' + ${order.getPhone().substring(3,7)} + '-' + ${order.getPhone().substring(7,11)}">홍길동/010-1234-1234</td>
-
                 </tr>
             </table>
         </article>
@@ -259,18 +258,22 @@
                 <tr>
                     <td>연락처</td>
                     <td th:text="${order.getPhone().substring(0,3)} + '-' + ${order.getPhone().substring(3,7)} + '-' + ${order.getPhone().substring(7,11)}">010-1234-1234</td>
-                    <td rowspan="2" th:text="${order.getMemberDTO().getName()}">
+                    <td rowspan="4" th:text="${order.getMemberDTO().getName()}">
                         홍길동
                         <br th:text="${order.getPhone().substring(0,3)} + '-' + ${order.getPhone().substring(3,7)} + '-' + ${order.getPhone().substring(7,11)}"> 010-1234-1234
                     </td>
                 </tr>
-                <!--<tr>
+                <tr>
                     <td>배송지 주소</td>
-                    <td>부산광역시 강남구 대연동 123 10층</td>
-                </tr>-->
+                    <td th:text="'(' + ${order.getZipcode()} + ')' + ${order.getAddress()}">(1234)서울 노원구</td>
+                </tr>
                 <tr>
                     <td>고객 요청사항</td>
                     <td th:text="${order.getCustomerRequest()}"></td>
+                </tr>
+                <tr>
+                    <td>도착일</td>
+                    <td th:text="${order.getDeliveryPeriod()}"></td>
                 </tr>
             </table>
         </article>
@@ -280,7 +283,7 @@
             <ul>
                 <li>
                     <span>
-                        케이마켓은 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 케이마켓은 상품, 거래정보 및 거래에 대하여 책임을 지지 않습니다.
+                        Leafton은 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 케이마켓은 상품, 거래정보 및 거래에 대하여 책임을 지지 않습니다.
                     </span>
                 </li>
                 <li>

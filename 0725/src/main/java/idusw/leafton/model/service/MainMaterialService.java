@@ -1,6 +1,7 @@
 package idusw.leafton.model.service;
 
 import idusw.leafton.model.DTO.MainMaterialDTO;
+import idusw.leafton.model.entity.MainMaterial;
 
 import java.util.List;
 

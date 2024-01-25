@@ -33,6 +33,8 @@ public class Product {
     @Column
     private String content;
     @Column
+    private Double rating;
+    @Column
     private String maker;
     @Column
     private String name;
@@ -72,6 +74,7 @@ public class Product {
         product.setEvent(Event.toEventEntity(productDTO.getEventDTO()));
         product.setStyle(Style.toStyleEntity(productDTO.getStyleDTO()));
         product.setName(productDTO.getName());
+        product.setRating(productDTO.getRating());
         product.setColor(productDTO.getColor());
         product.setSize(productDTO.getSize());
         product.setPrice(productDTO.getPrice());

@@ -52,6 +52,7 @@ public class OrderDTO {
         orderDTO.setDeliveryFee(order.getDeliveryFee());
         orderDTO.setDeliveryCompany(order.getDeliveryCompany());
         orderDTO.setCustomerRequest(order.getCustomerRequest());
+        orderDTO.setDeliveryPeriod(order.getDeliveryPeriod());
         orderDTO.setPhone(order.getPhone());
 
         return orderDTO;

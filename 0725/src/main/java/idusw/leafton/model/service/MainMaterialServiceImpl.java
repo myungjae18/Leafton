@@ -1,6 +1,8 @@
 package idusw.leafton.model.service;
 
+import idusw.leafton.model.DTO.MainCategoryDTO;
 import idusw.leafton.model.DTO.MainMaterialDTO;
+import idusw.leafton.model.entity.MainCategory;
 import idusw.leafton.model.entity.MainMaterial;
 import idusw.leafton.model.repository.MainMaterialRepository;
 import lombok.RequiredArgsConstructor;

@@ -16,8 +16,6 @@ import java.time.LocalDateTime;
 public class EventDTO {
     private Long eventId;
 
-    private ProductDTO productDTO;
-
     private LocalDateTime registDate;
 
     private String content;
@@ -34,7 +32,6 @@ public class EventDTO {
         EventDTO eventDTO = new EventDTO();
 
         eventDTO.setEventId(event.getEventId());
-        eventDTO.setProductDTO(ProductDTO.toProductDTO(event.getProduct()));
         eventDTO.setRegistDate(event.getRegistDate());
         eventDTO.setContent(event.getContent());
         eventDTO.setEndDate(event.getEndDate());

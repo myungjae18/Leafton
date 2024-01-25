@@ -83,7 +83,7 @@ public class MemberController {
 
             //entity에 insert
             MemberDTO result = memberService.save(memberDTO);
-            cartService.createCart(result);
+            //cartService.createCart(result);
         }
 
         return "redirect:/main/index";

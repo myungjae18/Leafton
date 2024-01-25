@@ -17,30 +17,22 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "eventId")
     private Long eventId;
-
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDateTime registDate;
-
     @Column
     private String content;
-
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDateTime endDate;
-
     @Column
     private String mainImage;
-
     @Column
     private String subImage;
-
     @Column
     private String thumbImage;
-
     public static Event toEventEntity(EventDTO eventDTO) {
         Event event = new Event();
 
         event.setEventId(eventDTO.getEventId());
-        event.setProduct(Product.toProductEntity(eventDTO.getProductDTO()));
         event.setRegistDate(eventDTO.getRegistDate());
         event.setContent(eventDTO.getContent());
         event.setEndDate(eventDTO.getEndDate());
