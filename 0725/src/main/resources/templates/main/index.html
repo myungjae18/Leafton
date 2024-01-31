@@ -7,34 +7,21 @@
 <body>
 <!-- 현재 이벤트 슬라이드 -->
 <div class="slide">
-  <div class="slideTab" id="imageTab">
-    <div class="photoFrame">
-      <img src="/static/images/event/main/1.png" onclick="location.href='../product/index.html'">
+    <div class="slideTab" id="imageTab">
+        <div class="photoFrame" th:each="event : ${eventList}" id="photoFrame">
+            <img class="eventImage" th:src="${event.mainImage}" th:onclick="|location.href='@{/product/shop?eventId='+${event.eventId}+'}'|"/>
+        </div>
     </div>
-    <div class="photoFrame">
-      <img src="/static/images/event/main/2.png" onclick="location.href='../product/index.html'">
-    </div>
-    <div class="photoFrame">
-      <img src="/static/images/event/main/3.png" onclick="location.href='../product/index.html'">
-    </div>
-    <div class="photoFrame">
-      <img src="/static/images/event/main/4.png" onclick="location.href='../product/index.html'">
-    </div>
-    <div class="photoFrame">
-      <img src="/static/images/event/main/5.jpg" onclick="location.href='../product/index.html'">
-    </div>
-  </div>
 </div>
-</section>
 <!-- 현재 이벤트 슬라이드 끝 -->
 <br>
 <!-- 할인 중인 상품 탭 -->
 <section class="product-grid">
-  <header class="row section-header max-inner">
-    <div class="columns-12 col-centered">
-      <h2>New Products</h2><hr/>
-    </div>
-  </header>
+    <header class="row section-header max-inner">
+        <div class="columns-12 col-centered">
+            <h2>New Products</h2><hr/>
+        </div>
+    </header>
 </section>
 <!-- 할인 중인 상품 탭 끝 -->
 <!-- footer -->

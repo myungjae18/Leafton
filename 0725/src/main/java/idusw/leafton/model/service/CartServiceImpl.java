@@ -145,4 +145,9 @@ public class CartServiceImpl implements CartService{
         cartRepository.deleteById(cartId);
     }
 
+    @Override
+    public void createCart(MemberDTO memberDTO) {
+        Cart cart = Cart.createCart(memberDTO);
+    }
+
 }

@@ -18,6 +18,8 @@ public class EventDTO {
 
     private LocalDateTime registDate;
 
+    private String title;
+
     private String content;
 
     private LocalDateTime endDate;
@@ -33,6 +35,7 @@ public class EventDTO {
 
         eventDTO.setEventId(event.getEventId());
         eventDTO.setRegistDate(event.getRegistDate());
+        eventDTO.setTitle(event.getTitle());
         eventDTO.setContent(event.getContent());
         eventDTO.setEndDate(event.getEndDate());
         eventDTO.setMainImage(event.getMainImage());

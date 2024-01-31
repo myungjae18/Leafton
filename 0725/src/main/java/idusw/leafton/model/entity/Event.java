@@ -20,6 +20,8 @@ public class Event {
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDateTime registDate;
     @Column
+    private String title;
+    @Column
     private String content;
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDateTime endDate;
@@ -34,6 +36,7 @@ public class Event {
 
         event.setEventId(eventDTO.getEventId());
         event.setRegistDate(eventDTO.getRegistDate());
+        event.setTitle(eventDTO.getTitle());
         event.setContent(eventDTO.getContent());
         event.setEndDate(eventDTO.getEndDate());
         event.setMainImage(eventDTO.getMainImage());

@@ -45,8 +45,8 @@
 }
 
 .main-info {
-    width:75%;
-    height:80%;
+    width:100%;
+    height:100%;
     float:left;
 }
 
@@ -61,7 +61,7 @@
 }
 
 .input-field {
-    width: 60%;
+    width: 40%;
     padding: 10px 0;
     margin: 5px 0;
     border: none;
@@ -70,9 +70,6 @@
     background: transparent;
 }
 
-.main-info textarea {
-    height:100px;
-}
 
 .main-info button {
     background-color: green;

@@ -24,5 +24,5 @@ public interface CartService {
 
     void deleteCart(Long cartId);
 
-
+    void createCart(MemberDTO memberDTO);
 }

@@ -288,23 +288,6 @@ code {
 Forms and inputs
 ------------------------------------------
 */
-input[type="search"] {
-    background: #fff;
-    color: #6d6d6d;
-    display: table;
-    margin: 0 0 10px 0;
-    padding: 15px 20px 12px 20px;
-    width: 100%;
-    border: 1px solid #dfdfdf;
-    outline: none;
-    border-top-left-radius: 5;
-    border-top-right-radius: 5;
-    border-bottom-left-radius: 5;
-    border-bottom-right-radius: 5;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-}
 
 .inline-label {
     font-family: "novecento_sans_widemedium";

@@ -22,7 +22,7 @@ public class Product {
     @JoinColumn (name = "subCategoryId") //fk지정
     private SubCategory subCategory;
     @ManyToOne
-    @JoinColumn (name = "styledId") //fk 지정
+    @JoinColumn (name = "styleId") //fk 지정
     private Style style;
     @ManyToOne
     @JoinColumn (name = "eventId") //fk 지정
