@@ -7,6 +7,11 @@
     position: relative;
     top:20px;
 }
+#searchBox>form{
+    width:100%;
+    display: flex;
+    justify-content: center;
+}
 .searchbar{
     background-color: white;
     color:#4d4d4d;

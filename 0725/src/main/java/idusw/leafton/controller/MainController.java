@@ -21,7 +21,6 @@ public class MainController {
     @GetMapping(value="/index")
     public String goIndex(HttpServletRequest request) {
         request.setAttribute("eventList", eventService.getAll());
-        request.setAttribute("productList", productService.viewAllProducts());
 
         return "/main/index";
     }
