@@ -1,13 +1,16 @@
 package idusw.leafton.model.service;
 
 import idusw.leafton.model.DTO.EventDTO;
+import idusw.leafton.model.DTO.MainCategoryDTO;
 import idusw.leafton.model.entity.Event;
+import idusw.leafton.model.entity.MainCategory;
 import idusw.leafton.model.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,5 +28,15 @@ public class EventServiceImpl implements EventService {
         }
 
         return eventDTOList;
+    }
+
+    @Override
+    public EventDTO getEventById(Long eventId){
+        Optional<Event> opEvent = eventRepository.findById(eventId);
+        if(opEvent.isPresent()) {
+            return EventDTO.toEventDTO(opEvent.get());
+        } else {
+            throw new IllegalArgumentException("Invalid event Id: " + eventId);
+        }
     }
 }

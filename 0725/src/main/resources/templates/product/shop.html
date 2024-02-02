@@ -30,7 +30,7 @@
       </button>
       <div class="dropdown-content">
         <ul class="main-category" th:each="mainCategory : ${mainCategories}">
-          <li><a th:href="@{/product/shop/mainCategory(mainCategoryId=${mainCategory.mainCategoryId})}" th:text="${mainCategory.name}"></a></li>
+          <li><a th:href="@{/product/shop(mainCategoryId=${mainCategory.mainCategoryId})}" th:text="${mainCategory.name}"></a></li>
         </ul>
       </div>
     </div>
@@ -49,7 +49,7 @@
       </button>
       <div class="dropdown-content">
         <ul class="sub-category" th:each="subCategory : ${subCategories}">
-          <li><a th:href="@{/product/shop/subCategory(mainCategoryId=${subCategory.mainCategoryDTO.mainCategoryId},subCategoryId=${subCategory.subCategoryId})}" th:text="${subCategory.name}"></a></li>
+          <li><a th:href="@{/product/shop(mainCategoryId=${subCategory.mainCategoryDTO.mainCategoryId},subCategoryId=${subCategory.subCategoryId})}" th:text="${subCategory.name}"></a></li>
         </ul>
       </div>
     </div>
@@ -64,13 +64,13 @@
       </button>
       <div class="dropdown-content">
         <ul th:if="${mainCategoryDetail == null}" class="main-category" th:each="mainMaterial : ${mainMaterials}">
-          <li><a th:href="@{/product/shop/material(mainMaterialId=${mainMaterial.mainMaterialId})}" th:text="${mainMaterial.name}"></a></li>
+          <li><a th:href="@{/product/shop(mainMaterialId=${mainMaterial.mainMaterialId})}" th:text="${mainMaterial.name}"></a></li>
         </ul>
         <ul th:if="${mainCategoryDetail != null and subCategoryDetail == null}" class="main-category" th:each="mainMaterial : ${mainMaterials}">
-          <li><a th:href="@{/product/shop/mainCategory-material(mainCategoryId=${mainCategoryDetail.mainCategoryId},mainMaterialId=${mainMaterial.mainMaterialId})}" th:text="${mainMaterial.name}"></a></li>
+          <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},mainMaterialId=${mainMaterial.mainMaterialId})}" th:text="${mainMaterial.name}"></a></li>
         </ul>
         <ul th:if="${mainCategoryDetail != null and subCategoryDetail !=null}" class="main-category" th:each="mainMaterial : ${mainMaterials}">
-          <li><a th:href="@{/product/shop/mainCategory-subCategory-material(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId},mainMaterialId=${mainMaterial.mainMaterialId})}" th:text="${mainMaterial.name}"></a></li>
+          <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId},mainMaterialId=${mainMaterial.mainMaterialId})}" th:text="${mainMaterial.name}"></a></li>
         </ul>
       </div>
     </div>
@@ -91,39 +91,39 @@
             <li><a th:href="@{/product/shop(arName='dprice')}">가격: 가격 높은 순</a></li>
           </ul>
           <ul th:if="${mainCategoryDetail != null and subCategoryDetail == null and mainMaterialDetail == null}" class="mainCategory-arrange">
-            <li><a th:href="@{/product/shop/mainCategory(mainCategoryId=${mainCategoryDetail.mainCategoryId}, arName='name')}">이름 순</a></li>
-            <li><a th:href="@{/product/shop/mainCategory(mainCategoryId=${mainCategoryDetail.mainCategoryId}, arName='new')}">신상품 순</a></li>
-            <li><a th:href="@{/product/shop/mainCategory(mainCategoryId=${mainCategoryDetail.mainCategoryId}, arName='rating')}">평점 순</a></li>
-            <li><a th:href="@{/product/shop/mainCategory(mainCategoryId=${mainCategoryDetail.mainCategoryId}, arName='aprice')}">가격: 가격 낮은 순</a></li>
-            <li><a th:href="@{/product/shop/mainCategory(mainCategoryId=${mainCategoryDetail.mainCategoryId}, arName='dprice')}">가격: 가격 높은 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId}, arName='name')}">이름 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId}, arName='new')}">신상품 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId}, arName='rating')}">평점 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId}, arName='aprice')}">가격: 가격 낮은 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId}, arName='dprice')}">가격: 가격 높은 순</a></li>
           </ul>
           <ul th:if="${mainCategoryDetail != null and subCategoryDetail !=null and mainMaterialDetail == null}" class="sub-category-arrange">
-            <li><a th:href="@{/product/shop/subCategory(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId}, arName='name')}">이름 순</a></li>
-            <li><a th:href="@{/product/shop/subCategory(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId}, arName='new')}">신상품 순</a></li>
-            <li><a th:href="@{/product/shop/subCategory(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId}, arName='rating')}">평점 순</a></li>
-            <li><a th:href="@{/product/shop/subCategory(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId}, arName='aprice')}">가격: 가격 낮은 순</a></li>
-            <li><a th:href="@{/product/shop/subCategory(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId}, arName='dprice')}">가격: 가격 높은 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId}, arName='name')}">이름 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId}, arName='new')}">신상품 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId}, arName='rating')}">평점 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId}, arName='aprice')}">가격: 가격 낮은 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId}, arName='dprice')}">가격: 가격 높은 순</a></li>
           </ul>
           <ul th:if="${mainCategoryDetail == null and subCategoryDetail == null and mainMaterialDetail != null}" class="material-arrange">
-            <li><a th:href="@{/product/shop/material(mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='name')}">이름 순</a></li>
-            <li><a th:href="@{/product/shop/material(mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='new')}">신상품 순</a></li>
-            <li><a th:href="@{/product/shop/material(mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='rating')}">평점 순</a></li>
-            <li><a th:href="@{/product/shop/material(mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='aprice')}">가격: 가격 낮은 순</a></li>
-            <li><a th:href="@{/product/shop/material(mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='dprice')}">가격: 가격 높은 순</a></li>
+            <li><a th:href="@{/product/shop(mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='name')}">이름 순</a></li>
+            <li><a th:href="@{/product/shop(mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='new')}">신상품 순</a></li>
+            <li><a th:href="@{/product/shop(mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='rating')}">평점 순</a></li>
+            <li><a th:href="@{/product/shop(mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='aprice')}">가격: 가격 낮은 순</a></li>
+            <li><a th:href="@{/product/shop(mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='dprice')}">가격: 가격 높은 순</a></li>
           </ul>
           <ul th:if="${mainCategoryDetail != null and subCategoryDetail == null and mainMaterialDetail != null}" class="mainCategory-material-arrange">
-            <li><a th:href="@{/product/shop/mainCategory-material(mainCategoryId=${mainCategoryDetail.mainCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='name')}">이름 순</a></li>
-            <li><a th:href="@{/product/shop/mainCategory-material(mainCategoryId=${mainCategoryDetail.mainCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='new')}">신상품 순</a></li>
-            <li><a th:href="@{/product/shop/mainCategory-material(mainCategoryId=${mainCategoryDetail.mainCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='rating')}">평점 순</a></li>
-            <li><a th:href="@{/product/shop/mainCategory-material(mainCategoryId=${mainCategoryDetail.mainCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='aprice')}">가격: 가격 낮은 순</a></li>
-            <li><a th:href="@{/product/shop/mainCategory-material(mainCategoryId=${mainCategoryDetail.mainCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='dprice')}">가격: 가격 높은 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='name')}">이름 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='new')}">신상품 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='rating')}">평점 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='aprice')}">가격: 가격 낮은 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='dprice')}">가격: 가격 높은 순</a></li>
           </ul>
           <ul th:if="${mainCategoryDetail != null and subCategoryDetail !=null and mainMaterialDetail != null}" class="subCategory-material">
-            <li><a th:href="@{/product/shop/mainCategory-subCategory-material(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='name')}">이름 순</a></li>
-            <li><a th:href="@{/product/shop/mainCategory-subCategory-material(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='new')}">신상품 순</a></li>
-            <li><a th:href="@{/product/shop/mainCategory-subCategory-material(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='rating')}">평점 순</a></li>
-            <li><a th:href="@{/product/shop/mainCategory-subCategory-material(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='aprice')}">가격: 가격 낮은 순</a></li>
-            <li><a th:href="@{/product/shop/mainCategory-subCategory-material(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='dprice')}">가격: 가격 높은 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='name')}">이름 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='new')}">신상품 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='rating')}">평점 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='aprice')}">가격: 가격 낮은 순</a></li>
+            <li><a th:href="@{/product/shop(mainCategoryId=${mainCategoryDetail.mainCategoryId},subCategoryId=${subCategoryDetail.subCategoryId},mainMaterialId=${mainMaterialDetail.mainMaterialId}, arName='dprice')}">가격: 가격 높은 순</a></li>
           </ul>
         </ul>
       </div>
@@ -158,16 +158,17 @@
                   </span>
                 </div>
                  &nbsp
+                 &nbsp
                 <div class="rateText">
                     <span class="rateText" style="color: black;" th:with="alterFive=${#numbers.formatDecimal(product.rating / 2.0 , 3 , 5 )}"
-                          th:text="${#numbers.formatDecimal(alterFive, 1, 1)} + '/5'">
+                          th:text="${#numbers.formatDecimal(alterFive, 1, 1)}">
                     </span>
                 </div>
               </div>
               </span>
             </span>
-            <span style="color: #282828" class="grid-item-price" th:if="${product.salePercentage == null}" th:text="'₩ ' + ${#numbers.formatInteger(product.price, 1, 'COMMA')}"></span>
-            <span class="grid-item-price" th:unless="${product.salePercentage == null}">
+            <span style="color: #282828" class="grid-item-price" th:if="${product.salePercentage == null or product.salePercentage == 0}" th:text="'₩ ' + ${#numbers.formatInteger(product.price, 1, 'COMMA')}"></span>
+            <span class="grid-item-price" th:unless="${product.salePercentage == null or product.salePercentage == 0}">
               <s th:text="'₩ ' + ${#numbers.formatInteger(product.price, 1, 'COMMA')}"></s>
               <span style="color: fuchsia;" th:text="${product.salePercentage} + '%'"></span>
               <span th:with="discountedPrice=${product.price * (1 - product.salePercentage / 100.0)}"

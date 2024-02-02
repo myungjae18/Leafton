@@ -35,94 +35,6 @@
 
 
 <main id="product">
-    <!-- <aside>
-        <ul class="category" style="list-style: none;">
-            <li>
-                <i class="fa fa-bars" aria-hidden="true"></i>카테고리
-                <li>
-                  <a href="#">
-                      <i class="fas fa-home" aria-hidden="true"></i>ALL
-                      </i>
-                  </a>
-                  <ol>
-                      <li>
-                          <a href="#">가구/DIY</a>
-                      </li>
-                      <li>
-                          <a href="#">침구·커튼</a>
-                      </li>
-                      <li>
-                          <a href="#">생활용품</a>
-                      </li>
-                      <li>
-                          <a href="#">사무용품</a>
-                      </li>
-                  </ol>
-              </li>
-            </li>
-                <li>
-                <a href="#">
-                  <i class="fa fa-percent" aria-hidden="true"></i>SALE
-                    </i>
-                </a>
-                <ol>
-                    <li>
-                        <a href="#">남성의류</a>
-                    </li>
-                    <li>
-                        <a href="#">여성의류</a>
-                    </li>
-                    <li>
-                        <a href="#">잡화</a>
-                    </li>
-                    <li>
-                        <a href="#">뷰티</a>
-                    </li>
-                </ol>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-star-o" aria-hidden="true"></i>EVENT
-                    </i>
-                </a>
-                <ol>
-                    <li>
-                        <a href="#">노트북/PC</a>
-                    </li>
-                    <li>
-                        <a href="#">가전</a>
-                    </li>
-                    <li>
-                        <a href="#">휴대폰</a>
-                    </li>
-                    <li>
-                        <a href="#">기타</a>
-                    </li>
-                </ol>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-search" aria-hidden="true"></i>BRAND
-                    </i>
-                </a>
-                <ol>
-                    <li>
-                        <a href="#">신선식품</a>
-                    </li>
-                    <li>
-                        <a href="#">가공식품</a>
-                    </li>
-                    <li>
-                        <a href="#">건강식품</a>
-                    </li>
-                    <li>
-                        <a href="#">생필품</a>
-                    </li>
-                </ol>
-            </li>
-
-        </ul>
-    </aside> -->
     <section class="order">
         <nav>
             <h1>장바구니</h1>
@@ -136,11 +48,11 @@
             <table border="0">
                 <tr>
                     <th>상품명</th>
-                    <th>총수량</th>
+                    <th>수량</th>
                     <th>판매가</th>
                     <th>할인금액</th>
                     <th>최종금액</th>
-                    <th>삭제</th>
+                    <th>취소</th>
                     <th>주문</th>
                 </tr>
                 <tr th:if="${cartItems.isEmpty()}">
@@ -152,24 +64,23 @@
                             <img src="	https://via.placeholder.com/80x80" alt="1">
                         </a>
                         <div>
-                            <h2 th:text="${cartItem.getProduct().getName()}"><a href="#">상품명</a></h2>
-                            <p th:text="${cartItem.getProduct().getContent()}">상품설명</p>
+                            <h2 th:text="${cartItem.getProductDTO().getName()}"><a href="#">상품명</a></h2>
+                            <p th:text="${cartItem.getProductDTO().getContent()}">상품설명</p>
                         </div>
                     </article></td>
-                    <td th:text="${cartItem.getCount()}"></td>
-                    <td th:text="'₩' + ${#numbers.formatInteger(cartItem.getProduct().getPrice(), 0, 'COMMA')}">상품금액</td>
-                    <td th:if="${cartItem.getProduct().getSalePercentage() == 0}" th:text="'적용된 할인 없음'">할인금액</td>
-                    <td th:unless="${cartItem.getProduct().getSalePercentage() == 0}">
-                            <span th:with="discountedPrice=${cartItem.getProduct().getPrice() *
-                            (1 - cartItem.getProduct().getSalePercentage()/100.0)}" th:text="'₩' + ${#numbers.formatInteger(discountedPrice.intValue(), 0, 'COMMA')}"></span>
+                    <td th:text="${cartItem.getCount()}">수량</td>
+                    <td th:text="'₩' + ${#numbers.formatInteger(cartItem.getProductDTO().getPrice(), 0, 'COMMA')}">상품금액</td>
+                    <td th:if="${cartItem.getProductDTO().getSalePercentage() == 0}" th:text="'적용된 할인 없음'">할인금액</td>
+                    <td th:unless="${cartItem.getProductDTO().getSalePercentage() == 0}">
+                            <span th:with="discountedPrice=${cartItem.getProductDTO().getPrice() *
+                            (1 - cartItem.getProductDTO().getSalePercentage()/100.0)}" th:text="'₩' + ${#numbers.formatInteger(discountedPrice.intValue(), 0, 'COMMA')}"></span>
                     </td>
-                    <!--<td th:text="${deliveryFee}">무료배송</td>-->
-                    <td th:if="${cartItem.getProduct().getSalePercentage() == 0}" th:text="'₩' + ${#numbers.formatInteger(cartItem.getProduct().getPrice() * cartItem.getCount(), 1, 'COMMA')}"></td>
-                    <td th:unless="${cartItem.getProduct().getSalePercentage() == 0}">
-                            <span th:with="discountedTotalPrice=${cartItem.getProduct().getPrice() *
-                            (1 - cartItem.getProduct().getSalePercentage()/100.0) * cartItem.getCount()}" th:text="'₩' + ${#numbers.formatInteger(discountedTotalPrice.intValue(), 0, 'COMMA')}"></span>
+                    <td th:if="${cartItem.getProductDTO().getSalePercentage() == 0}" th:text="'₩' + ${#numbers.formatInteger(cartItem.getProductDTO().getPrice() * cartItem.getCount(), 1, 'COMMA')}"></td>
+                    <td th:unless="${cartItem.getProductDTO().getSalePercentage() == 0}">
+                            <span th:with="discountedTotalPrice=${cartItem.getProductDTO().getPrice() *
+                            (1 - cartItem.getProductDTO().getSalePercentage()/100.0) * cartItem.getCount()}" th:text="'₩' + ${#numbers.formatInteger(discountedTotalPrice.intValue(), 0, 'COMMA')}"></span>
                     </td>
-                    <td><a th:href="@{/pay/cart/{memberId}/{cartItemId}/delete(memberId=${session.memberDTO.getMemberId()}, cartItemId=${cartItem.getCartItemId()})}">삭제</a></td>
+                    <td><a th:href="@{/pay/cart/{memberId}/{cartItemId}/delete(memberId=${session.memberDTO.getMemberId()}, cartItemId=${cartItem.getCartItemId()})}">취소</a></td>
                     <td> <input type="checkbox" name="itemChkBox" th:value="${cartItem.getCartItemId()}"></td>
                 </tr>
             </table>
@@ -185,7 +96,6 @@
                 <input type="submit" value="결제하기">
                 <h3>10만원 이상 주문시 배송비 무료!</h3>
             </div>
-
         </form>
     </section>
 </main>
@@ -197,20 +107,16 @@
     function submitForm() {
         const itemChkBox = document.getElementsByName('itemChkBox');
         let checkedItems = [];
-
         for(let i = 0; i < itemChkBox.length; i++) {
             if(itemChkBox[i].checked) {
                 checkedItems.push(itemChkBox[i].value);
             }
         }
-
         if(checkedItems.length === 0) {
             alert("선택된 상품이 없습니다.");
             return false;
         }
-
         document.getElementsByName('checkedItems')[0].value = checkedItems.join(',');
-
         return true;
     }
 </script>

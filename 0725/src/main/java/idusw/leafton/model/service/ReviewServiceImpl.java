@@ -1,7 +1,11 @@
 package idusw.leafton.model.service;
 
+import idusw.leafton.model.DTO.MainCategoryDTO;
+import idusw.leafton.model.DTO.MemberDTO;
 import idusw.leafton.model.DTO.ProductDTO;
 import idusw.leafton.model.DTO.ReviewDTO;
+import idusw.leafton.model.entity.MainCategory;
+import idusw.leafton.model.entity.Member;
 import idusw.leafton.model.entity.Product;
 import idusw.leafton.model.entity.Review;
 import idusw.leafton.model.repository.ReviewRepository;
@@ -26,12 +30,31 @@ public class ReviewServiceImpl implements ReviewService{
 //        }
 //        return reviewDTOList;
 //    }
+    @Override
+    public ReviewDTO viewDetailReview(MemberDTO memberDTO, ProductDTO productDTO){
+        Optional<Review> opReview = reviewRepository.findByMemberAndProduct(Member.toMemberEntity(memberDTO), Product.toProductEntity(productDTO));
+        ReviewDTO reviewDTO = new ReviewDTO();
+        if (opReview.isPresent()) {
+            Review review = opReview.get();
+            reviewDTO = ReviewDTO.toReviewDTO(review);
+            // findById로 받아온 결과값들을 DTO에 저장함
+
+            return reviewDTO;
+        } else {
+            return null;
+        }
+    };
 
     @Override
     public ReviewDTO insertReview(ReviewDTO reviewDTO) {
         Review review = Review.toReviewEntity(reviewDTO); // entity에 넣기위하여 변경
         Review result = reviewRepository.save(review); // 레파지토리에서 save(insert)한 결과
         return ReviewDTO.toReviewDTO(result); //결과를 dto에 저장
+    }
+
+    @Override
+    public void deleteReview(Long reviewId) {
+        reviewRepository.deleteById(reviewId);
     }
     @Override
     public Double getAvgRating(Long productId) {
@@ -42,5 +65,6 @@ public class ReviewServiceImpl implements ReviewService{
             return null;
         }
     }
+
 
 }

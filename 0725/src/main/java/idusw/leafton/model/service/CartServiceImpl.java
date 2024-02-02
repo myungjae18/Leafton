@@ -6,6 +6,7 @@ import idusw.leafton.model.DTO.MemberDTO;
 import idusw.leafton.model.DTO.ProductDTO;
 import idusw.leafton.model.entity.Cart;
 import idusw.leafton.model.entity.CartItem;
+import idusw.leafton.model.entity.Member;
 import idusw.leafton.model.entity.Product;
 import idusw.leafton.model.repository.CartItemRepository;
 import idusw.leafton.model.repository.CartRepository;
@@ -56,24 +57,23 @@ public class CartServiceImpl implements CartService{
     // DTO 변환 처리?
     // User라고 되어있는 부분 Member로 변경 및 리펙토링
     @Override
-    public List<CartItem> allUserCartView(CartDTO userCart){
+    public List<CartItemDTO> allUserCartView(CartDTO userCart){
         // 사용자의 카트 id를 꺼냄
         Long userCartId = userCart.getCartId();
 
         // id에 해당하는 유저가 담은 상품을 담아둘 곳
-        List<CartItem> UserCartItems = new ArrayList<>();
+        List<CartItemDTO> UserCartItems = new ArrayList<>();
 
         // 유저 상관 없이 일단 카트에 있는 상품 모두 불러오기
         List<CartItem> CartItems = cartItemRepository.findAll();
 
         for(CartItem cartItem : CartItems) {
             if(cartItem.getCart().getCartId() == userCartId) {
-                UserCartItems.add(cartItem);
+                UserCartItems.add(CartItemDTO.toCartItemDTO(cartItem));
             }
         }
         return UserCartItems;
     }
-
 
     // 장바구니에 존재하는 상품들의 정보를 DB에서 찾아오기
     @Override
@@ -145,9 +145,11 @@ public class CartServiceImpl implements CartService{
         cartRepository.deleteById(cartId);
     }
 
+
     @Override
-    public void createCart(MemberDTO memberDTO) {
-        Cart cart = Cart.createCart(memberDTO);
+    public void createCart(MemberDTO result){
+        Cart.createCart(result);
     }
+
 
 }

@@ -37,7 +37,7 @@
         <input type="text" class="input-field" name="address" th:value="${session.memberDTO.address}"/><br><br>
         <label>&nbsp;선호 스타일</label>
         <input type="text" class="input-field" th:value="${session.memberDTO.styleDTO.name}" style="width:47%;"/>
-        &nbsp;&nbsp;<button type="button" onclick="location.href='/member/info?type=changeSt'">변경</button><br><br>
+        &nbsp;&nbsp;<button type="button">변경</button><br><br>
         <label></label>
         <button>수정</button>
         <button type="button" onclick="edit('delete')">탈퇴</button>
@@ -84,7 +84,7 @@
         <img src="/static/images/style/classic.jpg" class="style-image">
         <br><br>
         <input type="radio" id="upcycling" name="styleId" class="checkbox" value="3">
-        <label for="upcycling" th:text="${styleList.get(2).name}">upcycling</label>
+        <label for="upcycling" th:text="${styleList.get(2).name}">upcycling</label><br>
         <img src="/static/images/style/upcycling.jpg" class="style-image">
         &nbsp;&nbsp;<br><br>
         <button>변경</button><br><br>
@@ -92,6 +92,84 @@
     </div>
   </div>
   <!-- 스타일 수정 끝 -->
+  <!-- 주문 내역 -->
+  <div class="main" th:if="${type}=='orderlist'">
+    <div class="main-header">
+      내 주문 목록
+    </div>
+    <div class="main-info">
+      <th:block th:each="orderEntry : ${ordersMap}">
+        <h3 th:text="${orderEntry.key.getOrderDate()} + ' 주문'">주문</h3>
+        <table border="0">
+          <tr>
+            <th>상품명</th>
+            <th>사이즈</th>
+            <th>색상</th>
+            <th>수량</th>
+            <th>주문금액</th>
+            <th></th>
+          </tr>
+          <tr th:each="orderItem : ${orderEntry.value.orderItems}">
+            <td>
+              <article>
+                <a href="#">
+                  <img src="https://via.placeholder.com/80x80" alt="1">
+                </a>
+                <div>
+                  <h2><a href="#" th:text="${orderItem.getProductDTO().getName()}">상품명</a></h2>
+                  <p th:text="${orderItem.getProductDTO().getContent()}">상품설명</p>
+                </div>
+              </article>
+            </td>
+            <td th:text="${orderItem.getProductDTO().getSize()}">대형</td>
+            <td th:text="${orderItem.getProductDTO().getColor()}">노란색</td>
+            <td th:text="${orderItem.getCount()}">5개</td>
+            <td th:if="${orderItem.getProductDTO().getSalePercentage() == 0}" th:text="'₩' + ${#numbers.formatInteger(orderItem.getProductDTO().getPrice() * orderItem.getCount(), 1, 'COMMA')}"></td>
+            <td th:unless="${orderItem.getProductDTO().getSalePercentage() == 0}">
+                                 <span th:with="discountedTotalPrice=${orderItem.getProductDTO().getPrice() *
+                                 (1 - orderItem.getProductDTO().getSalePercentage()/100.0) * orderItem.getCount()}" th:text="'₩' + ${#numbers.formatInteger(discountedTotalPrice.intValue(), 0, 'COMMA')}"></span>
+            </td>
+            <td>
+              <a th:with="link=@{/product/product/{productId}(productId=${orderItem.getProductDTO().getProductId})},
+                      anchor='#reviewSection', totalLink=${link+anchor}" th:href="${totalLink}">리뷰 작성</a>
+              <br>
+              <form th:action="@{/pay/cart/{memberId}/{productId}(memberId=${session.memberDTO.getMemberId()}, productId=${orderItem.getProductDTO.getProductId})}" method="post">
+                <input type="submit" value="장바구니 담기">
+                <input type="hidden" name="count" value="1">
+                <input type="hidden" name="type" value="order">
+              </form>
+            </td>
+          </tr>
+          <tr class="total">
+            <td colspan="5"></td>
+            <td>
+              <table>
+                <tr>
+                  <td>총 상품금액</td>
+                  <td>
+                    <span th:text="'₩' + ${#numbers.formatInteger(orderEntry.value.totalPrice, 0, 'COMMA')}">34,000원</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>배송비</td>
+                  <td>
+                    <span th:text="'₩' + ${#numbers.formatInteger(orderEntry.value.deliveryFee, 0, 'COMMA')}">3,000원</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>총 결제금액</td>
+                  <td>
+                    <span th:text="'₩' + ${#numbers.formatInteger(orderEntry.value.totalPrice + orderEntry.value.deliveryFee, 0, 'COMMA')}">35,000</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </th:block>
+    </div>
+  </div>
+  <!-- 주문 내역 끝 -->
 </div>
 <!-- footer -->
 <th:block th:replace="/fragments/footer :: footerFragment"></th:block>

@@ -224,15 +224,22 @@
     display: inline-block;
     outline: none;
 }
-#product > .order > form > .discount > div > table{
-    width: 80%;
-    margin-top: 3px;
+#product > .order > form > .discount > div{
+    border-radius: 12px;
+    box-shadow: #6e6e6e;
+    border-radius: 12px;
+    box-shadow: rgba(0,0,0,0.08) 0px 1.5px 2px 0px,
+    rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
+    background-color: rgb(255,255,255);
 
+}
+#product > .order > form > .discount > div > table{
+    margin-top: 3px;
 }
 #product > .order > form > .discount > div > table th {
     padding: 6px 0;
     background: #fff;
-    color: #383838;
+    color: #6e6e6e;
     letter-spacing: -0.1em;
     border-bottom: 1px solid #000;
     text-align: center;

@@ -8,10 +8,13 @@ import idusw.leafton.model.entity.CartItem;
 import idusw.leafton.model.service.CartService;
 import idusw.leafton.model.service.MemberService;
 import idusw.leafton.model.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -19,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class CartController {
+
     private final MemberService memberService;
     private final ProductService productService;
     private final CartService cartService;
@@ -32,15 +36,15 @@ public class CartController {
             CartDTO userCart = cartService.findMemberCart(memberId);
 
             //장바구니에 들어있는 상품 모두 가져오기
-            List<CartItem> cartItemList = cartService.allUserCartView(userCart);
+            List<CartItemDTO> cartItemList = cartService.allUserCartView(userCart);
 
 
             //장바구니에 들어있는 상뭎들의 총 가격 -> 주문에서 처리해야 할 듯
             int totalPrice = 0; // 최종 주문 정보에 나타내기 위한 물품 총 가격
             int totalCount = 0; // 최종 주문 정보에 나타내기 위한 물품 총 개수
 
-            for (CartItem cartItem : cartItemList) {
-                totalPrice += cartItem.getCount() * cartItem.getProduct().getPrice() * (1 - cartItem.getProduct().getSalePercentage()/100.0) ;
+            for (CartItemDTO cartItem : cartItemList) {
+                totalPrice += cartItem.getCount() * cartItem.getProductDTO().getPrice() * (1 - cartItem.getProductDTO().getSalePercentage()/100.0) ;
                 totalCount += cartItem.getCount();
             }
 
@@ -56,14 +60,22 @@ public class CartController {
 
     //장바구니에 해당하는 물건 담기
     @PostMapping(value = "/cart/{memberId}/{productId}")
-    public String addCartItem(@PathVariable("memberId") Long memberId, @PathVariable("productId") Long productId, int count) {
+    public String addCartItem(@PathVariable("memberId") Long memberId, @PathVariable("productId") Long productId,
+                              @RequestParam("count") int count, @RequestParam("type") String type,
+                              RedirectAttributes redirectAttributes) {
 
         MemberDTO member = memberService.getMemberById(memberId);
         ProductDTO product = productService.getProductById(productId);
 
         cartService.addCart(member, product, count);
 
-        return "redirect:/product/product/{productId}";
+        redirectAttributes.addFlashAttribute("message", "상품이 장바구니에 등록 되었습니다.");
+
+        if(type.equals("order")){
+            return "redirect:/member/info?type=orderlist";
+        }else{
+            return "redirect:/product/product/{productId}";
+        }
     }
 
     // 장바구니에서 해당하는 물건 제거
@@ -82,14 +94,12 @@ public class CartController {
             cartService.cartItemDelete(cartItemId);
 
             //장바구니에 들어있는 상품 모두 가져오기 -> 삭제후 장바구니에 담긴 남은 물건을 불러옴
-            List<CartItem> cartItemList = cartService.allUserCartView(memberCart);
-
+            List<CartItemDTO> cartItemList = cartService.allUserCartView(memberCart);
 
             int totalPrice = 0; // 최종 주문 정보에 나타내기 위한 물품 총 가격
             int totalCount = 0; // 최종 주문 정보에 나타내기 위한 물품 총 개수
-
-            for (CartItem cartitem : cartItemList) {
-                totalPrice += cartitem.getCount() * cartitem.getProduct().getPrice() * (1 - cartitem.getProduct().getSalePercentage()/100.0) ;
+            for (CartItemDTO cartitem : cartItemList) {
+                totalPrice += cartitem.getCount() * cartitem.getProductDTO().getPrice() * (1 - cartitem.getProductDTO().getSalePercentage()/100.0) ;
                 totalCount += cartItem.getCount();
             }
 
@@ -113,7 +123,6 @@ public class CartController {
         ProductDTO product = productService.getProductById(productId);
 
         Long cartOneItemId = cartService.addOneCart(member, product, count);
-
 
         return "redirect:/pay/buy/one?memberId=" + memberId + "&cartOneItemId=" + cartOneItemId;
 

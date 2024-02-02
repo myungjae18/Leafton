@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="/fragments/header"></th:block>
 <!-- start: breadcrumbs -->
+
+
 <head>
   <link rel="stylesheet" href="../../static/css/reviewr.css" />
   <link rel="stylesheet" href="../../static/css/productview.css" />
@@ -9,8 +11,10 @@
   <link rel="stylesheet" href="../../static/css/ratingView.css" />
   <link rel="stylesheet" href="../../static/css/qpc.css" />
   <link rel="stylesheet" href="../../static/css/ratingList.css" />
+  <link rel="stylesheet" href="../../static/css/productPageBtn.css">
+  <link rel="stylesheet" href="../../static/css/payForm.css">
 
-
+  <script src="https://kit.fontawesome.com/c0890a4f25.js" crossorigin="anonymous"></script>
   <script src="../..//static/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
   <script>
     function changefun(){
@@ -98,8 +102,8 @@
       </div>
       <!-- 평점 별 평균 표시 끝-->
 
-      <span style="color: #282828" class="product-price" th:if="${productDetail.salePercentage == null }" th:text="'₩' + ${#numbers.formatInteger(productDetail.price, 1, 'COMMA')}"></span>
-      <span class="product-price" th:unless="${productDetail.salePercentage == null}">
+      <span style="color: #282828" class="product-price" th:if="${productDetail.salePercentage == null or productDetail.salePercentage == 0}" th:text="'₩' + ${#numbers.formatInteger(productDetail.price, 1, 'COMMA')}"></span>
+      <span class="product-price" th:unless="${productDetail.salePercentage == null or productDetail.salePercentage == 0}">
         <s th:text="'₩ ' + ${#numbers.formatInteger(productDetail.price, 1, 'COMMA')}"></s>
         <span style="color: fuchsia;" th:text="${productDetail.salePercentage} + '%'"></span>
         <br />
@@ -131,59 +135,6 @@
         </div>
       </div>
 
-      <form th:if="${session.memberDTO!=null}"  th:action="@{/pay/cart/{memberId}/{productId}(memberId=${session.memberDTO.getMemberId()}, productId=${productDetail.productId})}" method="post">
-        <div class="row product-options">
-          <div class="columns col-6">
-            <label for="product-quantity" class="product-quantity">
-              <span class="label-text">개수:</span>
-              <!-- <input type="text" value="1" id="product-quantity" /> -->
-              <input type="number" name="count" value="1" id="product-quantity" min="0" oninput="updateTotalPrice()"/>
-            </label>
-          </div>
-          <div class="columns col-6">
-            <label for="product-quantity" class="product-quantity">
-              <h1 class="label-text" id="total-price" th:text="'총 가격 : ' + '0' + '원'"></h1>
-            </label>
-          </div>
-          <div class="columns col-6">
-            <button type="submit" class="submit">
-              <i class="fa fa-shopping-cart"></i> 장바구니 담기
-            </button>
-          </div>
-          <div class="columns col-6"> <!-- 추가 된 부분 -->
-            <button type="button" class="submit" onclick="buyNow()">
-              <i class="fa fa-shopping-cart"></i> 바로 구매하기
-            </button>
-          </div>
-        </div>
-      </form>
-      <form th:unless="${session.memberDTO!=null}"  th:action="@{/pay/cart/{memberId}/{productId}(memberId='guest', productId=${productDetail.productId})}" method="post">
-        <div class="row product-options">
-          <div class="kim col-Faker">
-            <label for="product-quantity" class="product-quantity">
-              <span class="label-text">개수:</span>
-              <!-- <input type="text" value="1" id="product-quantity" /> -->
-              <input type="number" name="count" value="1" id="product-quantity" min="0" oninput="updateTotalPrice()"/>
-            </label>
-          </div>
-          <div class="kim col-Faker2">
-            <label for="product-quantity" class="product-quantity">
-              <h1 class="label-text" id="total-price" th:text="'총 가격 : ' + '0' + '원'"></h1>
-            </label>
-          </div>
-          <div class="kim col-Faker2">
-            <button type="submit" class="submit">
-              <i class="fa fa-shopping-cart"></i> 장바구니 담기
-            </button>
-          </div>
-          <div class="columns col-6"> <!-- 추가 된 부분 -->
-            <button type="button" class="submit" onclick="buyNow()">
-              <i class="fa fa-shopping-cart"></i> 바로 구매하기
-            </button>
-          </div>
-        </div>
-      </form>
-
       <script th:inline="javascript">
         /*<![CDATA[*/
         var unitPrice = /*[[${productDetail.price}]]*/ 'productDetail.price'; // 상품 가격 선언
@@ -193,28 +144,52 @@
           return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
         function updateTotalPrice() {
-          var quantity = document.getElementById('product-quantity').value; // 증가 개수 선언
+          var quantity = document.getElementById('product-count').value; // 증가 개수 선언
           var totalPrice = unitPrice * quantity; // 총가격 계산 선언
-          document.getElementById('total-price').textContent = '총 가격 : ' + numberWithCommas(totalPrice.toFixed(0)) + '원'; //결과값 출력
+          document.getElementById('total-price').textContent = numberWithCommas(totalPrice.toFixed(0)); //결과값 출력
         }
         /*]]>*/
         /*[@ thymeleaf variable to JavaScript variable]*/
-        var memberId = [[${session.memberDTO.getMemberId()}]];
+        var memberId = [[${session.memberDTO != null ? session.memberDTO.getMemberId() : 'guest'}]];
         var productId = [[${productDetail.productId}]];
-        function buyNow() { /* 추가된 부분 */
-          var count = document.getElementById('product-quantity').value;
-          var form = document.createElement('form');
-          form.method = 'post';
-          form.action = '/pay/cart/one?memberId=' + memberId + '&productId=' + productId;
-          var input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = 'count';
-          input.value = count;
-          form.appendChild(input);
-          document.body.appendChild(form);
-          form.submit();
+
+        /* 추가된 내용 */
+        let message = [[${message}]]; //controller에서 날린 request 객체에 담긴 메세지
+
+        if(message!=null){
+          alert(message);
         }
       </script>
+      <script src="../../static/js/members.js">
+      </script>
+      <form id="choiceCart" th:action="@{/pay/cart/{memberId}/{productId}(memberId='guest', productId=${productDetail.productId})}" method="post">
+        <div class="row product-options">
+          <div class="columns col-6">
+            <label for="product-count" class="product-count">
+              <span class="label-text">개수:</span>
+              <!-- <input type="text" value="1" id="product-quantity" /> -->
+              <input type="number" name="count" value="0" id="product-count" min="0" oninput="updateTotalPrice()"/>
+            </label>
+            &nbsp
+            <label for="total-price" class="total-price">
+              <h1 class="label-text" id="total-price" th:text="0"></h1>
+            </label>
+          </div>
+          <div class="columns col-6">
+            <button type="submit" onclick="return memberType()" class="cart-btn">
+              <i class="fa-solid fa-cart-shopping"></i> 장바구니 담기
+            </button>
+          </div>
+          <div class="columns col-6"> <!-- 추가 된 부분 -->
+            <button type="button" onclick="return buyNow()" class="cart-btn" >
+              <i class="fa-regular fa-credit-card"></i> 바로 구매하기
+            </button>
+          </div>
+        </div>
+        <input type="hidden" name="type" value="cart"> <!-- 매우 중요 -->
+      </form>
+
+
       <!-- end: product options form -->
 
 
@@ -260,8 +235,8 @@
               </div>
               </span>
             </span>
-            <span style="color: #282828" class="grid-item-price" th:if="${product.salePercentage == null}" th:text="'₩ ' + ${#numbers.formatInteger(product.price, 1, 'COMMA')}"></span>
-            <span class="grid-item-price" th:unless="${product.salePercentage == null}">
+            <span style="color: #282828" class="grid-item-price" th:if="${product.salePercentage == null or product.salePercentage == 0}" th:text="'₩ ' + ${#numbers.formatInteger(product.price, 1, 'COMMA')}"></span>
+            <span class="grid-item-price" th:unless="${product.salePercentage == null or product.salePercentage == 0}">
               <s th:text="'₩ ' + ${#numbers.formatInteger(product.price, 1, 'COMMA')}"></s>
               <span style="color: fuchsia;" th:text="${product.salePercentage} + '%'"></span>
               <span th:with="discountedPrice=${product.price * (1 - product.salePercentage / 100.0)}"
@@ -278,12 +253,13 @@
 <!--end: recommand product-->
 
 <!-- start: review content -->
-<section class="review">
+<section class="review" id="reviewSection">
+
 
   <div class="mainname">
     <h2>Products Review</h2><hr />
   </div>
-  <form th:if="${session.memberDTO!=null}" method="post" action="/product/review">
+  <form th:if="${session.memberDTO!=null}" onsubmit="return reviewSubmit();" method="post" action="/product/review">
     <div class="reviewInsert">
       <fieldset class="rate">
         <input type="radio" id="rating10" name="rating" value="10"><label for="rating10" title="5점"></label>
@@ -299,14 +275,31 @@
       </fieldset>
       <input type="hidden" name="productId" th:value="${productDetail.productId}">
       <input type="hidden" name="memberId" th:value="${session.memberDTO.getMemberId()}">
-      <input type="text" name="reviewContent">
+      <input type="text" name="reviewContent" placeholder="댓글을 작성해주세요." onfocus="this.placeholder = ''" onblur="this.placeholder = '댓글을 작성해주세요.'">
     </div>
     <div class="columns col-6">
-      <button type="submit" class="submit">
-        <i class="fa fa-shopping-cart"></i> 입력
+      <button type="submit" class="comment-btn">
+        <i class="fa-solid fa-comment"></i> 입력
       </button>
     </div>
   </form>
+
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+
+    function reviewSubmit() {
+      var memberId = [[${session.memberDTO != null ? session.memberDTO.getMemberId() : 'guest'}]];
+      var reviewMemberId = [[${reviewDetail != null && reviewDetail.memberDTO != null ? reviewDetail.memberDTO.getMemberId() : 'guest'}]];
+      if (memberId == reviewMemberId) {
+        alert('이미 댓글을 입력하셨습니다.');
+        return false;
+      }
+      return true;
+    };
+
+    /*]]>*/
+  </script>
+
   <ul >
     <li th:each="review : ${reviewPageList}">
       <div>
@@ -329,6 +322,9 @@
       <h3></h3>
       <p th:text="${review.content}">
       </p>
+      <div th:if="${session.memberDTO!=null and session.memberDTO.memberId == review.memberDTO.memberId}">
+        <button class="delete-btn" th:onclick="'window.location.href=\'/product/review/delete?reviewId=' + ${review.reviewId} + '&productId=' + ${productDetail.productId} + '\''">삭제</button>
+      </div>
     </li>
   </ul>
   <section class="product-pagination">

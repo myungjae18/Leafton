@@ -77,7 +77,7 @@ public class OrderController {
                     return "redirect:/main/index";
                 }
                 totalPrice += cartItemById.getCount() * cartItemById.getProductDTO().getPrice()
-                                * (1 - cartItemById.getProductDTO().getSalePercentage()/100.0);
+                        * (1 - cartItemById.getProductDTO().getSalePercentage()/100.0);
             }
             // 배송 관련
             String deliveryCompany = "CJ대한통운";
@@ -151,7 +151,6 @@ public class OrderController {
             }else{
                 productEvents.put(cartOneItemById.getProductDTO(), "이벤트 없음");
             }
-
 
             // 주문 처리를 위해 cartItemId를 세션에 담아서 oderCheckOut()에서 처리할 수 있도록 넘겨줌
             // oderCheckOut()에서 String[]에 CartItemId들을 담아서 처리하므로 먼저 Long -> String -> String[] 순으로 변환

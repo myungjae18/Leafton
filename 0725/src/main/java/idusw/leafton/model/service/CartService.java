@@ -12,7 +12,7 @@ import java.util.List;
 public interface CartService {
     void addCart(MemberDTO member, ProductDTO product, int count);
 
-    List<CartItem> allUserCartView(CartDTO userCart);
+    List<CartItemDTO> allUserCartView(CartDTO userCart);
 
     CartItemDTO findCartItemById(Long cartItemId);
 
@@ -24,5 +24,7 @@ public interface CartService {
 
     void deleteCart(Long cartId);
 
-    void createCart(MemberDTO memberDTO);
+    void createCart(MemberDTO result);
+
+
 }

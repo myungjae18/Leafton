@@ -12,6 +12,10 @@ import idusw.leafton.model.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +24,6 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final ProductRepository productRepository;
-
     // 주문 생성
     @Override
     public OrderDTO addOrder(OrderDTO orderDTO){
@@ -30,7 +33,6 @@ public class OrderServiceImpl implements OrderService {
 
         return OrderDTO.toOrderDTO(order);
     }
-
     // OrderItem 생성 후 주문한 상품 정보 저장
     @Override
     public OrderItemDTO addOrderItem(OrderDTO orderDTO, ProductDTO productDTO, int count){
@@ -59,5 +61,37 @@ public class OrderServiceImpl implements OrderService {
             return 3000;
         }
     }
+    //내 주문 내역 보기
+    @Override
+    public List<OrderItemDTO> allUserOrderView(OrderDTO userOrders){
+        // 사용자의 모든 주문 아이템을 담아둘 리스트 선언
+        List<OrderItemDTO> UserOrderItems = new ArrayList<>();
 
+        // 사용자의 주문id를 찾아냄
+        Long userOrderId = userOrders.getOrderId();
+
+        // 해당 주문id에 대한 주문 아이템들을 찾아서 리스트에 추가
+        List<OrderItem> orderItems = orderItemRepository.findByOrder_OrderId(userOrderId);
+
+        // OrderItem을 OrderItemDTO로 변환하여 리스트에 추가
+        for(OrderItem orderItem : orderItems){
+            UserOrderItems.add(OrderItemDTO.toOrderItemDTO(orderItem));
+        }
+
+        return UserOrderItems;
+    }
+    // 사용자의 주문 정보 찾기
+    @Override
+    public List<OrderDTO> findMemberOrder(Long memberId){
+        List<OrderDTO> UserOrder = new ArrayList<>();
+
+        List<Order> orderList = orderRepository.findAllByMember_MemberId(memberId);
+
+        for(Order order : orderList){
+            if(order.getMember().getMemberId() == memberId) {
+                UserOrder.add(OrderDTO.toOrderDTO(order));
+            }
+        }
+        return UserOrder;
+    }
 }

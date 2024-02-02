@@ -839,7 +839,7 @@ Footer
 ------------------------------------------
 */
 .footer > .row.max-inner {
-    padding: 100px 0; }
+    padding: 50px 0; }
 .footer > .row.max-inner:before {
     content: "";
     display: block;
@@ -1276,7 +1276,7 @@ Site-wide media queries
 */
 @media screen and (max-width: 1170px) {
     .max-inner {
-        max-width: 960px; }
+        max-width: 1060px; }
 
     .header > .row > .columns {
         display: table;

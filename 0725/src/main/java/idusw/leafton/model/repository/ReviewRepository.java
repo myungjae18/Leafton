@@ -2,6 +2,7 @@ package idusw.leafton.model.repository;
 
 import idusw.leafton.model.DTO.ProductDTO;
 import idusw.leafton.model.DTO.ReviewDTO;
+import idusw.leafton.model.entity.Member;
 import idusw.leafton.model.entity.Product;
 import idusw.leafton.model.entity.Review;
 import org.springframework.data.domain.Page;
@@ -32,4 +33,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long>{
 
     @Override
     <S extends Review> S save(S reivew);
+
+    Optional<Review> findByMemberAndProduct(Member member, Product product);
+
+
 }

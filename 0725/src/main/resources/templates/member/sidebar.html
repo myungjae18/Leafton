@@ -29,10 +29,10 @@
             <span class="sidebar-title">결제</span>
             <br>
             <br>
-            <a th:href="@{/member/myPage(type='orderlist')}">주문 내역</a>
+            <a th:href="@{/member/info(type='orderlist')}">주문 내역</a>
             <br>
             <br>
-            <a th:href="@{/pay/cart}">장바구니</a>
+            <a th:href="@{/pay/cart/{memberId}(memberId=${session.memberDTO.memberId})}">장바구니</a>
         </div>
         <div>
             <hr>

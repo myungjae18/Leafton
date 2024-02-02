@@ -1,18 +1,20 @@
 package idusw.leafton.controller;
 
-import idusw.leafton.model.DTO.CartDTO;
-import idusw.leafton.model.DTO.MemberDTO;
-import idusw.leafton.model.DTO.StyleDTO;
-import idusw.leafton.model.service.CartService;
-import idusw.leafton.model.service.EventService;
-import idusw.leafton.model.service.MemberService;
-import idusw.leafton.model.service.StyleService;
+import idusw.leafton.model.DTO.*;
+import idusw.leafton.model.entity.Cart;
+import idusw.leafton.model.entity.CartItem;
+import idusw.leafton.model.entity.Order;
+import idusw.leafton.model.entity.OrderItem;
+import idusw.leafton.model.service.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
 
 @RequestMapping(value = "/member")
 @Controller
@@ -24,6 +26,8 @@ public class MemberController {
     @Autowired
     CartService cartService;
     @Autowired
+    OrderService orderService;
+    @Autowired
     EventService eventService;
 
     //로그인 페이지로 이동
@@ -31,16 +35,49 @@ public class MemberController {
     private String goLogin(HttpServletRequest request) {
         request.setAttribute("type", request.getParameter("type"));
         request.setAttribute("styleList", styleService.getAll());
-
         return "/member/login";
     }
 
     //마이 페이지로 이동
     @GetMapping(value="/info")
-    private String goMyPage(HttpServletRequest request, @RequestParam String type) {
+    private String goMyPage(HttpServletRequest request, @RequestParam String type, HttpSession session, Model model) {
         request.setAttribute("type", type);
         if(type.equals("changeSt")) {
             request.setAttribute("styleList", styleService.getAll());
+        }
+        if(type.equals("orderlist")){
+            MemberDTO member = (MemberDTO) session.getAttribute("memberDTO");
+
+            List<OrderDTO> memberOrders = orderService.findMemberOrder(member.getMemberId());
+
+            // 주문 목록을 order_date로 정렬
+            Collections.sort(memberOrders, Comparator.comparing(OrderDTO::getOrderDate).reversed());
+
+            Map<OrderDTO, Map<String, Object>> ordersMap = new LinkedHashMap<>();
+
+            for(OrderDTO order : memberOrders){
+                List<OrderItemDTO> orderItems = orderService.allUserOrderView(order);
+                int totalPrice = 0;
+
+                for (OrderItemDTO orderItem : orderItems) {
+                    totalPrice += orderItem.getCount() * orderItem.getProductDTO().getPrice() * (1 - orderItem.getProductDTO().getSalePercentage()/100.0);
+                }
+                int deliveryFee = orderService.calculateDeliveryFee(totalPrice);
+
+                Map<String, Object> orderInfo = new HashMap<>();
+                orderInfo.put("orderItems", orderItems);
+                orderInfo.put("totalPrice", totalPrice);
+                orderInfo.put("deliveryFee", deliveryFee);
+
+                ordersMap.put(order, orderInfo);
+            }
+            String message = (String) model.getAttribute("message");
+            if (message != null) {
+                model.addAttribute("message", message);
+            }
+
+            model.addAttribute("ordersMap", ordersMap);
+
         }
         return "/member/info";
     }
@@ -50,7 +87,6 @@ public class MemberController {
     private String logout(HttpServletRequest request){
         HttpSession session = request.getSession();
         session.invalidate();//세션 회수
-
         request.setAttribute("eventList", eventService.getAll());
 
         return "/main/index";
@@ -59,7 +95,7 @@ public class MemberController {
     //로그인 요청을 처리하는 메서드
     @PostMapping(value="/login")
     private String login(@ModelAttribute MemberDTO memberDTO, HttpServletRequest request){
-        //view에서 넘어온 email과 password를 이용하여  select
+        //view에서 넘어온 email과 password를 이용하여 select
         MemberDTO memberResult = memberService.loginCheck(memberDTO);
 
         if(memberResult != null) //로그인 성공 시
@@ -92,10 +128,9 @@ public class MemberController {
             MemberDTO result = memberService.save(memberDTO);
             cartService.createCart(result);
         }
-
         request.setAttribute("eventList", eventService.getAll());
 
-        return "/main/index";
+        return "redirect:/main/index";
     }
 
     //회원 정보 수정 요청을 처리하는 메서드
