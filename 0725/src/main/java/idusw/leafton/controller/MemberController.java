@@ -112,6 +112,7 @@ public class MemberController {
         } else { //로그인 실패 시
             //request에 message 주입 후 다시 로그인 페이지로 이동
             request.setAttribute("message", "아이디나 비밀번호가 일치하지 않습니다");
+            request.setAttribute("styleList", styleService.getAll());
             return "/member/login";
         }
     }
