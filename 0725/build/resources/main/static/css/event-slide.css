@@ -53,6 +53,9 @@
     align-items: center;
     cursor: pointer;
 }
+#eventTab{
+   width:5000px;
+}
 #categoryTab{
     position: absolute;
 }

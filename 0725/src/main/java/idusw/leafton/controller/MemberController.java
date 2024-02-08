@@ -123,6 +123,7 @@ public class MemberController {
         //이메일 중복체크 후 중복이 아닐 경우 가입 로직으로 진행
         if (memberService.emailCheck(memberDTO.getEmail()) != null) {
             request.setAttribute("message", "이미 사용 중인 이메일입니다");
+            request.setAttribute("styleList", styleService.getAll());
             return "/member/login";
         } else {
             //memberDTO에 넣을 styleDTO 생성하여 pathVariable로 받은 styleId 주입
