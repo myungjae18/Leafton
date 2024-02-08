@@ -78,14 +78,14 @@
       <!--버튼/검색 메뉴 끝-->
       <!--검색 창-->
       <div id="searchBox">
-        <form action="/product/shop/mainCategory" method="get">
+        <form action="/product/shop" method="get">
           <select class="select-box" name="searchType">
-            <option value="category">카테고리 검색</option>
+            <option value="category" checked>카테고리 검색</option>
             <option value="material">재료 검색</option>
             <option value="productName">상품명 검색</option>
           </select>
           <div class="blank-box"></div>
-          <input type="search" class="searchbar" placeholder="검색어 입력" name="value" />
+          <input type="search" class="searchbar" placeholder="검색어 입력" name="searchValue" />
           <button type="submit" class="search-button"><span class="fa fa-search"></span></button>&nbsp;&nbsp;
           <button type="button" class="search-button" onclick="controlHeader('close')">X</button>
         </form>

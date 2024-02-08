@@ -37,7 +37,7 @@
         <input type="text" class="input-field" name="address" th:value="${session.memberDTO.address}"/><br><br>
         <label>&nbsp;선호 스타일</label>
         <input type="text" class="input-field" th:value="${session.memberDTO.styleDTO.name}" style="width:47%;"/>
-        &nbsp;&nbsp;<button type="button">변경</button><br><br>
+        &nbsp;&nbsp;<button type="button" th:onclick="|location.href='@{/member/info(type=changeSt)}'|">변경</button><br><br>
         <label></label>
         <button>수정</button>
         <button type="button" onclick="edit('delete')">탈퇴</button>
@@ -75,18 +75,12 @@
     <div class="main-info">
       <form action="/member/edit?type=changeSt" method="post" id="form-style">
         <input type="hidden" name="memberId" th:value="${session.memberDTO.memberId}"/>
-        <input type="radio" id="modern" name="styleId" class="checkbox" value="1" checked>
-        <label for="modern" th:text="${styleList.get(0).name}"></label>
-        <img src="/static/images/style/modern.jpg" class="style-image">
-        <br><br>
-        <input type="radio" id="classic" name="styleId" class="checkbox" value="2">
-        <label for="classic" th:text="${styleList.get(1).name}">classic</label>
-        <img src="/static/images/style/classic.jpg" class="style-image">
-        <br><br>
-        <input type="radio" id="upcycling" name="styleId" class="checkbox" value="3">
-        <label for="upcycling" th:text="${styleList.get(2).name}">upcycling</label><br>
-        <img src="/static/images/style/upcycling.jpg" class="style-image">
-        &nbsp;&nbsp;<br><br>
+        <th:block th:each="style : ${styleList}">
+          <input type="radio" th:id="${style.name}" name="styleId" class="checkbox" th:value="${style.styleId}" checked>
+          <label th:for="${style.name}" th:text="${style.name}"></label>
+          <img th:src="${style.image}" class="style-image">
+          <br><br>
+        </th:block>
         <button>변경</button><br><br>
       </form>
     </div>

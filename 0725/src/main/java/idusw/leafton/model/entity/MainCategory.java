@@ -19,11 +19,15 @@ public class MainCategory {
     @Column
     private String name;
 
+    @Column
+    private String image;
+
     public static MainCategory toMainCategoryEntity(MainCategoryDTO mainCategoryDTO){
         MainCategory mainCategory = new MainCategory();
 
         mainCategory.setMainCategoryId(mainCategoryDTO.getMainCategoryId());
         mainCategory.setName(mainCategoryDTO.getName());
+        mainCategory.setImage(mainCategoryDTO.getImage());
 
         return mainCategory;
     }

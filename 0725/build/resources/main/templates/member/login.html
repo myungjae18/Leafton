@@ -36,20 +36,10 @@
             <br><br><br>
             <label>prefferred style</label>
             <br>
-            <div class="style-wrapper">
-                <input type="radio" id="modern" name="styleId" class="checkbox" value="1" onclick="setStyle(event)">
-                <label for="modern" th:text="${styleList.get(0).name}"></label>
-                <img src="/static/images/style/modern.jpg" class="style-image">
-            </div>
-            <div class="style-wrapper">
-                <input type="radio" id="classic" name="styleId" class="checkbox" value="2" onclick="setStyle(event)">
-                <label for="classic" th:text="${styleList.get(1).name}"></label>
-                <img src="/static/images/style/classic.jpg" class="style-image">
-            </div>
-            <div class="style-wrapper">
-                <input type="radio" id="upcycling" name="styleId" class="checkbox" value="3" onclick="setStyle(event)">
-                <label for="upcycling" th:text="${styleList.get(2).name}"></label><br>
-                <img src="/static/images/style/upcycling.jpg" class="style-image">
+            <div class="style-wrapper" th:each="style : ${styleList}">
+                <input type="radio" th:id="${style.name}" name="styleId" class="checkbox" th:value="${style.styleId}" onclick="setStyle(event)">
+                <label th:for="${style.name}" th:text="${style.name}"></label>
+                <img th:src="${style.image}" class="style-image">
             </div>
             &nbsp;&nbsp;<br>
             <button class="submit">REGISTER</button>

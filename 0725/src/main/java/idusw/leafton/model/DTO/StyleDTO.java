@@ -13,11 +13,14 @@ public class StyleDTO {
 
     private String name;
 
+    private String image;
+
     public static StyleDTO toStyleDTO(Style style) {
         StyleDTO styleDTO = new StyleDTO();
 
         styleDTO.setStyleId(style.getStyleId());
         styleDTO.setName(style.getName());
+        styleDTO.setImage(style.getImage());
 
         return styleDTO;
     }

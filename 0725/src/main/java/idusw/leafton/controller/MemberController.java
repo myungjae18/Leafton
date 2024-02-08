@@ -29,6 +29,8 @@ public class MemberController {
     OrderService orderService;
     @Autowired
     EventService eventService;
+    @Autowired
+    MainCategoryService mainCategoryService;
 
     //로그인 페이지로 이동
     @GetMapping(value = "/login")
@@ -87,6 +89,8 @@ public class MemberController {
     private String logout(HttpServletRequest request){
         HttpSession session = request.getSession();
         session.invalidate();//세션 회수
+
+        request.setAttribute("mainCategoryList", mainCategoryService.viewAllMainCategory());
         request.setAttribute("eventList", eventService.getAll());
 
         return "/main/index";
@@ -102,6 +106,7 @@ public class MemberController {
         {
             HttpSession session = request.getSession(); //session 객체 생성
             session.setAttribute("memberDTO", memberResult); //session에 DTO 주입
+            request.setAttribute("mainCategoryList", mainCategoryService.viewAllMainCategory());
             request.setAttribute("eventList", eventService.getAll());
             return "/main/index";
         } else { //로그인 실패 시
@@ -128,6 +133,7 @@ public class MemberController {
             MemberDTO result = memberService.save(memberDTO);
             cartService.createCart(result);
         }
+        request.setAttribute("mainCategoryList", mainCategoryService.viewAllMainCategory());
         request.setAttribute("eventList", eventService.getAll());
 
         return "redirect:/main/index";
@@ -164,6 +170,7 @@ public class MemberController {
 
                 request.setAttribute("message", "회원 탈퇴가 완료되었습니다. 이용해 주셔서 감사합니다");
                 request.setAttribute("eventList", eventService.getAll());
+                request.setAttribute("mainCategoryList", mainCategoryService.viewAllMainCategory());
 
                 return "/main/index";
             case "changePw":

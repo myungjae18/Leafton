@@ -18,11 +18,15 @@ public class Style {
     @Column
     private String name;
 
+    @Column
+    private String image;
+
     public static Style toStyleEntity(StyleDTO styleDTO) {
         Style style = new Style();
 
         style.setStyleId(styleDTO.getStyleId());
         style.setName(styleDTO.getName());
+        style.setImage(styleDTO.getImage());
 
         return style;
     }
