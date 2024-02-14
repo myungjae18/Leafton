@@ -4,31 +4,28 @@ let width=1170;//이미지의 가로길이
 let count=document.getElementsByClassName("eventImage").length;//이미지의 개수
 let eventTab=document.getElementById("eventTab");//가로 슬라이드
 let categoryTab=document.getElementById("categoryTab");
+let bar = document.getElementById('bar');//슬라이드를 제어하는 바 모양의 div
 
-//페이지 로드 후 실행되는 익명함수
-window.onload = function(){
+document.addEventListener('DOMContentLoaded', function () {
     slideWidth=count*width;
     eventTab.style.width=`${slideWidth}px`;//frame의 길이를 이미지 개수와 길이를 통해 동적으로 결정
 
-    alert(eventTab.style.width+"px");
-
     //setInterval을 사용하여 일정 시간마다 moveSlide() 메서드 호출
     setInterval(moveEventSlide, 4000);
-}
 
-document.addEventListener('DOMContentLoaded', function () {
     // 마우스의 위치값 저장
     let x = 0;
-    let y = 0;
-
-    // 대상 Element 가져옴
-    let bar = document.getElementById('bar');
 
     // 마우스 누른 순간 이벤트
     const mouseDownHandler = function (e) {
         // 누른 마우스 위치값을 가져와 저장
         x = e.clientX;
 
+        if(bar.offsetLeft>870){
+            bar.style.left = `870px`;
+        }else if(bar.offsetLeft<0){
+            bar.style.left = `0px`;
+        }
         // 마우스 이동 및 해제 이벤트를 등록
         document.addEventListener('mousemove', mouseMoveHandler);
         document.addEventListener('mouseup', mouseUpHandler);
@@ -38,19 +35,17 @@ document.addEventListener('DOMContentLoaded', function () {
         // 마우스 이동시 초기 위치와의 거리차 계산
         const dx = e.clientX - x;
 
-        if(bar.offsetLeft>=0 && bar.offsetLeft<=870){
-            // 마우스 이동 거리 만큼 Element의 left 위치값에 반영
-            bar.style.left = `${bar.offsetLeft + dx}px`;
-            categoryTab.style.left = `${categoryTab.offsetLeft - dx*0.2}px`;
-        } else if(bar.offsetLeft>870){
-            bar.style.left = `${bar.offsetLeft - 10}px`;
-        } else if(bar.offsetLeft<0){
-            bar.style.left = `${bar.offsetLeft + 10}px`;
-        }
-
+        // 마우스 이동 거리 만큼 Element의 left 위치값에 반영
+        bar.style.left = `${bar.offsetLeft + dx}px`;
+        categoryTab.style.left = `${categoryTab.offsetLeft - dx*0.2}px`;
 
         // 기준 위치 값을 현재 마우스 위치로 update
         x = e.clientX;
+
+        if(bar.offsetLeft>870 || bar.offsetLeft<0){
+            document.removeEventListener('mousemove', mouseMoveHandler);
+            document.removeEventListener('mouseup', mouseUpHandler);
+        }
     };
 
     const mouseUpHandler = function () {
@@ -61,6 +56,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     bar.addEventListener('mousedown', mouseDownHandler);
 });
+
+
 
 //imageTab의 위치에 따라 translateX의 값을 제어하는 메서드
 function moveEventSlide(){
