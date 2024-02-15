@@ -1,10 +1,9 @@
-let x=1;//슬라이드의 이동거리를 결정하는 변수
+let num=1;//슬라이드의 이동거리를 결정하는 변수
 let slideWidth=0;
 let width=1170;//이미지의 가로길이
 let count=document.getElementsByClassName("eventImage").length;//이미지의 개수
 let eventTab=document.getElementById("eventTab");//가로 슬라이드
 let categoryTab=document.getElementById("categoryTab");
-let parent=document.getElementsByClassName("bar-container").item(0);//bar의 부모 div
 let bar = document.getElementById('bar');//슬라이드를 제어하는 바 모양의 div
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -24,8 +23,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if(bar.offsetLeft>870){
             bar.style.left = `870px`;
+            categoryTab.style.left=`-172px`;
         }else if(bar.offsetLeft<0){
             bar.style.left = `0px`;
+            categoryTab.style.left=`0px`;
         }
         // 마우스 이동 및 해제 이벤트를 등록
         document.addEventListener('mousemove', mouseMoveHandler);
@@ -35,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const mouseMoveHandler = function (e) {
         // 마우스 이동시 초기 위치와의 거리차 계산
         const dx = e.clientX - x;
-
 
         // 마우스 이동 거리 만큼 Element의 left 위치값에 반영
         bar.style.left = `${bar.offsetLeft + dx}px`;
@@ -56,23 +56,18 @@ document.addEventListener('DOMContentLoaded', function () {
         document.removeEventListener('mouseup', mouseUpHandler);
     };
 
-    const mouseClickHandler = function (e) {
-        bar.style.left = `${e.clientX}px`;
-    }
-
     bar.addEventListener('mousedown', mouseDownHandler);
-    parent.addEventListener('click', mouseClickHandler);
 });
 
 
 
 //imageTab의 위치에 따라 translateX의 값을 제어하는 메서드
 function moveEventSlide(){
-    if(x==count){//한바퀴를 다 돌았을 때 다시 처음으로 이동
+    if(num=count){//한바퀴를 다 돌았을 때 다시 처음으로 이동
         document.getElementById("eventTab").style.transform='translateX(0px)';
-        x=1;
+        num=1;
     }else{//슬라이드를 x와 이미지의 가로길이만큼 왼쪽으로 이동
         document.getElementById("eventTab").style.transform='translateX(-'+x*width+'px)';
-        x++;
+        num++;
     }
 }

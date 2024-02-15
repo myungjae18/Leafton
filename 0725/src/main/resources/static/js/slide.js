@@ -1,4 +1,4 @@
-let x=1;//슬라이드의 이동거리를 결정하는 변수
+let num=1;//슬라이드의 이동거리를 결정하는 변수
 let slideWidth=0;
 let width=1170;//이미지의 가로길이
 let count=document.getElementsByClassName("eventImage").length;//이미지의 개수
@@ -23,8 +23,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if(bar.offsetLeft>870){
             bar.style.left = `870px`;
+            categoryTab.style.left=`-172px`;
         }else if(bar.offsetLeft<0){
             bar.style.left = `0px`;
+            categoryTab.style.left=`0px`;
         }
         // 마우스 이동 및 해제 이벤트를 등록
         document.addEventListener('mousemove', mouseMoveHandler);
@@ -61,11 +63,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //imageTab의 위치에 따라 translateX의 값을 제어하는 메서드
 function moveEventSlide(){
-    if(x==count){//한바퀴를 다 돌았을 때 다시 처음으로 이동
+    if(num=count){//한바퀴를 다 돌았을 때 다시 처음으로 이동
         document.getElementById("eventTab").style.transform='translateX(0px)';
-        x=1;
+        num=1;
     }else{//슬라이드를 x와 이미지의 가로길이만큼 왼쪽으로 이동
         document.getElementById("eventTab").style.transform='translateX(-'+x*width+'px)';
-        x++;
+        num++;
     }
 }

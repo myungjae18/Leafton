@@ -36,7 +36,7 @@
         <label>&nbsp;주소</label>
         <input type="text" class="input-field" name="address" th:value="${session.memberDTO.address}"/><br><br>
         <label>&nbsp;선호 스타일</label>
-        <input type="text" class="input-field" th:value="${session.memberDTO.styleDTO.name}" style="width:47%;"/>
+        <input type="text" class="input-field" th:value="${session.memberDTO.styleDTO.name}"/>
         &nbsp;&nbsp;<button type="button" th:onclick="|location.href='@{/member/info(type=changeSt)}'|">변경</button><br><br>
         <label></label>
         <button>수정</button>
@@ -76,7 +76,8 @@
       <form action="/member/edit?type=changeSt" method="post" id="form-style">
         <input type="hidden" name="memberId" th:value="${session.memberDTO.memberId}"/>
         <th:block th:each="style : ${styleList}">
-          <input type="radio" th:id="${style.name}" name="styleId" class="checkbox" th:value="${style.styleId}" checked>
+          <input type="radio" th:if="${session.memberDTO.styleDTO.styleId==style.styleId}" th:id="${style.name}" name="styleId" class="checkbox" th:value="${style.styleId}" checked>
+          <input type="radio" th:if="${session.memberDTO.styleDTO.styleId!=style.styleId}" th:id="${style.name}" name="styleId" class="checkbox" th:value="${style.styleId}">
           <label th:for="${style.name}" th:text="${style.name}"></label>
           <img th:src="${style.image}" class="style-image">
           <br><br>

@@ -55,3 +55,14 @@
     border-left: none;
     border-right: 2px solid green;
 }
+.close-button{
+    height:40px;
+    font-size:15px;
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+}
