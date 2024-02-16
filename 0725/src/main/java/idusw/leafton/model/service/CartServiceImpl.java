@@ -36,6 +36,7 @@ public class CartServiceImpl implements CartService{
             findCart = Cart.createCart(member);
             cartRepository.save(findCart);
         }
+
         Product product = productRepository.findById(newProduct.getProductId()).orElse(null); //카트에 추가할 상품
         CartItem cartItem = cartItemRepository.findByCart_CartIdAndProduct_ProductId(
                 findCart.getCartId(), newProduct.getProductId()).orElse(null); //장바구니에 있는 상품 찾기
@@ -54,7 +55,7 @@ public class CartServiceImpl implements CartService{
         }
 
     }
-    // DTO 변환 처리?
+    // DTO 변환 처리? -> -완-
     // User라고 되어있는 부분 Member로 변경 및 리펙토링
     @Override
     public List<CartItemDTO> allUserCartView(CartDTO userCart){
@@ -74,7 +75,6 @@ public class CartServiceImpl implements CartService{
         }
         return UserCartItems;
     }
-
     // 장바구니에 존재하는 상품들의 정보를 DB에서 찾아오기
     @Override
     public CartItemDTO findCartItemById(Long cartItem){
@@ -85,7 +85,6 @@ public class CartServiceImpl implements CartService{
             return null;
         }
     }
-
     // 사용자의 장바구니 정보 찾기
     @Override
     public CartDTO findMemberCart(Long memberId){
@@ -144,11 +143,12 @@ public class CartServiceImpl implements CartService{
         cartItemRepository.deleteByCart_CartId(cartId);
         cartRepository.deleteById(cartId);
     }
-
-
+    // 장바구니 생성
     @Override
     public void createCart(MemberDTO result){
-        Cart.createCart(result);
+        Cart cart = Cart.createCart(result);
+        cartRepository.save(cart);
+
     }
 
 

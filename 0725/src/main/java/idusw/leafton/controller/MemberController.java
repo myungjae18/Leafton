@@ -10,6 +10,11 @@ import idusw.leafton.model.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,25 +44,25 @@ public class MemberController {
         request.setAttribute("styleList", styleService.getAll());
         return "/member/login";
     }
-
     //마이 페이지로 이동
     @GetMapping(value="/info")
-    private String goMyPage(HttpServletRequest request, @RequestParam String type, HttpSession session, Model model) {
+    private String goMyPage(HttpServletRequest request, @RequestParam(required = false, defaultValue = "0") int page,
+                            @RequestParam(required = false, defaultValue = "3") int size, @RequestParam String type,
+                            HttpSession session, Model model) {
         request.setAttribute("type", type);
         if(type.equals("changeSt")) {
             request.setAttribute("styleList", styleService.getAll());
         }
         if(type.equals("orderlist")){
             MemberDTO member = (MemberDTO) session.getAttribute("memberDTO");
+            // 페이지 번호, 페이지 크기, 정렬 방식을 지정하여 PageRequest 객체를 생성
+            Pageable pageable = PageRequest.of(page, size, Sort.by("orderDate").descending());
 
-            List<OrderDTO> memberOrders = orderService.findMemberOrder(member.getMemberId());
-
-            // 주문 목록을 order_date로 정렬
-            Collections.sort(memberOrders, Comparator.comparing(OrderDTO::getOrderDate).reversed());
+            Page<OrderDTO> memberOrdersPage = orderService.findMemberOrder(member.getMemberId(), pageable);
 
             Map<OrderDTO, Map<String, Object>> ordersMap = new LinkedHashMap<>();
 
-            for(OrderDTO order : memberOrders){
+            for(OrderDTO order : memberOrdersPage.getContent()){
                 List<OrderItemDTO> orderItems = orderService.allUserOrderView(order);
                 int totalPrice = 0;
 
@@ -73,17 +78,19 @@ public class MemberController {
 
                 ordersMap.put(order, orderInfo);
             }
+
             String message = (String) model.getAttribute("message");
             if (message != null) {
                 model.addAttribute("message", message);
             }
 
             model.addAttribute("ordersMap", ordersMap);
+            model.addAttribute("totalPages", memberOrdersPage.getTotalPages()); // 총 페이지 수를 뷰에 전달
+            model.addAttribute("page", page); // 현재 페이지 번호를 뷰에 전달
 
         }
         return "/member/info";
     }
-
     //로그아웃 요청을 처리하는 메서드
     @GetMapping(value="/logout")
     private String logout(HttpServletRequest request){

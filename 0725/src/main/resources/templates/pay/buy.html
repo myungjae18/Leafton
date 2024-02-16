@@ -41,7 +41,7 @@
                 HOME >
                 <span>CART</span>
                 >
-                <strong>BUY</strong>
+                <strong>ORDER</strong>
             </p>
         </nav>
         <form th:action="@{/pay/order/{memberId}(memberId=${session.memberDTO.getMemberId()})}" method="post">
@@ -105,7 +105,17 @@
                         </thead>
                         <tbody th:each="entry : ${productEvents}">
                         <tr>
-                            <td class="product-name" th:text="${entry.key.name}"></td>
+                            <td class="product-name"><article>
+                                <a href="#">
+                                    <!-- <img src="	https://via.placeholder.com/80x80" alt="1"> -->
+                                    <img th:src="${entry.key.getMainImage()}" alt="x">
+                                </a>
+                                <div>
+                                    <h2 th:text="${entry.key.name}"><a href="#">상품명</a></h2>
+                                    <p th:text="${entry.key.getContent()}">상품설명</p>
+                                </div>
+                            </article></td>
+                            <!-- <td class="product-name" th:text="${entry.key.name}"></td> -->
                             <td class="event" th:text="${entry.value}"></td>
                             <td class="product-price" th:if="${entry.value != '이벤트 없음'}">
                                 <span th:with="discountedPrice=${entry.key.getPrice() * (1 - entry.key.getSalePercentage()/100.0)}">

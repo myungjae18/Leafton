@@ -10,11 +10,13 @@ import idusw.leafton.model.repository.OrderItemRepository;
 import idusw.leafton.model.repository.OrderRepository;
 import idusw.leafton.model.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -24,6 +26,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final ProductRepository productRepository;
+
     // 주문 생성
     @Override
     public OrderDTO addOrder(OrderDTO orderDTO){
@@ -42,15 +45,14 @@ public class OrderServiceImpl implements OrderService {
         orderItemRepository.save(orderItem);
 
         return OrderItemDTO.toOrderItemDTO(orderItem);
-
     }
     // 상품 재고 감소
     @Override
     public void decreaseStock(ProductDTO productDTO, int count){
 
         productDTO.setAmount(productDTO.getAmount() - count);
-        productRepository.save(Product.toProductEntity(productDTO));
 
+        productRepository.save(Product.toProductEntity(productDTO));
     }
     // 배송비 계산
     @Override
@@ -61,7 +63,7 @@ public class OrderServiceImpl implements OrderService {
             return 3000;
         }
     }
-    //내 주문 내역 보기
+    //사용자 주문 정보로 해당하는 주문한 상품 찾기
     @Override
     public List<OrderItemDTO> allUserOrderView(OrderDTO userOrders){
         // 사용자의 모든 주문 아이템을 담아둘 리스트 선언
@@ -80,18 +82,20 @@ public class OrderServiceImpl implements OrderService {
 
         return UserOrderItems;
     }
-    // 사용자의 주문 정보 찾기
+    // 사용자의 주문 정보 찾기 + 페이징 처리
     @Override
-    public List<OrderDTO> findMemberOrder(Long memberId){
-        List<OrderDTO> UserOrder = new ArrayList<>();
+    public Page<OrderDTO> findMemberOrder(Long memberId, Pageable pageable){
+        Page<Order> orderPage = orderRepository.findAllByMember_MemberId(memberId, pageable);
 
-        List<Order> orderList = orderRepository.findAllByMember_MemberId(memberId);
+        List<OrderDTO> userOrder = new ArrayList<>();
 
-        for(Order order : orderList){
+        for(Order order : orderPage.getContent()){
             if(order.getMember().getMemberId() == memberId) {
-                UserOrder.add(OrderDTO.toOrderDTO(order));
+                userOrder.add(OrderDTO.toOrderDTO(order));
             }
         }
-        return UserOrder;
+
+        return new PageImpl<>(userOrder, pageable, orderPage.getTotalElements());
     }
+
 }

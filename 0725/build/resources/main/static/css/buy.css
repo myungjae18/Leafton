@@ -109,7 +109,7 @@
     top: 0; /* 스크롤을 내려도 항상 상단에 고정 */
     margin-left: 20px; /* 왼쪽 여백 추가 */
     margin-top: 20px;
-    width: 240px;
+    width: 260px;
 
 }
 
@@ -228,7 +228,7 @@
     border-radius: 12px;
     box-shadow: #6e6e6e;
     border-radius: 12px;
-    box-shadow: rgba(0,0,0,0.08) 0px 1.5px 2px 0px,
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, rgba(0, 0, 0, 0.16) 0px 0px 2px 0px;
     rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
     background-color: rgb(255,255,255);
 
@@ -249,9 +249,7 @@
     text-align: center;
     padding: 12px;
 }
-#product > .order > form > .discount > div > table td > .product-name{
 
-}
 #product > .order > form > .discount > div > table td > span > s {
     color: #6e6e6e;
 }
@@ -272,6 +270,19 @@
     color: #3371c9;
     outline: none;
 }
+#product > .order > form > .discount .product-name > article {
+    padding: 6px;
+    overflow: hidden;
+}
+#product > .order > form > .discount .product-name > article > a {
+    float: left;
+    display: inline-block;
+}
+#product > .order > form > .discount .product-name > article > div {
+    float: left;
+    margin-left: 10px;
+}
+#product > .order > form > .discount .product-name article > a img { width: 80px;}
 #product > .order > form > .payment > div { margin-bottom: 10px; }
 #product > .order > form > .payment > div > span {
     display: inline-block;

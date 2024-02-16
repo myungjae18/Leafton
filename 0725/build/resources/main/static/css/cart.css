@@ -1,3 +1,15 @@
+.emptyCart {
+    font-size: .75rem;
+    text-align: center;
+    margin-top: 30px;
+}
+.category-title {
+    font-size: 1.35rem;
+    text-align: center;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
 #product > .order { /*추가 사항 */
     margin : 15px;
 }
@@ -17,6 +29,28 @@
 }
 
 #product > .order > form > table tr { border-bottom: 1px solid #d3d3d3 ;}
+#product > .order .noProduct {
+    height:50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #6e6e6e;
+    font-size: 2.075rem;
+}
+#product > .order .goShop {
+    height:50%;
+    background-color:#f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#product > .order .goShop > a {
+    display:inline-block;
+    padding:10px 20px;
+    background-color:#008000;
+    color:white;
+    text-decoration:none;
+}
 
 #product > .order > form > table th {
     padding: 12px 0;
@@ -49,7 +83,7 @@
     display: inline-block;
 }
 
-#product > .order > form > table td > article > a > img { width: 80px;}
+#product > .order > form > table td > article > a > img { width: 80px; height: 80px;}
 
 #product > .order > form > table td > article > div {
     float: left;

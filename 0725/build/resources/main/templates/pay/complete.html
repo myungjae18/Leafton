@@ -49,7 +49,7 @@
         <nav>
             <h1>주문완료</h1>
             <p>
-                HOME > CART > BUY >
+                HOME > CART > ORDER >
                 <strong>COMPLETE</strong>
             </p>
         </nav>
@@ -74,62 +74,55 @@
                 </tr>
                 <tr th:each="orderItem : ${orderItems}">
                     <td><article>
-                        <a href="#">
-                            <img src="	https://via.placeholder.com/80x80" alt="1">
-                        </a>
-                        <div>
-                            <h2 th:text="${orderItem.getProductDTO().getName()}"><a href="#">상품명</a></h2>
-                            <p th:text="${orderItem.getProductDTO().getContent()}">상품설명</p>
-                        </div>
-                    </article></td>
-                    <td th:text="${orderItem.getCount()}"></td>
-                    <td th:text="'₩' + ${#numbers.formatInteger(orderItem.getProductDTO().getPrice(), 0, 'COMMA')}">판매가</td>
-                    <td th:if="${orderItem.getProductDTO().getSalePercentage() == 0}" th:text="'적용된 할인 없음'">할인금액</td>
-                    <td th:unless="${orderItem.getProductDTO().getSalePercentage() == 0}">
-                            <span th:with="discountedPrice=${orderItem.getProductDTO().getPrice() *
-                            (1 - orderItem.getProductDTO().getSalePercentage()/100.0)}" th:text="'-₩' + ${#numbers.formatInteger(discountedPrice.intValue(), 0, 'COMMA')}"></span>
-                    </td>
-                    <td th:if="${orderItem.getProductDTO().getSalePercentage() == 0}" th:text="'₩' + ${#numbers.formatInteger(orderItem.getProductDTO().getPrice() * orderItem.getCount(), 1, 'COMMA')}"></td>
-                    <td th:unless="${orderItem.getProductDTO().getSalePercentage() == 0}">
-                             <span th:with="discountedTotalPrice=${orderItem.getProductDTO().getPrice() *
-                             (1 - orderItem.getProductDTO().getSalePercentage()/100.0) * orderItem.getCount()}" th:text="'₩' + ${#numbers.formatInteger(discountedTotalPrice.intValue(), 0, 'COMMA')}"></span>
-                    </td>
-                <tr class="total">
-                    <td colspan="4"></td>
-                    <td>
-                        <table>
-                            <tr>
-                                <td>총 상품금액</td>
-                                <td>
-                                    <span th:text="'₩' + ${#numbers.formatInteger(totalPrice, 0, 'COMMA')}">34,000원</span>
-                                </td>
-                            </tr>
-                            <!--
-                            <tr>
-                                <td>총 할인금액</td>
-                                <td>
-                                    <span>-2,000원</span>
-                                </td>
-                            </tr>
-                            -->
-                            <tr>
-                                <td>배송비</td>
-                                <td>
-                                    <span th:text="'₩' + ${#numbers.formatInteger(order.getDeliveryFee(), 0, 'COMMA')}">3,000원</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>총 결제금액</td>
-                                <td>
-                                    <span th:text="'₩' + ${#numbers.formatInteger(totalPrice + order.getDeliveryFee(), 0, 'COMMA')}">35,000</span>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </article>
-        <!-- 주문정보 -->
+                        <a th:href="@{/product/product/{productId}(productId=${orderItem.getProductDTO().getProductId})}">
+                             <img th:src="${orderItem.getProductDTO().getMainImage()}" alt="x">
+                            <!-- <img src="	https://via.placeholder.com/80x80" alt="1"> -->
+                         </a>
+                         <div>
+                             <h2 th:text="${orderItem.getProductDTO().getName()}"><a href="#">상품명</a></h2>
+                             <p th:text="${orderItem.getProductDTO().getContent()}">상품설명</p>
+                         </div>
+                     </article></td>
+                     <td th:text="${orderItem.getCount()}"></td>
+                     <td th:text="'₩' + ${#numbers.formatInteger(orderItem.getProductDTO().getPrice(), 0, 'COMMA')}">판매가</td>
+                     <td th:if="${orderItem.getProductDTO().getSalePercentage() == 0}" th:text="'적용된 할인 없음'">할인금액</td>
+                     <td th:unless="${orderItem.getProductDTO().getSalePercentage() == 0}">
+                             <span th:with="discountedPrice=${orderItem.getProductDTO().getPrice() *
+                             (1 - orderItem.getProductDTO().getSalePercentage()/100.0)}" th:text="'-₩' + ${#numbers.formatInteger(orderItem.getProductDTO().getPrice() - discountedPrice.intValue(), 0, 'COMMA')}"></span>
+                     </td>
+                     <td th:if="${orderItem.getProductDTO().getSalePercentage() == 0}" th:text="'₩' + ${#numbers.formatInteger(orderItem.getProductDTO().getPrice() * orderItem.getCount(), 1, 'COMMA')}"></td>
+                     <td th:unless="${orderItem.getProductDTO().getSalePercentage() == 0}">
+                              <span th:with="discountedTotalPrice=${orderItem.getProductDTO().getPrice() *
+                              (1 - orderItem.getProductDTO().getSalePercentage()/100.0) * orderItem.getCount()}" th:text="'₩' + ${#numbers.formatInteger(discountedTotalPrice.intValue(), 0, 'COMMA')}"></span>
+                     </td>
+                 <tr class="total">
+                     <td colspan="4"></td>
+                     <td>
+                         <table>
+                             <tr>
+                                 <td>총 상품금액</td>
+                                 <td>
+                                     <span th:text="'₩' + ${#numbers.formatInteger(totalPrice, 0, 'COMMA')}">34,000원</span>
+                                 </td>
+                             </tr>
+                             <tr>
+                                 <td>배송비</td>
+                                 <td>
+                                     <span th:text="'₩' + ${#numbers.formatInteger(order.getDeliveryFee(), 0, 'COMMA')}">3,000원</span>
+                                 </td>
+                             </tr>
+                             <tr>
+                                 <td>총 결제금액</td>
+                                 <td>
+                                     <span th:text="'₩' + ${#numbers.formatInteger(totalPrice + order.getDeliveryFee(), 0, 'COMMA')}">35,000</span>
+                                 </td>
+                             </tr>
+                         </table>
+                     </td>
+                 </tr>
+             </table>
+         </article>
+         <!-- 주문정보 -->
         <article class="order">
             <h1 th:text="'주문정보(' + ${order.getOrderDate()} + ')' ">주문정보</h1>
             <table border="0">

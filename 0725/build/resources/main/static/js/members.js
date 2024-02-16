@@ -10,9 +10,10 @@ function memberType(){
 }
 
 
-function buyNow() { /* 추가된 부분 */
+
+function buyNow() {
     if(memberId != 'guest'){
-        var count = document.getElementById('product-quantity').value;
+        var count = document.getElementById('product-count').value; // 수정된 부분
         var form = document.createElement('form');
         form.method = 'post';
         form.action = '/pay/cart/one?memberId=' + memberId + '&productId=' + productId;
@@ -27,5 +28,4 @@ function buyNow() { /* 추가된 부분 */
         alert('로그인이 필요한 서비스입니다!');
         return false;
     }
-
 }

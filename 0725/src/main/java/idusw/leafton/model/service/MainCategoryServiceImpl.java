@@ -21,7 +21,7 @@ public class MainCategoryServiceImpl implements MainCategoryService{
 
        List<MainCategory> mainCategoryList = mainCategoryRepository.findAll();
        List<MainCategoryDTO> mainCategoryDTOList = new ArrayList<>(); //productDTO로 ArrayList 객체만듬
-       for(MainCategory mainCategory : mainCategoryList) {
+       for(MainCategory mainCategory: mainCategoryList) {
            mainCategoryDTOList.add(MainCategoryDTO.toMainCategoryDTO(mainCategory)); //productDTO 객체안에 DTO 데이터 넣음
        }
        return mainCategoryDTOList;

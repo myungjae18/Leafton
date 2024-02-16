@@ -1,13 +1,9 @@
 package idusw.leafton.controller;
 
-import idusw.leafton.model.DTO.CartDTO;
-import idusw.leafton.model.DTO.CartItemDTO;
-import idusw.leafton.model.DTO.MemberDTO;
-import idusw.leafton.model.DTO.ProductDTO;
+import idusw.leafton.model.DTO.*;
 import idusw.leafton.model.entity.CartItem;
-import idusw.leafton.model.service.CartService;
-import idusw.leafton.model.service.MemberService;
-import idusw.leafton.model.service.ProductService;
+import idusw.leafton.model.entity.MainCategory;
+import idusw.leafton.model.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +22,7 @@ public class CartController {
     private final MemberService memberService;
     private final ProductService productService;
     private final CartService cartService;
+    private final MainCategoryService mainCategoryService;
 
     // 해당 사용자의 장바구니에 담긴 물건을 cart.html에 나타냄
     @GetMapping(value = "/cart/{memberId}")
@@ -38,7 +35,6 @@ public class CartController {
             //장바구니에 들어있는 상품 모두 가져오기
             List<CartItemDTO> cartItemList = cartService.allUserCartView(userCart);
 
-
             //장바구니에 들어있는 상뭎들의 총 가격 -> 주문에서 처리해야 할 듯
             int totalPrice = 0; // 최종 주문 정보에 나타내기 위한 물품 총 가격
             int totalCount = 0; // 최종 주문 정보에 나타내기 위한 물품 총 개수
@@ -47,10 +43,13 @@ public class CartController {
                 totalPrice += cartItem.getCount() * cartItem.getProductDTO().getPrice() * (1 - cartItem.getProductDTO().getSalePercentage()/100.0) ;
                 totalCount += cartItem.getCount();
             }
+            List<MainCategoryDTO> mainCategoryDTO = mainCategoryService.viewAllMainCategory();
 
             model.addAttribute("totalCount", totalCount);
             model.addAttribute("totalPrice", totalPrice);
             model.addAttribute("cartItems", cartItemList);
+            model.addAttribute("mainCategoryList", mainCategoryDTO);
+
 
             return "pay/cart";
         }else {
