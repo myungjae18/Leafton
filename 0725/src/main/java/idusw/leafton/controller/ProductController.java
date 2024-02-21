@@ -115,7 +115,6 @@ public class ProductController {
                 request.setAttribute("message", "검색 결과가 없습니다");
                 request.setAttribute("mainCategoryList", mainCategoryService.viewAllMainCategory());
                 request.setAttribute("eventList", eventService.getAll());
-
                 return "/main/index";
             } else {
                 loadProductPage(products, request);
