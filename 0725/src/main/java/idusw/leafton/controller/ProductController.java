@@ -1,10 +1,7 @@
 package idusw.leafton.controller;
 
 import idusw.leafton.model.DTO.*;
-import idusw.leafton.model.entity.Event;
-import idusw.leafton.model.entity.MainMaterial;
 import idusw.leafton.model.service.*;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
@@ -15,9 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
-@RequestMapping(value = "/product")
 @Controller
 @RequiredArgsConstructor // 이 어노테이션은 final이나 @NonNull이 붙은 필드에 대한 생성자를 자동으로 생성해주는 Lombok의 어노테이션
 public class ProductController {
@@ -39,7 +34,7 @@ public class ProductController {
     MainMaterialDTO mainMaterialDTO = null;
     EventDTO eventDTO = null;
 
-    @GetMapping (value="/product/{productId}") //상품 상세 페이지
+    @GetMapping (value="/product/product/{productId}") //상품 상세 페이지
     public String goProduct(@PathVariable Long productId,
                             @RequestParam(required = false, defaultValue = "1", value = "p") int pageNo,
                             @RequestParam(required = false, defaultValue = "registDate", value = "criteria") String criteria,
@@ -80,7 +75,7 @@ public class ProductController {
 
 
     //shop page mapping
-    @GetMapping(value="/shop") // 상품 리스트 처음 시작
+    @GetMapping(value="/product/shop") // 상품 리스트 처음 시작
     public String goShop(@RequestParam(value = "arName", required = false) String arName,
                          @RequestParam(value = "mainCategoryId", required = false) Long mainCategoryId,
                          @RequestParam(value = "subCategoryId", required = false) Long subCategoryId,
@@ -303,7 +298,7 @@ public class ProductController {
 
 
 
-    @PostMapping(value="/review") //리뷰작성
+    @PostMapping(value="/product/review") //리뷰작성
     public String goReview(HttpServletRequest request){
         ReviewDTO reviewDTO = new ReviewDTO();
         MemberDTO memberDTO = memberService.getMemberById(Long.valueOf(request.getParameter("memberId")));
@@ -318,7 +313,7 @@ public class ProductController {
         reviewService.insertReview(reviewDTO);
         return "redirect:/product/product/" + Long.valueOf(request.getParameter("productId"));
     }
-    @GetMapping(value="/review/delete") //리뷰작성
+    @GetMapping(value="/product/review/delete") //리뷰작성
     public String deleteReview(@RequestParam("reviewId") Long reviewId ,@RequestParam("productId") Long productId ,HttpServletRequest request){
         reviewService.deleteReview(reviewId);
         return "redirect:/product/product/" + productId;

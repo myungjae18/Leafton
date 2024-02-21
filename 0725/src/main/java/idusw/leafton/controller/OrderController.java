@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-@RequestMapping(value = "/pay")
 @RequiredArgsConstructor
 @Controller
 public class OrderController {
@@ -26,7 +25,7 @@ public class OrderController {
     private final OrderService orderService;
 
     // 주문 페이지로 이동
-    @GetMapping(value = "/buy/{memberId}")
+    @GetMapping(value = "/pay/buy/{memberId}")
     public String goBuy(@PathVariable("memberId") Long memberId, @RequestParam("checkedItems") String checkedItems, Model model, HttpSession session){
         MemberDTO member = memberService.getMemberById(memberId);
         if(member != null) {
@@ -60,7 +59,7 @@ public class OrderController {
     }
 
     // 주문 처리
-    @PostMapping(value = "/order/{memberId}")
+    @PostMapping(value = "/pay/order/{memberId}")
     public String orderCheckout(@PathVariable("memberId") Long memberId, @ModelAttribute OrderDTO orderDTO, HttpSession session, Model model){
         MemberDTO member = memberService.getMemberById(memberId);
         if(member != null) {
@@ -128,7 +127,7 @@ public class OrderController {
     }
 
     // 바로 구매하기 버튼 클릭시 주문 페이지로 이동 처리
-    @GetMapping(value = "/buy/one")
+    @GetMapping(value = "/pay/buy/one")
     public String goBuyOne(@RequestParam("memberId") Long memberId, @RequestParam("cartOneItemId") Long cartOneItemId, Model model, HttpSession session){
         MemberDTO member = memberService.getMemberById(memberId);
 

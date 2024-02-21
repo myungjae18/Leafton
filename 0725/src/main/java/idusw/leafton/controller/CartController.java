@@ -14,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
-@RequestMapping(value = "/pay")
 @RequiredArgsConstructor
 @Controller
 public class CartController {
@@ -25,7 +24,7 @@ public class CartController {
     private final MainCategoryService mainCategoryService;
 
     // 해당 사용자의 장바구니에 담긴 물건을 cart.html에 나타냄
-    @GetMapping(value = "/cart/{memberId}")
+    @GetMapping(value = "/pay/cart/{memberId}")
     public String userCartPage(@PathVariable("memberId") Long memberId, Model model) {
         MemberDTO member = memberService.getMemberById(memberId);
         if(member != null) {
@@ -58,7 +57,7 @@ public class CartController {
     }
 
     //장바구니에 해당하는 물건 담기
-    @PostMapping(value = "/cart/{memberId}/{productId}")
+    @PostMapping(value = "/pay/cart/{memberId}/{productId}")
     public String addCartItem(@PathVariable("memberId") Long memberId, @PathVariable("productId") Long productId,
                               @RequestParam("count") int count, @RequestParam("type") String type,
                               RedirectAttributes redirectAttributes) {
@@ -78,7 +77,7 @@ public class CartController {
     }
 
     // 장바구니에서 해당하는 물건 제거
-    @GetMapping("/cart/{memberId}/{cartItemId}/delete")
+    @GetMapping("/pay/cart/{memberId}/{cartItemId}/delete")
     public String deleteCartItem(@PathVariable("memberId") Long memberId, @PathVariable("cartItemId") Long cartItemId, Model model) {
         //로그인 한 사용자 id가 db에 존재하는지 확인
         MemberDTO member = memberService.getMemberById(memberId);
@@ -115,7 +114,7 @@ public class CartController {
 
     // 바로 구매하기 버튼 클릭시 장바구니 생성 및 구매 상품 장바구니에 담기
     // 기존에는 @PathVariable을 사용하여 변수를 받아왔지만 css가 꺠지는 오류가 발생하여 @RequestParam으로 변경
-    @PostMapping(value = "/cart/one")
+    @PostMapping(value = "/pay/cart/one")
     public String addOneCartItem(@RequestParam("memberId") Long memberId, @RequestParam("productId") Long productId, int count) {
 
         MemberDTO member = memberService.getMemberById(memberId);
