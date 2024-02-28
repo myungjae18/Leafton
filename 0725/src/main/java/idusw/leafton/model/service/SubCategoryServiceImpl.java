@@ -26,6 +26,14 @@ public class SubCategoryServiceImpl implements SubCategoryService{
         return subCategoryDTOList;
     }
 
+    public List<SubCategoryDTO> viewAllSubCategory(){
+        List<SubCategory> subCategoryList = subCategoryRepository.findAll();
+        List<SubCategoryDTO> subCategoryDTOList = new ArrayList<>();
+        for(SubCategory subCategory : subCategoryList){
+            subCategoryDTOList.add(SubCategoryDTO.toSubCategoryDTO(subCategory));
+        }
+        return subCategoryDTOList;
+    }
     @Override
     public SubCategoryDTO getSubCategoryDetail(Long subCategoryId){
         Optional<SubCategory> opSubCategory = subCategoryRepository.findById(subCategoryId);
@@ -49,5 +57,24 @@ public class SubCategoryServiceImpl implements SubCategoryService{
         } else {
             throw new IllegalArgumentException("Invalid subCategory Id: " + subCategoryId);
         }
+    }
+
+    @Override
+    public SubCategoryDTO insertAndUpdateSubCategory(SubCategoryDTO subCategoryDTO){
+        SubCategory subCategory = SubCategory.toSubCategoryEntity(subCategoryDTO); // entity에 넣기위하여 변경
+        SubCategory result = subCategoryRepository.save(subCategory); // 레파지토리에서 save(insert)한 결과
+        return SubCategoryDTO.toSubCategoryDTO(result); //결과를 dto에 저장
+    }
+
+    @Override
+    public List<SubCategoryDTO> getAll(){
+        List<SubCategory> subCategoryList = subCategoryRepository.findAll();
+        List<SubCategoryDTO> result = new ArrayList<>();
+
+        for(SubCategory subCategory : subCategoryList) {
+            result.add(SubCategoryDTO.toSubCategoryDTO(subCategory));
+        }
+
+        return result;
     }
 }

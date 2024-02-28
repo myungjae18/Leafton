@@ -7,6 +7,7 @@ import idusw.leafton.model.service.MemberService;
 import idusw.leafton.model.service.OrderService;
 
 import idusw.leafton.model.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,6 @@ public class OrderController {
     public String goBuy(@PathVariable("memberId") Long memberId, @RequestParam("checkedItems") String checkedItems, Model model, HttpSession session){
         MemberDTO member = memberService.getMemberById(memberId);
         if(member != null) {
-
             String[] itemIds = checkedItems.split(",");
 
             session.setAttribute("itemIds", itemIds); // 세션에 itemIds 저장 -> 다음 요청에서도 사용해야해서
@@ -162,5 +162,10 @@ public class OrderController {
         return "/pay/buy";
     }
 
-
+    //관리자 주문 내역 페이지
+    @GetMapping(value = "/admin/order/list")
+    public String goAdminList(HttpServletRequest request) {
+        request.setAttribute("orderList", orderService.findAll());
+        return "/admin/order/list";
+    }
 }

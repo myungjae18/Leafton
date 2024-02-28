@@ -2,8 +2,10 @@ package idusw.leafton.model.service;
 
 import idusw.leafton.model.DTO.MainCategoryDTO;
 import idusw.leafton.model.DTO.ProductDTO;
+import idusw.leafton.model.DTO.ReviewDTO;
 import idusw.leafton.model.entity.MainCategory;
 import idusw.leafton.model.entity.Product;
+import idusw.leafton.model.entity.Review;
 import idusw.leafton.model.repository.MainCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -51,4 +53,11 @@ public class MainCategoryServiceImpl implements MainCategoryService{
            throw new IllegalArgumentException("Invalid mainCategory Id: " + mainCategoryId);
        }
    }
+
+    @Override
+    public MainCategoryDTO insertAndUpdateMainCategory(MainCategoryDTO mainCategoryDTO) {
+        MainCategory mainCategory = MainCategory.toMainCategoryEntity(mainCategoryDTO); // entity에 넣기위하여 변경
+        MainCategory result = mainCategoryRepository.save(mainCategory); // 레파지토리에서 save(insert)한 결과
+        return MainCategoryDTO.toMainCategoryDTO(result); //결과를 dto에 저장
+    }
 }

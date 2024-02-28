@@ -1,16 +1,11 @@
 package idusw.leafton.model.DTO;
 
 import idusw.leafton.model.entity.*;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 @Getter
@@ -35,7 +30,7 @@ public class ProductDTO {
     private Integer salePercentage;
     private Integer weight;
     private Integer asPeriod;
-    private LocalDateTime registDate;
+    private LocalDate registDate;
     private Integer amount;
     private Integer isAssemble;
     private String mainImage;

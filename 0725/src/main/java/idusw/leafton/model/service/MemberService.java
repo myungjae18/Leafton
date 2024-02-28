@@ -2,6 +2,8 @@ package idusw.leafton.model.service;
 
 import idusw.leafton.model.DTO.MemberDTO;
 
+import java.util.List;
+
 public interface MemberService {
     //로그인 성공 여부를 반환하는 메서드
     public MemberDTO loginCheck(MemberDTO memberDTO);
@@ -23,4 +25,6 @@ public interface MemberService {
 
     //update
     public void update(MemberDTO memberDTO);
+
+    List<MemberDTO> viewAllMembers();
 }

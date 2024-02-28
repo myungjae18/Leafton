@@ -15,4 +15,5 @@ import java.util.Optional;
 public interface SubCategoryRepository  extends JpaRepository<SubCategory, Long> {
     List<SubCategory> findAllByMainCategory(MainCategory mainCategory);
     Optional<SubCategory> findById(Long subCategoryId);
+    <S extends SubCategory> S save(S subCategory);
 }

@@ -7,4 +7,5 @@ import java.util.List;
 public interface EventService {
     public List<EventDTO> getAll();
     EventDTO getEventById(Long eventId);
+    void insert(EventDTO eventDTO);
 }

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+@RequestMapping(value = "/member")
 @Controller
 public class MemberController {
     @Autowired
@@ -37,14 +38,14 @@ public class MemberController {
     MainCategoryService mainCategoryService;
 
     //로그인 페이지로 이동
-    @GetMapping(value = "/member/login")
+    @GetMapping(value = "/login")
     private String goLogin(HttpServletRequest request) {
         request.setAttribute("type", request.getParameter("type"));
         request.setAttribute("styleList", styleService.getAll());
         return "/member/login";
     }
     //마이 페이지로 이동
-    @GetMapping(value="/member/info")
+    @GetMapping(value="/info")
     private String goMyPage(HttpServletRequest request, @RequestParam(required = false, defaultValue = "0") int page,
                             @RequestParam(required = false, defaultValue = "3") int size, @RequestParam String type,
                             HttpSession session, Model model) {
@@ -91,7 +92,7 @@ public class MemberController {
         return "/member/info";
     }
     //로그아웃 요청을 처리하는 메서드
-    @GetMapping(value="/member/logout")
+    @GetMapping(value="/logout")
     private String logout(HttpServletRequest request){
         HttpSession session = request.getSession();
         session.invalidate();//세션 회수
@@ -103,7 +104,7 @@ public class MemberController {
     }
 
     //로그인 요청을 처리하는 메서드
-    @PostMapping(value="/member/login")
+    @PostMapping(value="/login")
     private String login(@ModelAttribute MemberDTO memberDTO, HttpServletRequest request){
         //view에서 넘어온 email과 password를 이용하여 select
         MemberDTO memberResult = memberService.loginCheck(memberDTO);
@@ -124,7 +125,7 @@ public class MemberController {
     }
 
     //회원가입을 처리하는 메서드
-    @PostMapping(value="/member/register/{styleId}")
+    @PostMapping(value="/register/{styleId}")
     private String register(@PathVariable("styleId") Long styleId, @ModelAttribute MemberDTO memberDTO, HttpServletRequest request){
         //이메일 중복체크 후 중복이 아닐 경우 가입 로직으로 진행
         if (memberService.emailCheck(memberDTO.getEmail()) != null) {
@@ -148,7 +149,7 @@ public class MemberController {
     }
 
     //회원 정보 수정 요청을 처리하는 메서드
-    @PostMapping(value="/member/edit")
+    @PostMapping(value="/edit")
     private String edit(HttpServletRequest request, @RequestParam String type, @ModelAttribute MemberDTO memberDTO){
         HttpSession session = request.getSession();
         StyleDTO styleDTO = null;
@@ -215,5 +216,15 @@ public class MemberController {
                 return "/member/info";
             default: return null;
         }
+    }
+
+    /* admin */
+
+    //회원 리스트 페이지 이동
+    @GetMapping(value="/admin/member/user-tables")
+    public String goUserTable(HttpServletRequest request){
+        List<MemberDTO> memberList = memberService.viewAllMembers();
+        request.setAttribute("memberList", memberList);
+        return "admin/member/user-tables";
     }
 }

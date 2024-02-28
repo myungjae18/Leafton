@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface MainMaterialRepository extends JpaRepository<MainMaterial, Long>{
     List<MainMaterial> findAll();
     Optional<MainMaterial> findById(Long MainMaterialId);
+    @Override
+    <S extends MainMaterial> S save(S mainMaterial);
 }

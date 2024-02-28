@@ -39,4 +39,9 @@ public class EventServiceImpl implements EventService {
             throw new IllegalArgumentException("Invalid event Id: " + eventId);
         }
     }
+
+    @Override
+    public void insert(EventDTO eventDTO) {
+        eventRepository.save(Event.toEventEntity(eventDTO));
+    }
 }

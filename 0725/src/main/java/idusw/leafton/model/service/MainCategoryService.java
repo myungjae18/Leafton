@@ -9,4 +9,5 @@ public interface MainCategoryService {
     List<MainCategoryDTO> viewAllMainCategory();
     MainCategoryDTO getMainCategoryById(Long mainCategoryId);
     MainCategoryDTO getMainCategoryDetail(Long mainCategoryId);
+    MainCategoryDTO insertAndUpdateMainCategory(MainCategoryDTO mainCategoryDTO);
 }

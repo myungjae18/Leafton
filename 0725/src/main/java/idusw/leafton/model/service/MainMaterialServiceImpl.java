@@ -2,8 +2,10 @@ package idusw.leafton.model.service;
 
 import idusw.leafton.model.DTO.MainCategoryDTO;
 import idusw.leafton.model.DTO.MainMaterialDTO;
+import idusw.leafton.model.DTO.SubCategoryDTO;
 import idusw.leafton.model.entity.MainCategory;
 import idusw.leafton.model.entity.MainMaterial;
+import idusw.leafton.model.entity.SubCategory;
 import idusw.leafton.model.repository.MainMaterialRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -51,5 +53,12 @@ public class MainMaterialServiceImpl implements MainMaterialService{
         } else {
             throw new IllegalArgumentException("해당 ID의 상품이 없습니다. ID: " + mainMaterialDTO.getMainMaterialId());
         }
+    }
+
+    @Override
+    public MainMaterialDTO insertAndUpdateMainMaterial(MainMaterialDTO mainMaterialDTO){
+        MainMaterial mainMaterial = MainMaterial.toMainMaterialEntity(mainMaterialDTO); // entity에 넣기위하여 변경
+        MainMaterial result = mainMaterialRepository.save(mainMaterial); // 레파지토리에서 save(insert)한 결과
+        return MainMaterialDTO.toMainMaterialDTO(result); //결과를 dto에 저장
     }
 }

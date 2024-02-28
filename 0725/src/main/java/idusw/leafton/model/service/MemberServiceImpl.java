@@ -7,6 +7,9 @@ import idusw.leafton.model.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,5 +66,15 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public void update(MemberDTO memberDTO) {
 
+    }
+
+    @Override
+    public List<MemberDTO> viewAllMembers(){
+        List<Member> memberList = memberRepository.findAll();
+        List<MemberDTO> memberDTOList = new ArrayList<>();
+        for(Member member: memberList){
+            memberDTOList.add(MemberDTO.toMemberDTO(member));
+        }
+        return memberDTOList;
     }
 }
