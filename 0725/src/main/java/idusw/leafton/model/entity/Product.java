@@ -4,9 +4,7 @@ import idusw.leafton.model.DTO.ProductDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -52,8 +50,8 @@ public class Product {
     private Integer weight;
     @Column
     private Integer asPeriod;
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private LocalDate registDate;
+    @Column
+    private LocalDateTime registDate;
     @Column
     private Integer amount;
     @Column
