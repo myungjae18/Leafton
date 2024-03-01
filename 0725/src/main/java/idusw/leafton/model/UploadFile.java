@@ -7,7 +7,7 @@ public class UploadFile {
 
     public UploadFile(String uploadFileName, String storeFileName, String imagePath) {
         this.uploadFileName = uploadFileName;
-        this.storeFile  Name = storeFileName;
+        //this.storeFile  Name = storeFileName;
         this.imagePath = imagePath;
     }
 }
