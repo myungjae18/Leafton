@@ -20,13 +20,13 @@ public class MainController {
     @Autowired
     OrderService orderService;
 
-    @GetMapping(value="/main/index")
+    @GetMapping(value="main/index")
     public String goIndex(HttpServletRequest request) {
         request.setAttribute("mainCategoryList", mainCategoryService.viewAllMainCategory());
         request.setAttribute("eventList", eventService.getAll());
         request.setAttribute("products", productService.viewProductsBySale());
 
-        return "/main/index";
+        return "main/index";
     }
 
     @GetMapping(value="/main/location")
