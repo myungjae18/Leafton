@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>내 정보</title>
   <th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
-  <link rel="stylesheet" href="../css/myPage.css"/>
+  <link rel="stylesheet" href="/static/css/myPage.css"/>
 </head>
 <body>
 <div class="row max-inner">
@@ -169,7 +169,7 @@
 <!-- footer -->
 <th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
 <!-- footer 끝 -->
-<script src="../js/info.js"></script>
+<script src="/static/js/info.js"></script>
 <script th:inline="javascript">
   let message = [[${message}]]; //controller에서 날린 request 객체에 담긴 메세지
 
