@@ -302,8 +302,6 @@ public class ProductController {
     }
 
 
-
-
     @PostMapping(value="/product/review") //리뷰작성
     public String goReview(HttpServletRequest request){
         ReviewDTO reviewDTO = new ReviewDTO();

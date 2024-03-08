@@ -11,9 +11,9 @@
 <div class="category-slide">
   <div class="slideTab" id="categoryTab">
     <div class="tab-item" th:each="category : ${mainCategoryList}">
-      <img th:src="${category.image}" th:onclick="|location.href='@{/product/shop(mainCategoryId=${category.mainCategoryId})}'|"/>
+      <img th:src="${category.image}" th:onclick="|location.href='@{product/shop(mainCategoryId=${category.mainCategoryId})}'|"/>
       <br><br>
-      <a th:href="@{/product/shop(mainCategoryId=${category.mainCategoryId})}" th:text="${category.name}"></a>
+      <a th:href="@{product/shop(mainCategoryId=${category.mainCategoryId})}" th:text="${category.name}"></a>
     </div>
   </div>
   <div class="bar-container">
@@ -26,7 +26,7 @@
 <div class="slide">
   <div class="slideTab" id="eventTab">
     <div class="photoFrame" th:each="event : ${eventList}">
-      <img class="eventImage" th:src="${event.mainImage}" th:onclick="|location.href='@{/product/shop(eventId=${event.eventId})}'|"/>
+      <img class="eventImage" th:src="${event.mainImage}" th:onclick="|location.href='@{product/shop(eventId=${event.eventId})}'|"/>
     </div>
   </div>
 </div>

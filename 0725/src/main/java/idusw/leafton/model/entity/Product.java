@@ -4,7 +4,9 @@ import idusw.leafton.model.DTO.ProductDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Formula;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -46,6 +48,8 @@ public class Product {
     private Integer price;
     @Column
     private Integer salePercentage;
+    @Formula("price - (price * sale_percentage / 100)")
+    private BigDecimal calculatedPrice;
     @Column
     private Integer weight;
     @Column

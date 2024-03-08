@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="/fragments/header :: headerFragment"></th:block>
+<th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
 <head>
-  <link rel="stylesheet" href="../../static/css/eventPage.css">
+  <link rel="stylesheet" href="../css/eventPage.css">
 </head>
 <body>
 <div class="row max-inner">
@@ -71,6 +71,6 @@
   <br><br>
 </div>
 <br>
-<th:block th:replace="/fragments/footer :: footerFragment"></th:block>
+<th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
 </body>
 </html>

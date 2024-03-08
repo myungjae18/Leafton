@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="/fragments/header :: headerFragment"></th:block>
+<th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
 <head>
-  <script src="../../static/js/main.js"></script>
+  <script src="../js/main.js"></script>
   <script>
     function changeLoc(str){        
         if(str=="jongno3ga") {
@@ -39,64 +39,7 @@
     </div>    
   <!-- 매장 지도 끝 --> 
   <!-- start: footer -->
-  <footer class="footer">
-    <div class="row max-inner">
-      
-      <div class="columns col-2">
-        <h3>Address</h3>
-        <p>
-          INDUK UNIV.<br/>
-          <br />
-          초안산로<br />
-          SEOUL, nowon<br />
-          <br />
-          <a href="#">induk.ac.kr</a><br />
-          (02) 950 7000<br />           
-        </p>
-      </div>
-
-      <div class="columns col-2">
-        <h3>Customer Service</h3>
-        <ul>
-          <li><a href="#">환불/배송 정책</a></li>
-          <li><a href="#">고객 센터</a></li>
-          <li><a href="#">매장 찾기</a></li>
-        </ul>
-      </div>
-
-      <div class="columns col-2">
-        <h3>Account</h3>
-        <ul>
-          <li><a href="../member/login.html">로그인</a></li>
-          <li><a href="../member/register.html">회원가입</a></li>
-          <li><a href="../member/info.html">내 정보</a></li>
-        </ul>
-      </div>
-
-      <div class="columns col-6">
-        <h3>Follow us</h3>            
-        <div class="row">
-          <div class="columns col-12 social-links">
-            <a href="http://www.facebook.com"><i class="fa fa-facebook"></i></a>
-            <a href="http://www.twitter.com"><i class="fa fa-twitter"></i></a>
-            <a href="http://www.pinterest.co.kr"><i class="fa fa-pinterest"></i></a>
-          </div>            
-        </div>
-      </div>
-
-    </div>
-  </footer>
+  <th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
   <!-- end: footer -->
-
-
-  <!-- start: copyright -->
-  <section class="footer-copyright">
-    <div class="row max-inner">
-      <div class="columns col-7 col-centered">
-        <p>Copyright 2023 Leafton. All rights reserved.</p>
-      </div>
-    </div>
-  </section>
-  <!-- end: copyright -->
 </body>
 </html>
