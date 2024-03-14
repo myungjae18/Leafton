@@ -1,7 +1,8 @@
 package idusw.leafton.model.DTO;
 
 import idusw.leafton.model.entity.Event;
-
+import idusw.leafton.model.entity.Product;
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
