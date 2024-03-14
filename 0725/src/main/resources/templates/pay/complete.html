@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 
-<th:block th:replace="/fragments/header"></th:block>
+<th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -22,8 +22,8 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-    <link rel="stylesheet" href="../../static/css/common.css">
-    <link rel="stylesheet" href="../../static/css/complete.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/complete.css">
 
 
     <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -34,7 +34,7 @@
 <section class="row breadcrumbs max-inner">
     <div class="columns col-12">
         <ul class="breadcrumb-list">
-            <li><a href="../main/index.html">Home</a></li>
+            <li><a href="/main/index">Home</a></li>
             <li>Cart</li>
             <li>Buy</li>
             <li>Complete</li>
@@ -220,6 +220,6 @@
         </article>
     </section>
 </main>
-<th:block th:replace="/fragments/footer"></th:block>
+<th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
 </body>
 </html>

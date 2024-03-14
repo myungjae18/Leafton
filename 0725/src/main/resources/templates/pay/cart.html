@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 
-<th:block th:replace="/fragments/header"></th:block>
+<th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-    <link rel="stylesheet" href="../../static/css/common.css">
-    <link rel="stylesheet" href="../../static/css/cart.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/cart.css">
     <link rel="stylesheet" href="/static/css/event-slide.css"/>
 
     <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -25,7 +25,7 @@
 <section class="row breadcrumbs max-inner">
     <div class="columns col-12">
         <ul class="breadcrumb-list">
-            <li><a href="../main/index.html">Home</a></li>
+            <li><a href="/main/index">Home</a></li>
             <li>Cart</li>
         </ul>
     </div>
@@ -123,8 +123,8 @@
 </div>
 <!-- 카테고리 슬라이드 끝 -->
 <br>
-<th:block th:replace="/fragments/footer"></th:block>
-<script src="/static/js/slide.js"></script>
+<th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
+<script src="../js/slide.js"></script>
 <script type="text/javascript">
     function submitForm() {
         const itemChkBox = document.getElementsByName('itemChkBox');

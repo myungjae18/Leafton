@@ -5,7 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 
 
-<th:block th:replace="/fragments/header"></th:block>
+<th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-    <link rel="stylesheet" href="../../static/css/common.css">
-    <link rel="stylesheet" href="../../static/css/buy.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/buy.css">
     <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 </head>
 <body>
@@ -24,7 +24,7 @@
 <section class="row breadcrumbs max-inner">
     <div class="columns col-12">
         <ul class="breadcrumb-list">
-            <li><a href="../main/index.html">Home</a></li>
+            <li><a href="main/index">Home</a></li>
             <li>Cart</li>
             <li>Buy</li>
         </ul>
@@ -164,7 +164,7 @@
                         </label>
                         <label>
                             <input type="radio" name="paymentMethod" value="6">카카오페이
-                            <img src="../../static/images/ico_kakaopay.gif" alt="카카오페이">
+                            <img src="../images/ico_kakaopay.gif" alt="카카오페이">
                         </label>
                     </p>
                 </div>
@@ -188,6 +188,6 @@
 <br>
 <br>
 
-<th:block th:replace="/fragments/footer"></th:block>
+<th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
 </body>
 </html>

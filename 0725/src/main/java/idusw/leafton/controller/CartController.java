@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
-@RequestMapping(value = "/pay")
+@RequestMapping(value = "pay")
 @RequiredArgsConstructor
 @Controller
 public class CartController {

@@ -40,8 +40,8 @@ public class ProductController {
     MainMaterialDTO mainMaterialDTO = null;
     EventDTO eventDTO = null;
 
-    @GetMapping (value="/product/product/{productId}") //상품 상세 페이지
-    public String goProduct(@PathVariable Long productId,
+    @GetMapping (value="product/product") //상품 상세 페이지
+    public String goProduct(@RequestParam(required = false, value = "productId") Long productId,
                             @RequestParam(required = false, defaultValue = "1", value = "p") int pageNo,
                             @RequestParam(required = false, defaultValue = "registDate", value = "criteria") String criteria,
                             HttpServletRequest request, HttpSession session) {
@@ -81,7 +81,7 @@ public class ProductController {
 
 
     //shop page mapping
-    @GetMapping(value="/product/shop") // 상품 리스트 처음 시작
+    @GetMapping(value="product/shop") // 상품 리스트 처음 시작
     public String goShop(@RequestParam(value = "arName", required = false) String arName,
                          @RequestParam(value = "mainCategoryId", required = false) Long mainCategoryId,
                          @RequestParam(value = "subCategoryId", required = false) Long subCategoryId,
@@ -302,7 +302,9 @@ public class ProductController {
     }
 
 
-    @PostMapping(value="/product/review") //리뷰작성
+
+
+    @PostMapping(value="product/review") //리뷰작성
     public String goReview(HttpServletRequest request){
         ReviewDTO reviewDTO = new ReviewDTO();
         MemberDTO memberDTO = memberService.getMemberById(Long.valueOf(request.getParameter("memberId")));
@@ -317,7 +319,7 @@ public class ProductController {
         reviewService.insertReview(reviewDTO);
         return "redirect:/product/product/" + Long.valueOf(request.getParameter("productId"));
     }
-    @GetMapping(value="/product/review/delete") //리뷰삭제
+    @PostMapping(value="product/review/delete") //리뷰삭제
     public String deleteReview(@RequestParam("reviewId") Long reviewId ,@RequestParam("productId") Long productId ,HttpServletRequest request){
         reviewService.deleteReview(reviewId);
         return "redirect:/product/product/" + productId;
@@ -325,48 +327,48 @@ public class ProductController {
 
     /*---admin start---*/
 
-    @GetMapping(value = "/admin/product/list")
+    @GetMapping(value = "admin/product/list")
     public String goAdminList(HttpServletRequest request) {
         request.setAttribute("products", productService.viewAllproduct());
-        return "/admin/product/list";
+        return "admin/product/list";
     }
 
 
 
-    @GetMapping(value="/admin/property/main-category/list")
+    @GetMapping(value="admin/property/main-category/list")
     public String goMainCategoryTable(HttpServletRequest request){
         mainCategoryList(request);
         return "admin/property/main-category/list";
     }
-    @GetMapping(value="/admin/property/sub-category/list")
+    @GetMapping(value="admin/property/sub-category/list")
     public String goSubCategoryTable(HttpServletRequest request){
         List<SubCategoryDTO> subCategoryList = subCategoryService.viewAllSubCategory();
         request.setAttribute("subCategoryList", subCategoryList);
         return "admin/property/sub-category/list";
     }
-    @GetMapping(value="/admin/property/main-material/list")
+    @GetMapping(value="admin/property/main-material/list")
     public String goMainMaterialTable(HttpServletRequest request){
         materialList(request);
         return "admin/property/main-material/list";
     }
 
 
-    @GetMapping(value="/admin/property/main-category/register")
+    @GetMapping(value="admin/property/main-category/register")
     private String mainCategoryRegister(){
         return "admin/property/main-category/register";
     }
-    @GetMapping(value="/admin/property/sub-category/register")
+    @GetMapping(value="admin/property/sub-category/register")
     public String subCategoryRegister(HttpServletRequest request){
         mainCategoryList(request);
         return "admin/property/sub-category/register";
     }
-    @GetMapping(value="/admin/property/main-material/register")
+    @GetMapping(value="admin/property/main-material/register")
     public String mainMaterialRegister(){
         return "admin/property/main-material/register";
     }
 
 
-    @GetMapping(value="/admin/property/main-category/edit")
+    @GetMapping(value="admin/property/main-category/edit")
     public String mainCategoryEdit(@RequestParam(value = "mainCategoryId", required = false) Long mainCategoryId, HttpServletRequest request){
         MainCategoryDTO mainCategoryDTO = mainCategoryService.getMainCategoryById(mainCategoryId);
         mainCategoryDetail(mainCategoryId, request);
@@ -374,7 +376,7 @@ public class ProductController {
         return "admin/property/main-category/edit";
     }
 
-    @GetMapping(value="/admin/property/sub-category/edit")
+    @GetMapping(value="admin/property/sub-category/edit")
     public String subCategoryEdit(@RequestParam(value = "subCategoryId", required = false) Long subCategoryId,HttpServletRequest request){
         subCategoryDetail(subCategoryId, request);
         mainCategoryList(request);
@@ -382,7 +384,7 @@ public class ProductController {
         return "admin/property/sub-category/edit";
     }
 
-    @GetMapping(value="/admin/property/main-material/edit")
+    @GetMapping(value="admin/property/main-material/edit")
     public String mainMaterialEdit(@RequestParam(value = "mainMaterialId", required = false) Long mainMaterialId, HttpServletRequest request){
         materialDetail(mainMaterialId, request);
         return "admin/property/main-material/edit";
@@ -391,7 +393,7 @@ public class ProductController {
     String mcSaveLocation = "C:\\indukproject\\KTHshare\\0222\\0725\\src\\main\\resources\\static\\images\\main_category\\"; //저장 위치
     String mcDBLocation = "/static/images/main_category/"; //DB에 입력하는 값 (불러오는 위치)
 
-    @PostMapping(value="/admin/insert")
+    @PostMapping(value="admin/insert")
     public String insert(@RequestParam(value = "type", required = false) String type,
                          @RequestParam("mc-image") MultipartFile image, HttpServletRequest request) throws IOException {
         if("mainCategory".equals(type)){
@@ -401,7 +403,7 @@ public class ProductController {
             mainCategoryDTO.setImage(mcDBLocation + mcFilename);
 
             mainCategoryService.insertAndUpdateMainCategory(mainCategoryDTO);
-            return "redirect:/admin/property/main-category/list";
+            return "redirect:admin/property/main-category/list";
         }
         else if("subCategory".equals(type)){
             SubCategoryDTO subCategoryDTO = new SubCategoryDTO();
@@ -410,17 +412,17 @@ public class ProductController {
             subCategoryDTO.setName(request.getParameter("sc-name"));
 
             subCategoryService.insertAndUpdateSubCategory(subCategoryDTO);
-            return "redirect:/admin/property/sub-category/list";
+            return "redirect:admin/property/sub-category/list";
         }
         else {
             MainMaterialDTO mainMaterialDTO = new MainMaterialDTO();
             mainMaterialDTO.setName(request.getParameter("mm-name"));
 
             mainMaterialService.insertAndUpdateMainMaterial(mainMaterialDTO);
-            return "redirect:/admin/property/main-material/list";
+            return "redirect:admin/property/main-material/list";
         }
     }
-    @PostMapping(value="/admin/update")
+    @PostMapping(value="admin/update")
     private String update(@RequestParam(value = "type", required = false) String type ,
                           @RequestParam("mc-image") MultipartFile image, HttpServletRequest request ) throws IOException {
         if("mainCategory".equals(type)){
@@ -433,7 +435,7 @@ public class ProductController {
             }
 
             mainCategoryService.insertAndUpdateMainCategory(mainCategoryDTO);
-            return "redirect:/admin/property/main-category/list";
+            return "redirect:admin/property/main-category/list";
         }
         else if("subCategory".equals(type)){
             Long id = Long.valueOf(request.getParameter("sc-id"));
@@ -443,7 +445,7 @@ public class ProductController {
             subCategoryDTO.setName(request.getParameter("sc-name"));
 
             subCategoryService.insertAndUpdateSubCategory(subCategoryDTO);
-            return "redirect:/admin/property/sub-category/list";
+            return "redirect:admin/property/sub-category/list";
         }
         else {
             Long id = Long.valueOf(request.getParameter("mm-id"));
@@ -451,11 +453,11 @@ public class ProductController {
             mainMaterialDTO.setName(request.getParameter("mm-name"));
 
             mainMaterialService.insertAndUpdateMainMaterial(mainMaterialDTO);
-            return "redirect:/admin/property/main-material/list";
+            return "redirect:admin/property/main-material/list";
         }
     }
 
-    @GetMapping(value = "/admin/product/register")
+    @GetMapping(value = "admin/product/register")
     public String goAdminProductRegister(@RequestParam(required = false) String mainCategoryId,
                                          @RequestParam(required = false) String subCategoryId,
                                          @RequestParam(required = false) String mainMaterialId,
@@ -477,10 +479,10 @@ public class ProductController {
             if(eventId != null) request.setAttribute("eventNumber", eventId);
         }
 
-        return "/admin/product/register";
+        return "admin/product/register";
     }
 
-    @GetMapping(value = "/admin/product/edit")
+    @GetMapping(value = "admin/product/edit")
     public String goAdminProductEdit(@RequestParam(required = false) String mainCategoryId,
                                      @RequestParam(required = false) String subCategoryId,
                                      @RequestParam(required = false) String mainMaterialId,
@@ -504,7 +506,7 @@ public class ProductController {
         Long productId = Long.valueOf(request.getParameter("productId"));
         request.setAttribute("product", productService.getProductById(productId));
 
-        return "/admin/product/edit";
+        return "admin/product/edit";
     }
 
 

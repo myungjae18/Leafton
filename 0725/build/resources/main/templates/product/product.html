@@ -1,35 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="/fragments/header"></th:block>
 <!-- start: breadcrumbs -->
 
-
 <head>
-  <link rel="stylesheet" href="../../static/css/reviewr.css" />
-  <link rel="stylesheet" href="../../static/css/productview.css" />
-  <link rel="stylesheet" href="../../static/css/rating.css" />
-  <link rel="stylesheet" href="../../static/css/ratingView.css" />
-  <link rel="stylesheet" href="../../static/css/qpc.css" />
-  <link rel="stylesheet" href="../../static/css/ratingList.css" />
-  <link rel="stylesheet" href="../../static/css/productPageBtn.css">
-  <link rel="stylesheet" href="../../static/css/payForm.css">
-  <link rel="stylesheet" href="../../static/css/style.css">
-  <link rel="stylesheet" href="../../static/css/btndisabled.css">
-  <link rel="stylesheet" href="../../static/css/product-slide.css"/>
-  <link rel="stylesheet" href="../../static/css/product-count.css">
+  <link rel="stylesheet" href="/static/css/reviewr.css">
+  <link rel="stylesheet" href="/static/css/productview.css">
+  <link rel="stylesheet" href="/static/css/rating.css">
+  <link rel="stylesheet" href="/static/css/ratingView.css">
+  <link rel="stylesheet" href="/static/css/qpc.css">
+  <link rel="stylesheet" href="/static/css/ratingList.css">
+  <link rel="stylesheet" href="/static/css/productPageBtn.css">
+  <link rel="stylesheet" href="/static/css/payForm.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/btndisabled.css">
+  <link rel="stylesheet" href="/static/css/product-slide.css"/>
+  <link rel="stylesheet" href="/static/css/product-count.css">
+
 
 
   <script src="https://kit.fontawesome.com/c0890a4f25.js" crossorigin="anonymous"></script>
-  <script src="../..//static/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+  <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
 
 </head>
-
+<th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
 <body onload = "changefun()">
 <section class="row breadcrumbs max-inner">
   <div class="columns col-12">
     <ul class="breadcrumb-list">
-      <li><a href="../main/index.html">Home</a></li>
+      <li><a href="/main/index">Home</a></li>
       <li>Product page</li>
     </ul>
   </div>
@@ -48,8 +47,8 @@
       </div>
       <div id="subImages">
         <a href="javascript:void(0);"><img class="subI" th:src="${productDetail.mainImage}"></a>
-        <a href="javascript:void(0);"><img class="subI" src="/static/images/product/main/화이트소파.jpg"></a>
-        <a href="javascript:void(0);"><img class="subI" src="/static/images/product/main/흑소파.jpg"></a>
+        <a href="javascript:void(0);"><img class="subI" src="../images/product/main/화이트소파.jpg"></a>
+        <a href="javascript:void(0);"><img class="subI" src="../images/product/main/흑소파.jpg"></a>
       </div>
     </div>
 
@@ -153,7 +152,7 @@
           alert(message);
         }
       </script>
-      <script src="../../static/js/members.js">
+      <script src="../js/members.js">
       </script>
       <form id="choiceCart" th:action="@{/pay/cart/{memberId}/{productId}(memberId='guest', productId=${productDetail.productId})}" method="post">
         <div class="row product-options">
@@ -203,7 +202,7 @@
     <div class="product-category-slide">
       <div class="product-slideTab"  id="productTab">
         <div class="product-tab-item" th:each="product : ${products}">
-          <a th:href="@{/product/product/{productId}(productId=${product.productId})}"><img th:src="${product.mainImage}" /></a>
+          <a th:href="@{/product/product(productId=${product.productId})}"><img th:src="${product.mainImage}" /></a>
           <br><br>
           <h2>
             <span class="tab-maker" th:text="${product.maker}"></span><hr style="width: 100%; top: 188px;"/>
@@ -316,7 +315,9 @@
       <p th:text="${review.content}">
       </p>
       <div th:if="${session.memberDTO!=null and session.memberDTO.memberId == review.memberDTO.memberId}">
-        <button class="delete-btn" th:onclick="'window.location.href=\'/product/review/delete?reviewId=' + ${review.reviewId} + '&productId=' + ${productDetail.productId} + '\''">삭제</button>
+        <form method="post" th:action="'/product/review/delete?reviewId=' + ${review.reviewId} + '&productId=' + ${productDetail.productId}">
+          <button type="submit" class="delete-btn">삭제</button>
+        </form>
       </div>
     </li>
   </ul>
@@ -347,7 +348,7 @@
 <script src="/static/js/pagechange.js"></script>
 
 <!-- start: footer -->
-<th:block th:replace="/fragments/footer"></th:block>
+<th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
 <!-- end: copyright -->
 
 
