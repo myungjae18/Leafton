@@ -9,10 +9,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Slf4j
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+    String mainPath = "/passion/images/";
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/main-category/**")
-                .addResourceLocations("file:/home/passion/images/main-category/");
+        registry.addResourceHandler("/images/**")//정적 파일 찾는 표지판
+                .addResourceLocations("file:C:\\images\\");//실제 정적 리소스 위치
     }
 }

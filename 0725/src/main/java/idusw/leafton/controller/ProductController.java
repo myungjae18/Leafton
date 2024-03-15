@@ -422,6 +422,38 @@ public class ProductController {
             return "redirect:/admin/property/main-material/list";
         }
     }
+
+    @PostMapping(value = "admin/product/register")
+    private String insertProduct(@ModelAttribute ProductDTO productDTO,
+                                 HttpServletRequest request,
+                                 @RequestParam("thumb") MultipartFile thumb,
+                                 @RequestParam("main") MultipartFile main,
+                                 @RequestParam("sub") MultipartFile sub) throws IOException {
+        StyleDTO styleDTO = styleService.getById(Long.valueOf(request.getParameter("style")));
+        SubCategoryDTO subCategoryDTO = subCategoryService.getSubCategoryDetail(Long.valueOf(request.getParameter("subCategory")));
+        MainCategoryDTO mainCategoryDTO = mainCategoryService.getMainCategoryById(Long.valueOf(request.getParameter("mainCategory")));
+        MainMaterialDTO mainMaterialDTO = mainMaterialService.getMainMaterialById(Long.valueOf(request.getParameter("mainMaterial")));
+        EventDTO eventDTO = eventService.getEventById(Long.valueOf(request.getParameter("event")));
+        String width = request.getParameter("width");
+        String height = request.getParameter("height");
+        String depth = request.getParameter("depth");
+        String size = width + "fm" + depth + "lm" + height;
+
+        productDTO.setStyleDTO(styleDTO);
+        productDTO.setSubCategoryDTO(subCategoryDTO);
+        productDTO.setMainCategoryDTO(mainCategoryDTO);
+        productDTO.setMainMaterialDTO(mainMaterialDTO);
+        productDTO.setEventDTO(eventDTO);
+        productDTO.setSize(size);
+        System.out.println(main.getOriginalFilename());
+        System.out.println(thumb.getOriginalFilename());
+        System.out.println(sub.getOriginalFilename());
+
+        productService.saveProduct(productDTO, main, thumb, sub);
+
+        return "redirect:/admin/product/list";
+    }
+
     @PostMapping(value="admin/update")
     private String update(@RequestParam(value = "type", required = false) String type ,
                           @RequestParam("mc-image") MultipartFile image, HttpServletRequest request ) throws IOException {
@@ -503,6 +535,7 @@ public class ProductController {
             if(mainMaterialId != null) request.setAttribute("mainMaterialNumber", mainMaterialId);
             if(styleId != null) request.setAttribute("styleNumber", styleId);
             if(eventId != null) request.setAttribute("eventNumber", eventId);
+
         }
         Long productId = Long.valueOf(request.getParameter("productId"));
         request.setAttribute("product", productService.getProductById(productId));
