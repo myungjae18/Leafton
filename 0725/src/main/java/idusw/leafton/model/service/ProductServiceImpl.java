@@ -53,7 +53,6 @@ public class ProductServiceImpl implements ProductService { //ProductService를 
             product.setRating(opAvgRating.orElse(0.0)); //평균평점을 구한것을 product테이블 rating 컬럼에 set함
         }
         productRepository.saveAll(productList); //다시 저장
-
     }
 
     @Override
@@ -100,8 +99,6 @@ public class ProductServiceImpl implements ProductService { //ProductService를 
         }
         return productDTOList;
     }
-
-
 
     @Override
     public Page<ProductDTO> viewProducts(int pageNo, String arName){
@@ -302,19 +299,19 @@ public class ProductServiceImpl implements ProductService { //ProductService를 
         String thumbPath = "C:\\images\\product\\thumb\\";
 
         //파일이 있을 경우 파일 저장 후 DB에 저장할 경로 지정 후 DTO에 경로 주입
-        if(!main.isEmpty()) {
+        if(main != null) {
             String mainFileName = fileSave.saveFileAndRename(main, mainPath);
             productDTO.setMainImage("/images/product/main/"+mainFileName);
             System.out.println("나메인 저장");
         }
 
-        if(!sub.isEmpty()) {
+        if(sub != null) {
             String subFileName = fileSave.saveFileAndRename(sub, subPath);
             productDTO.setSubImage("/images/product/sub/"+subFileName);
             System.out.println("나 서브 저장");;
         }
 
-        if(!thumb.isEmpty()) {
+        if(thumb != null) {
             String thumbFileName = fileSave.saveFileAndRename(thumb, thumbPath);
             productDTO.setThumbImage("/images/product/thumb/"+thumbFileName);
             System.out.println("나텀브 저장");
