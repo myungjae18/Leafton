@@ -1,7 +1,6 @@
 package idusw.leafton.model;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -16,8 +15,7 @@ import java.util.UUID;
 @Component
 @Getter
 public class FileSave {
-    private String defaultPath="C:\\images\\";
-
+    private String defaultPath="/home/passion/images/";
     public String saveFileAndRename(MultipartFile multipartFile, String location) throws IOException{ //파일을 저장시키고 변경된 파일이름을 리턴
         if (multipartFile.isEmpty()){
             return null;

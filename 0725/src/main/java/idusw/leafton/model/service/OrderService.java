@@ -1,5 +1,6 @@
 package idusw.leafton.model.service;
 
+import idusw.leafton.controller.ChartController;
 import idusw.leafton.model.DTO.*;
 import idusw.leafton.model.entity.Order;
 import idusw.leafton.model.entity.OrderItem;
@@ -22,4 +23,8 @@ public interface OrderService {
     Page<OrderDTO> findMemberOrder(Long memberId, Pageable pageable);
 
     List<OrderDTO> findAll();
+    List<ChartController.TotalPrice> getMonthRevenue();
+    List<ChartController.TotalPrice> getMainCategoryRevenue(List<MainCategoryDTO>  mainCategoryDTOList);
+
+    List<ChartController.TotalPrice> getStyleRevenue(List<StyleDTO> styleDTOList);
 }

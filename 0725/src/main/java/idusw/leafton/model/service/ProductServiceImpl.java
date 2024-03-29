@@ -18,9 +18,9 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService { //ProductService를 구현도를 받고 implements를 구현함
 
-    private final FileSave fileSave;
     private final ProductRepository productRepository; //객체의 상태를 저장하고, 해당 상태를 클래스 내의 여러 메서드에서 공유하거나 조작하기 위해 필드 선언
     private final ReviewRepository reviewRepository;
+    private final FileSave fileSave;
 
     public Pageable arrangeService(String arName , int pageNo) { //정렬
         Sort sort = null;
@@ -53,6 +53,7 @@ public class ProductServiceImpl implements ProductService { //ProductService를 
             product.setRating(opAvgRating.orElse(0.0)); //평균평점을 구한것을 product테이블 rating 컬럼에 set함
         }
         productRepository.saveAll(productList); //다시 저장
+
     }
 
     @Override
@@ -71,7 +72,7 @@ public class ProductServiceImpl implements ProductService { //ProductService를 
     }
 
     @Override
-    public List<ProductDTO> viewAllproduct(){
+    public List<ProductDTO> view8product(){
         List<Product> productList = productRepository.findRandomProducts();
         List<ProductDTO> productDTOList = new ArrayList<>();
         for(Product product: productList) {
@@ -99,6 +100,8 @@ public class ProductServiceImpl implements ProductService { //ProductService를 
         }
         return productDTOList;
     }
+
+
 
     @Override
     public Page<ProductDTO> viewProducts(int pageNo, String arName){
@@ -294,29 +297,30 @@ public class ProductServiceImpl implements ProductService { //ProductService를 
     public void saveProduct(ProductDTO productDTO, MultipartFile main, MultipartFile thumb, MultipartFile sub)
             throws IOException {
         //저장할 파일 경로 지정
-        String mainPath = "C:\\images\\product\\main\\";
-        String subPath = "C:\\images\\product\\sub\\";
-        String thumbPath = "C:\\images\\product\\thumb\\";
+        String mainPath = fileSave.getDefaultPath() + "product/main/";
+        String subPath = fileSave.getDefaultPath() + "product/sub/";
+        String thumbPath = fileSave.getDefaultPath() + "product/thumb/";
 
         //파일이 있을 경우 파일 저장 후 DB에 저장할 경로 지정 후 DTO에 경로 주입
-        if(main != null) {
+        if(!main.isEmpty()) {
             String mainFileName = fileSave.saveFileAndRename(main, mainPath);
-            productDTO.setMainImage("/images/product/main/"+mainFileName);
+            productDTO.setMainImage("/home/passion/images/product/main/"+mainFileName);
             System.out.println("나메인 저장");
         }
 
-        if(sub != null) {
+        if(!sub.isEmpty()) {
             String subFileName = fileSave.saveFileAndRename(sub, subPath);
-            productDTO.setSubImage("/images/product/sub/"+subFileName);
+            productDTO.setSubImage("/home/passion/images/product/sub/"+subFileName);
             System.out.println("나 서브 저장");;
         }
 
-        if(thumb != null) {
+        if(!thumb.isEmpty()) {
             String thumbFileName = fileSave.saveFileAndRename(thumb, thumbPath);
-            productDTO.setThumbImage("/images/product/thumb/"+thumbFileName);
+            productDTO.setThumbImage("/home/passion/images/product/thumb/"+thumbFileName);
             System.out.println("나텀브 저장");
         }
 
         productRepository.save(Product.toProductEntity(productDTO));
     }
+
 }

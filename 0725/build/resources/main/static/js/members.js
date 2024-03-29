@@ -9,6 +9,8 @@ function memberType(){
     }
 }
 
+
+
 function buyNow() {
     if(memberId != 'guest'){
         var count = document.getElementById('product-count').value; // 수정된 부분

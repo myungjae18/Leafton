@@ -9,11 +9,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Slf4j
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    String mainPath = "/passion/images/";
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/images/**")//정적 파일 찾는 표지판
-                .addResourceLocations("file:C:\\images\\");//실제 정적 리소스 위치
+        registry.addResourceHandler("/home/passion/images/**").addResourceLocations("file:/home/passion/images/");
+
+//        registry.addResourceHandler("/images/**").addResourceLocations("file:C:\\images\\");
+        // 만약 위치가 c:\\images\\event\\main이라면 handler = db쪽은 /images/event/main으로 경로로찾아갈수있게해야함
+
     }
 }
