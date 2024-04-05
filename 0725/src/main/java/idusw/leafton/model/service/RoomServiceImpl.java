@@ -30,4 +30,10 @@ public class RoomServiceImpl implements RoomService {
 
         return result;
     }
+
+    @Override
+    public void saveRoomData(RoomDTO roomDTO) {
+        Room room = Room.toRoomEntity(roomDTO);
+        roomRepository.save(room);
+    }
 }
