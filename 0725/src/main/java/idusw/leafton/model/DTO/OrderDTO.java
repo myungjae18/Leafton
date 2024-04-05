@@ -22,7 +22,7 @@ public class OrderDTO {
 
     private String address;
 
-    private String zipcode;
+    private int zipcode;
 
     private LocalDate orderDate;
 

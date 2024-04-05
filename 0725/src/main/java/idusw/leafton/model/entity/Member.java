@@ -23,7 +23,7 @@ public class Member {
     private String address;
 
     @Column
-    private String zipcode;
+    private int zipcode;
 
     @Column
     private String email;

@@ -49,4 +49,9 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
     @Query("select p from Product p where p.salePercentage > 0 order by RAND() limit 8")
     List<Product> findRandomProductsBySalePercentage();
 
+    @Query("select p from Product p where p.event.eventId = :eventId")
+    List<Product> getAllByEventId(@Param("eventId") Long eventId);
+
+    @Query("update Product p set p.salePercentage = :salePercentage where p.productId = :productId")
+    int updateSalePercentage(@Param("salePercentage") int salePercentage, @Param("productId") Long productId);
 }

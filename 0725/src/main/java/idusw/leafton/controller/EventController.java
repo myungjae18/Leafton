@@ -2,7 +2,9 @@ package idusw.leafton.controller;
 
 import com.mysql.cj.log.Log;
 import idusw.leafton.model.DTO.EventDTO;
+import idusw.leafton.model.DTO.ProductDTO;
 import idusw.leafton.model.service.EventService;
+import idusw.leafton.model.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,11 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class EventController {
     @Autowired
     EventService eventService;
+    @Autowired
+    ProductService productService;
 
     //index page mapping
     @GetMapping(value="event/index")
@@ -49,8 +54,7 @@ public class EventController {
 
     //이벤트 등록
     @PostMapping(value = "admin/event/register")
-    public String register(HttpServletRequest request,
-                           @RequestParam("event-main-image") MultipartFile mainImage,
+    public String register(@RequestParam("event-main-image") MultipartFile mainImage,
                            @RequestParam("event-sub-image") MultipartFile subImage,
                            @RequestParam("event-thumb-image") MultipartFile thumbImage,
                            @ModelAttribute EventDTO eventDTO) throws IOException {
@@ -60,12 +64,18 @@ public class EventController {
     }
 
     @PostMapping(value = "admin/event/edit")
-    public String edit(HttpServletRequest request,
-                           @RequestParam("event-main-image") MultipartFile mainImage,
-                           @RequestParam("event-sub-image") MultipartFile subImage,
-                           @RequestParam("event-thumb-image") MultipartFile thumbImage,
-                           @ModelAttribute EventDTO eventDTO) throws IOException {
+    public String edit(@RequestParam("event-main-image") MultipartFile mainImage,
+                       @RequestParam("event-sub-image") MultipartFile subImage,
+                       @RequestParam("event-thumb-image") MultipartFile thumbImage,
+                       @ModelAttribute EventDTO eventDTO) throws IOException {
         eventService.save(eventDTO, mainImage, subImage, thumbImage);
+        List<ProductDTO> productDTOList = productService.viewProductsByEventId(eventDTO.getEventId());
+
+        for(ProductDTO productDTO : productDTOList) {
+            System.out.println(productDTO.getName());
+            productService.editSalePercentage(eventDTO.getSalePercentage(), productDTO);
+        }
+
         return "redirect:/admin/event/list";
     }
 

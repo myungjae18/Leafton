@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService { //ProductService를 
                     sort = Sort.by(Sort.Direction.ASC, "name");
                     break;
                 case "new":
-                    sort = Sort.by(Sort.Direction.ASC, "registDate");
+                    sort = Sort.by(Sort.Direction.DESC, "registDate");
                     break;
                 case "rating":
                     sort = Sort.by(Sort.Direction.DESC, "rating");
@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService { //ProductService를 
                     sort = Sort.by(Sort.Direction.DESC, "calculatedPrice");
             };
         }
-        Pageable pageable = PageRequest.of(pageNo, 4, sort);
+        Pageable pageable = PageRequest.of(pageNo, 12, sort);
         return pageable;
     }
     void combineRating(Page<Product> productList){ // 평점 평균값을 product 테이블 필드 평점에 대입
@@ -323,4 +323,21 @@ public class ProductServiceImpl implements ProductService { //ProductService를 
         productRepository.save(Product.toProductEntity(productDTO));
     }
 
+    @Override
+    public List<ProductDTO> viewProductsByEventId(Long eventId) {
+        List<Product> productList = productRepository.getAllByEventId(eventId);
+        List<ProductDTO> result = new ArrayList<>();
+
+        for(Product product : productList) {
+            result.add(ProductDTO.toProductDTO(product));
+        }
+
+        return result;
+    };
+
+    @Override
+    public void editSalePercentage(int salePercentage, ProductDTO productDTO) {
+        Product product = Product.toProductEntity(productDTO);
+        productRepository.updateSalePercentage(salePercentage, product.getProductId());
+    }
 }

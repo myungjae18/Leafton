@@ -26,6 +26,8 @@ public class Event {
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDateTime endDate;
     @Column
+    private Integer salePercentage;
+    @Column
     private String mainImage;
     @Column
     private String subImage;
@@ -39,6 +41,7 @@ public class Event {
         event.setTitle(eventDTO.getTitle());
         event.setContent(eventDTO.getContent());
         event.setEndDate(eventDTO.getEndDate());
+        event.setSalePercentage(eventDTO.getSalePercentage());
         event.setMainImage(eventDTO.getMainImage());
         event.setSubImage(eventDTO.getSubImage());
         event.setThumbImage(eventDTO.getThumbImage());

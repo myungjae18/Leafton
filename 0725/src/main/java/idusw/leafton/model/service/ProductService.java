@@ -38,5 +38,6 @@ public interface ProductService { //ProductService 구현도
     Page<ProductDTO> searchBySubCategoryName(int pageNo,String name,String arName);
     Page<ProductDTO> searchByMainMaterialName(int pageNo,String name,String arName);
     void saveProduct(ProductDTO productDTO, MultipartFile main, MultipartFile thumb, MultipartFile sub) throws IOException;
-
+    List<ProductDTO> viewProductsByEventId(Long eventId);
+    void editSalePercentage(int salePercentage, ProductDTO productDTO);
 }

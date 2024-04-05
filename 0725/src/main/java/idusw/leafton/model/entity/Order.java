@@ -28,7 +28,7 @@ public class Order {
     private String address;
 
     @Column
-    private String zipcode;
+    private int zipcode;
 
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDate orderDate;

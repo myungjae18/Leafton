@@ -21,6 +21,8 @@ public class EventDTO {
 
     private LocalDateTime endDate;
 
+    private Integer salePercentage;
+
     private String mainImage;
 
     private String subImage;
@@ -35,6 +37,7 @@ public class EventDTO {
         eventDTO.setTitle(event.getTitle());
         eventDTO.setContent(event.getContent());
         eventDTO.setEndDate(event.getEndDate());
+        eventDTO.setSalePercentage(event.getSalePercentage());
         eventDTO.setMainImage(event.getMainImage());
         eventDTO.setSubImage(event.getSubImage());
         eventDTO.setThumbImage(event.getThumbImage());
