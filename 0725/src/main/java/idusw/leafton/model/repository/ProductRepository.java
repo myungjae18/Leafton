@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
@@ -52,6 +53,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
     @Query("select p from Product p where p.event.eventId = :eventId")
     List<Product> getAllByEventId(@Param("eventId") Long eventId);
 
+    @Modifying(clearAutomatically = true)
     @Query("update Product p set p.salePercentage = :salePercentage where p.productId = :productId")
     int updateSalePercentage(@Param("salePercentage") int salePercentage, @Param("productId") Long productId);
 }
