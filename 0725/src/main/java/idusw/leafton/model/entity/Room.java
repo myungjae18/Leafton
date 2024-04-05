@@ -23,11 +23,15 @@ public class Room {
     @Column(columnDefinition = "LONGTEXT")
     private String unityData;
 
+    @Column(name = "name")
+    private String name;
+
     public static Room toRoomEntity(RoomDTO roomDTO){
         Room room = new Room();
         room.setRoomId(roomDTO.getRoomId());
         room.setMember(Member.toMemberEntity(roomDTO.getMemberDTO()));
         room.setUnityData(roomDTO.getUnityData());
+        room.setName(roomDTO.getName());
 
         return room;
     }

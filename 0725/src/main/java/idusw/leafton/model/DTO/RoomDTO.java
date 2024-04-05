@@ -16,11 +16,14 @@ public class RoomDTO {
     private Long roomId;
     private MemberDTO memberDTO;
     private String unityData;
+    private String name;
+
     public static RoomDTO toRoomDTO(Room room){
         RoomDTO roomDTO = new RoomDTO();
         roomDTO.setRoomId(room.getRoomId());
         roomDTO.setMemberDTO(MemberDTO.toMemberDTO(room.getMember()));
         roomDTO.setUnityData(room.getUnityData());
+        roomDTO.setName(room.getName());
         return roomDTO;
     }
 }
