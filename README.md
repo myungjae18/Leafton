@@ -2,8 +2,14 @@
 
 ## 제작 기간
 2023.07 - 2024.04
+## 기술 스택
+<img src="https://img.shields.io/badge/spring boot-6DB33F?style=for-the-badge&logo=spring boot&logoColor=white"/> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"/>
+<img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=Thymeleaf&logoColor=white"/>
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"/>
+<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
+
 ## ERD
-<img src="https://private-user-images.githubusercontent.com/47166127/391474178-0215000b-d7f9-46e4-b2cf-47a10f867711.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzQ5Mjg0ODcsIm5iZiI6MTczNDkyODE4NywicGF0aCI6Ii80NzE2NjEyNy8zOTE0NzQxNzgtMDIxNTAwMGItZDdmOS00NmU0LWIyY2YtNDdhMTBmODY3NzExLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDEyMjMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMjIzVDA0Mjk0N1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWFkODMzNDZiMmJjMDEyYWVlYTYzZjI1YjQwMGI0MDc3MDgwNjFlZDk4MGVjODllMzYzZTI1MzRmZGUzZjZjNTQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.ofNfmMimrLgSp4ajl32BF7dOoB4vdpa-URX8YoQ7ypg">
+<img src="https://private-user-images.githubusercontent.com/47166127/391474178-0215000b-d7f9-46e4-b2cf-47a10f867711.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzQ5Mjg0ODcsIm5iZiI6MTczNDkyODE4NywicGF0aCI6Ii80NzE2NjEyNy8zOTE0NzQxNzgtMDIxNTAwMGItZDdmOS00NmU0LWIyY2YtNDdhMTBmODY3NzExLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDEyMjMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMjIzVDA0Mjk0N1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWFkODMzNDZiMmJjMDEyYWVlYTYzZjI1YjQwMGI0MDc3MDgwNjFlZDk4MGVjODllMzYzZTI1MzRmZGUzZjZjNTQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.ofNfmMimrLgSp4ajl32BF7dOoB4vdpa-URX8YoQ7ypg"/>
 
 ## site images
 1. main page
