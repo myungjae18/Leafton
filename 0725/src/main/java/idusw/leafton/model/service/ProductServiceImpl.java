@@ -306,19 +306,22 @@ public class ProductServiceImpl implements ProductService { //ProductService를 
         //파일이 있을 경우 파일 저장 후 DB에 저장할 경로 지정 후 DTO에 경로 주입
         if(!main.isEmpty()) {
             String mainFileName = fileSave.saveFileAndRename(main, mainPath);
-            productDTO.setMainImage("/home/passion/images/product/main/"+mainFileName);
+            //productDTO.setMainImage("/home/passion/images/product/main/"+mainFileName);
+            productDTO.setMainImage("/images/product/main/"+mainFileName);
             System.out.println("나메인 저장");
         }
 
         if(!sub.isEmpty()) {
             String subFileName = fileSave.saveFileAndRename(sub, subPath);
-            productDTO.setSubImage("/home/passion/images/product/sub/"+subFileName);
+            //productDTO.setSubImage("/home/passion/images/product/sub/"+subFileName);
+            productDTO.setSubImage("/images/product/sub/"+subFileName);
             System.out.println("나 서브 저장");;
         }
 
         if(!thumb.isEmpty()) {
             String thumbFileName = fileSave.saveFileAndRename(thumb, thumbPath);
-            productDTO.setThumbImage("/home/passion/images/product/thumb/"+thumbFileName);
+            //productDTO.setThumbImage("/home/passion/images/product/thumb/"+thumbFileName);
+            productDTO.setThumbImage("/images/product/thumb/"+thumbFileName);
             System.out.println("나텀브 저장");
         }
 

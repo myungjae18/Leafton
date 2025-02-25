@@ -85,6 +85,7 @@ public class MemberController {
         }
         return "member/info";
     }
+
     //로그아웃 요청을 처리하는 메서드
     @GetMapping(value="/member/logout")
     private String logout(HttpServletRequest request){
@@ -96,8 +97,6 @@ public class MemberController {
 
         return "main/index";
     }
-
-
 
     //로그인 요청을 처리하는 메서드
     @PostMapping(value="/member/login")

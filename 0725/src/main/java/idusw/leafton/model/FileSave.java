@@ -15,7 +15,8 @@ import java.util.UUID;
 @Component
 @Getter
 public class FileSave {
-    private String defaultPath="/home/passion/images/";
+    //private String defaultPath="/home/passion/images/";
+    private String defaultPath="/images/";
     public String saveFileAndRename(MultipartFile multipartFile, String location) throws IOException{ //파일을 저장시키고 변경된 파일이름을 리턴
         if (multipartFile.isEmpty()){
             return null;
