@@ -20,14 +20,19 @@
 ![Image](https://github.com/user-attachments/assets/335abe18-02ce-4329-8129-d26b115ce476)
 ## site images
 ### 1. main page
+- 가구 유형을 선택하여 해당하는 상품 페이지로 이동 가능
+- 현재 진행중인 이벤트 배너를 슬라이드로 배치
 ![Image](https://github.com/user-attachments/assets/42d082a0-a067-47c3-a088-927695145228)
 ### 2. event page
+- 현재 진행 중인 이벤트들을 한눈에 볼 수 있는 페이지
 ![Image](https://github.com/user-attachments/assets/4b2dd4a9-84c3-4d5e-8659-a01e2f1e7fcb)
 ### 3. my page
+- 개인정보 열람 및 수정 기능
+- 장바구니 및 주문 내역 열람
 ![Image](https://github.com/user-attachments/assets/148c3161-bcf7-416a-8424-23cf4ee23835)
-<br>
 ![Image](https://github.com/user-attachments/assets/564adea6-4847-4607-9ab3-7cfffcb5148e)
 ### 4. login & register page
+- 회원가입 및 로그인 페이지
+- 슬라이드형 버튼을 통한 로그인/회원가입 전환 가능
 ![Image](https://github.com/user-attachments/assets/0402d349-e0d1-40ac-a215-68e227d0cc6e)
-<br>
 ![Image](https://github.com/user-attachments/assets/fe7f6c6c-33b2-43f3-9e2c-4878db4627c8)
