@@ -1,4 +1,5 @@
 ![header](https://capsule-render.vercel.app/api?type=waving&text=Leafton%20Study&color=auto)
+# Leafton
 ## 제작 기간
 2023.07 - 2024.04
 ## 기술 스택
